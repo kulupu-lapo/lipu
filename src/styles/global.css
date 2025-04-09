@@ -42,3 +42,7 @@ h1 {
 hr {
     color: var(--accent);
 }
+
+img {
+    max-width: 100%;
+}
