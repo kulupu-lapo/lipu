@@ -1,6 +1,9 @@
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
+// Helper function to format Date as YYYY-MM-DD
+const formatDate = (date: Date) => date.toISOString().split("T")[0];
+
 const Article = z
   .object({
     title: z.string(),
@@ -19,7 +22,15 @@ const Article = z
         z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Invalid yyyy-mm format"),
         z.null(),
       ])
-      .transform((val) => `${val}`),
+      .transform((val) => {
+        if (val === null) return `null`;
+
+        if (val instanceof Date) {
+          return formatDate(val); // returns "YYYY-MM-DD"
+        }
+
+        return `${val}`;
+      }),
     tags: z.array(z.string()).nonempty().optional(),
     // missing license -> "assume All rights reserved, but
     // its also possible we aren't yet aware of the correct license"

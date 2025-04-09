@@ -7,7 +7,7 @@ import PrevNext from "../components/PrevNext.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, date, prev, next } = Astro.props;
+const post = Astro.props;
 
 import { Debug } from "astro:components";
 import Footer from "../components/Footer.astro";
@@ -16,24 +16,22 @@ import Footer from "../components/Footer.astro";
 <!-- <Debug answer={Astro.props} /> -->
 <html lang="en">
     <head>
-        <BaseHead title={title} description={description} />
+        <BaseHead title={post.title} description={post.description || ""} />
     </head>
 
     <body>
         <Header />
         <main>
             <article>
-                <h1>{title}</h1>
-                <center>
-                    <!-- <FormattedDate date= -->
-                    {date}
-                    <!--  />-->
-                </center>
-                <PrevNext prev={prev} next={next} />
+                <h1>{post.title}</h1>
+                <center>{post.authors?.join(", ")}</center>
+                <center>{post.date}</center>
+                <PrevNext />
+                <!-- <PrevNext prev={prev} next={next} /> -->
                 <section>
                     <slot />
                 </section>
-                <PrevNext prev={prev} next={next} />
+                <!-- <PrevNext prev={prev} next={next} /> -->
             </article>
         </main>
         <Footer />
