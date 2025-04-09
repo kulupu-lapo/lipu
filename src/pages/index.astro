@@ -7,9 +7,7 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Footer from "../components/Footer.astro";
 import { render } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const posts = await getCollection("blog");
 const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
 
 const { Content: Meta } = await render(meta);
@@ -49,9 +47,7 @@ const { Content: Meta } = await render(meta);
                     {
                         posts.map((post) => (
                             <li>
-                                <p class="date">
-                                    <FormattedDate date={post.data.date} />
-                                </p>
+                                <p class="date">{post.data.date}</p>
                                 <a href={`./${post.id}/`}>{post.data.title}</a>
                             </li>
                         ))

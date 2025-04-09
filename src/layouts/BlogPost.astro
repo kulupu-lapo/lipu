@@ -24,7 +24,11 @@ import Footer from "../components/Footer.astro";
         <main>
             <article>
                 <h1>{title}</h1>
-                <center><FormattedDate date={date} /></center>
+                <center>
+                    <!-- <FormattedDate date= -->
+                    {date}
+                    <!--  />-->
+                </center>
                 <PrevNext prev={prev} next={next} />
                 <section>
                     <slot />

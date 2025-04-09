@@ -6,17 +6,15 @@ import { render } from "astro:content";
 import { Debug } from "astro:components";
 
 export async function getStaticPaths() {
-    const posts = (await getCollection("blog")).sort(
-        (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-    );
+    const posts = await getCollection("blog");
     const paths = posts.map((post, i) => ({
         params: { slug: post.id },
         props: {
             ...post,
-            prevnext: {
-                prev: i + 1 === posts.length ? "" : posts[i + 1].id,
-                next: i === 0 ? "" : posts[i - 1].id,
-            },
+            // prevnext: {
+            // prev: i + 1 === posts.length ? "" : posts[i + 1].id,
+            // next: i === 0 ? "" : posts[i - 1].id,
+            // },
         },
     }));
     return paths;
@@ -27,6 +25,11 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...{ ...post.data, ...post.prevnext }}>
+<BlogPost
+    {...{
+        ...post.data,
+        // ...post.prevnext
+    }}
+>
     <Content />
 </BlogPost>
