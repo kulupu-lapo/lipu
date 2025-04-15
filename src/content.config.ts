@@ -31,13 +31,13 @@ const Article = z
 
         return `${val}`;
       }),
-    tags: z.array(z.string()).nonempty().optional(),
+    tags: z.array(z.string()).nonempty().nullish(), // TODO: nullable
     // missing license -> "assume All rights reserved, but
     // its also possible we aren't yet aware of the correct license"
     license: z.string().nullable(), // TODO: SPDX compliance
     sources: z.array(z.string()).nonempty().optional(),
     archives: z.array(z.string()).nonempty().optional(),
-    preprocessing: z.string().optional(),
+    preprocessing: z.string().nullish(),
     "accessibility-notes": z.string().optional(),
     notes: z.string().optional(),
   })
