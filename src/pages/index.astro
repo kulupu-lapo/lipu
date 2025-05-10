@@ -5,8 +5,8 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 
-const posts = (await getCollection("blog")).sort((a, b) =>
-  a.data.date.toISOString() > b.data.date.toISOString() ? -1 : 1,
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
 
