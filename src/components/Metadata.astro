@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+interface Props {
+  post: CollectionEntry<"blog">["data"];
+}
+
+const { post } = Astro.props;
+---
+
+<style>
+  p {
+    margin: initial;
+  }
+  details {
+    background-color: #eee;
+    padding: 10px;
+  }
+</style>
+<details>
+  <summary>More</summary>
+  {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
+  {post.tags && <p>Tags: {post.tags.join(", ")}</p>}
+  {post.license && <p>License: {post.license}</p>}
+
+  {
+    post.sources && (
+      <p>
+        <span>Sources:</span>
+        {post.sources.map((source, i) => (
+          <a href={source}>{i + 1} </a>
+        ))}
+      </p>
+    )
+  }
+  {
+    post.archives && (
+      <p>
+        <span>Archives:</span>
+        {post.archives.map((archive, i) => (
+          <a href={archive}>{i + 1} </a>
+        ))}
+      </p>
+    )
+  }
+  {
+    (post.preprocessing || post["accessibility-notes"] || post.notes) && (
+      <p>
+        <span>Notes:</span>
+        {post.preprocessing && <span>{post.preprocessing}</span>}
+        {post["accessibility-notes"] && (
+          <span>{post["accessibility-notes"]}</span>
+        )}
+        {post.notes && <span>{post.notes}</span>}
+      </p>
+    )
+  }
+</details>

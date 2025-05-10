@@ -3,6 +3,7 @@ import BaseHead from "@/components/BaseHead.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import PrevNext from "@/components/PrevNext.astro";
+import Metadata from "@/components/Metadata.astro";
 import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"blog">["data"];
 
@@ -22,48 +23,8 @@ const { prev, next } = Astro.props;
       <article>
         <h1>{post.title}</h1>
         <center>{post.authors?.join(", ")}</center>
-        {
-          post.proofreaders ? (
-            <center>Proofreaders: {post.proofreaders.join(", ")}</center>
-          ) : <></>
-        }
-        {
-          post.tags ? (
-            <center>Tags: {post.tags.join(", ")}</center>
-          ) : <></>
-        }
-        {
-          post.license ? (
-            <center>License: {post.license}</center>
-          ) : <></>
-        }
-        {
-          post.sources ? (
-          <center>Sources:</center>
-          <center>
-          {post.sources.map((source, i) => (<a href={source}>{i} </a>))}
-          </center>
-          ) : <></>
-        }
-        {
-          post.archives ? (
-          <center>Archives:</center>
-          <center>
-          {post.archives.map((archive, i) => (<a href={archive}>{i} </a>))}
-          </center>
-          ) : <></>
-        }
-        {
-          post.preprocessing || post["accessibility-notes"] || post.notes ? (
-          <center>
-            {post.preprocessing ? <p>{post.preprocessing}</p> : <></>}
-            {post["accessibility-notes"] ? <p>{post["accessibility-notes"]}</p> : <></>}
-            {post.notes ? <p>{post.notes}</p> : <></>}
-          </center>
-          ) : <></>
-        }
-
         <center>{post.date.toDateString()}</center>
+        <Metadata post={post} />
         <PrevNext prev={prev} next={next} />
         <section>
           <slot />
