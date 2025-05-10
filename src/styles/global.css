@@ -48,3 +48,7 @@ hr {
 img {
     max-width: 100%;
 }
+
+pre {
+    padding: 10px;
+}
