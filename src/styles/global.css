@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
 :root {
     --bg: #ffffff;
     --txt: #080808;
@@ -7,10 +9,10 @@
 
 body {
     margin: 10px;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
     color: var(--txt);
-    line-height: 1.6;
-    font-size: 16px;
+    line-height: 1.7;
+    font-size: 18px;
 }
 
 main {
