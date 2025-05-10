@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { formatDate } from "@/utils/date";
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
@@ -21,7 +22,9 @@ const post = Astro.props;
 <li>
   <p>
     {post.data.authors?.join(", ")} ·{" "}
-    <span class="date">{post.data.date.toDateString()}</span>
+    <span class="date"
+      >{formatDate(post.data.date, post.data["date-precision"])}</span
+    >
   </p>
   <a href={`./${post.id}/`}>{post.data.title}</a>
 </li>

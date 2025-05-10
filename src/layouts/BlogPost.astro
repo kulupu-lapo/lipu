@@ -4,6 +4,7 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import Metadata from "@/components/Metadata.astro";
 import PrevNext from "@/components/PrevNext.astro";
+import { formatDate } from "@/utils/date";
 import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"blog">["data"];
 
@@ -24,7 +25,7 @@ const { prev, next } = Astro.props;
         <Metadata post={post} />
         <h1>{post.title}</h1>
         <center><b>{post.authors?.join(", ")}</b></center>
-        <center>{post.date.toDateString()}</center>
+        <center>{formatDate(post.date, post["date-precision"])}</center>
         <PrevNext prev={prev} next={next} />
         <section>
           <slot />
