@@ -7,39 +7,34 @@ const formatDate = (date: Date) => date.toISOString().split("T")[0];
 const Article = z
   .object({
     title: z.string(),
-    // NOTE: original-title may not exist, e.g. meli en mije li tawa
-    "original-title": z.string().optional(),
-    description: z.string().optional(),
-    authors: z.array(z.string()).nonempty().optional(),
-    translators: z.array(z.string()).nonempty().optional(),
-    proofreaders: z.array(z.string()).nonempty().optional(),
+    description: z.string().nullable(),
+    authors: z.array(z.string()).nullable(),
+    proofreaders: z.array(z.string()).nonempty().nullable(),
     // Date is required for all except `unknown-year/unknown-month`.
     // Those still have to specify null explicitly
-    date: z
-      .union([
-        z.date(),
-        z.string().date(),
-        z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Invalid yyyy-mm format"),
-        z.null(),
-      ])
-      .transform((val) => {
-        if (val === null) return `null`;
-
-        if (val instanceof Date) {
-          return formatDate(val); // returns "YYYY-MM-DD"
-        }
-
-        return `${val}`;
-      }),
-    tags: z.array(z.string()).nonempty().nullish(), // TODO: nullable
+    date: z.coerce.date(),
+    "date-precision": z.union([
+      z.literal("year"),
+      z.literal("month"),
+      z.literal("day"),
+      z.literal("none"),
+    ]),
+    original: z
+      .object({
+        // NOTE: original-title may not exist, e.g. meli en mije li tawa
+        title: z.string().nullable(),
+        authors: z.array(z.string()).nonempty().nullable(),
+      })
+      .nullable(),
+    tags: z.array(z.string()).nonempty().nullable(),
     // missing license -> "assume All rights reserved, but
     // its also possible we aren't yet aware of the correct license"
     license: z.string().nullable(), // TODO: SPDX compliance
-    sources: z.array(z.string()).nonempty().optional(),
-    archives: z.array(z.string()).nonempty().optional(),
-    preprocessing: z.string().nullish(),
-    "accessibility-notes": z.string().optional(),
-    notes: z.string().optional(),
+    sources: z.array(z.string()).nonempty().nullable(),
+    archives: z.array(z.string()).nonempty().nullable(),
+    preprocessing: z.string().nullable(),
+    "accessibility-notes": z.string().nullable(),
+    notes: z.string().nullable(),
   })
   .strict() // reject additional fields
   // TODO: it just says "Invalid input" when this refine fails to be met
