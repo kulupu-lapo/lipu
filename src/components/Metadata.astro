@@ -17,7 +17,7 @@ const { post } = Astro.props;
     margin: 10px auto;
   }
 </style>
-<details>
+<details open>
   <summary>More</summary>
   {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
   {post.tags && <p>Tags: {post.tags.join(", ")}</p>}
@@ -28,7 +28,7 @@ const { post } = Astro.props;
       <p>
         <span>Sources:</span>
         {post.sources.map((source, i) => (
-          <a href={source}>{i + 1} </a>
+          <a href={source}>{source.split("/")[2] ?? i + 1} </a>
         ))}
       </p>
     )
@@ -38,7 +38,7 @@ const { post } = Astro.props;
       <p>
         <span>Archives:</span>
         {post.archives.map((archive, i) => (
-          <a href={archive}>{i + 1} </a>
+          <a href={archive}>{archive.split("/")[2] ?? i + 1} </a>
         ))}
       </p>
     )
