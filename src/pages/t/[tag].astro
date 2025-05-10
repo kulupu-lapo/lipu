@@ -43,7 +43,7 @@ const { posts } = Astro.props;
   <body>
     <Header />
     <main>
-      <h2>Posts tagged with {tag}</h2>
+      <h2>Posts tagged with {tag} ({posts.length})</h2>
       <ul>
         {posts.map((post) => <FoundPost {...post} />)}
       </ul>
