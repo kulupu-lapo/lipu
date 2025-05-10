@@ -4,6 +4,7 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import PrevNext from "@/components/PrevNext.astro";
 const post = Astro.props;
+const { prev, next } = Astro.props;
 ---
 
 <!-- <Debug answer={Astro.props} /> -->
@@ -19,12 +20,11 @@ const post = Astro.props;
         <h1>{post.title}</h1>
         <center>{post.authors?.join(", ")}</center>
         <center>{post.date}</center>
-        <PrevNext />
-        <!-- <PrevNext prev={prev} next={next} /> -->
+        <PrevNext prev={prev} next={next} />
         <section>
           <slot />
         </section>
-        <!-- <PrevNext prev={prev} next={next} /> -->
+        <PrevNext prev={prev} next={next} />
       </article>
     </main>
     <Footer />

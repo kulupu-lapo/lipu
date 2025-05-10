@@ -10,10 +10,10 @@ export async function getStaticPaths() {
     params: { slug: post.id },
     props: {
       ...post,
-      // prevnext: {
-      // prev: i + 1 === posts.length ? "" : posts[i + 1].id,
-      // next: i === 0 ? "" : posts[i - 1].id,
-      // },
+      prevnext: {
+        prev: i + 1 === posts.length ? "" : posts[i + 1].id,
+        next: i === 0 ? "" : posts[i - 1].id,
+      },
     },
   }));
   return paths;
@@ -24,11 +24,6 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost
-  {...{
-    ...post.data,
-    // ...post.prevnext
-  }}
->
+<BlogPost {...{ ...post.data, ...post.prevnext }}>
   <Content />
 </BlogPost>
