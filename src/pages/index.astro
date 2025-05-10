@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseHead from "@/components/BaseHead.astro";
 import Footer from "@/components/Footer.astro";
+import FoundPost from "@/components/FoundPost.astro";
 import Header from "@/components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 
@@ -19,19 +20,8 @@ const { Content: Meta } = await render(meta);
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
       ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
         list-style-type: none;
         padding: 0;
-        line-height: 1.3;
-      }
-      ul li {
-        width: 100%;
-      }
-      .date {
-        margin: 0;
-        color: var(--grey);
       }
     </style>
   </head>
@@ -44,17 +34,7 @@ const { Content: Meta } = await render(meta);
       <section>
         <h2>Previous posts</h2>
         <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <p class="date">
-                  {post.data.authors?.join(", ")} ·{" "}
-                  {post.data.date.toDateString()}
-                </p>
-                <a href={`./${post.id}/`}>{post.data.title}</a>
-              </li>
-            ))
-          }
+          {posts.map((post) => <FoundPost {...post} />)}
         </ul>
       </section>
     </main>
