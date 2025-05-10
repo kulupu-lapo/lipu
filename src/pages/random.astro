@@ -1,0 +1,17 @@
+---
+import BlogPost from "@/layouts/BlogPost.astro";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const links = posts.map((post) => post.id);
+---
+
+<span style="display: none" id="links">{JSON.stringify(links)}</span>
+<script lang="javascript">
+  const urls = JSON.parse(document.getElementById("links").textContent);
+  var randURL = Math.floor(Math.random() * urls.length);
+  window.open(urls[randURL], "_self");
+</script>
