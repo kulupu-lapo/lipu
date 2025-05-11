@@ -1,0 +1,53 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Footer from "@/components/Footer.astro";
+import FoundPost from "@/components/FoundPost.astro";
+import Header from "@/components/Header.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+
+  const uniqueAuthors = [
+    ...new Set(posts.map((post) => post.data.authors).flat()),
+  ].filter((author) => author);
+
+  return uniqueAuthors.map((author) => {
+    if (!author) return;
+    const filteredPosts = posts.filter(
+      (post) => post.data.authors && post.data.authors.includes(author),
+    );
+    return {
+      params: { author },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { author } = Astro.params!;
+const { posts } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={author} description={""} />
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h2>Posts by {author} ({posts.length})</h2>
+      <ul>
+        {posts.map((post) => <FoundPost {...post} />)}
+      </ul>
+    </main>
+    <Footer />
+  </body>
+</html>
