@@ -31,11 +31,7 @@ export async function getStaticPaths() {
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
 
-  console.log(posts.map((post) => post.filePath));
-
-  const uniqueTags = [
-    ...new Set(posts.map((post) => post.data.tags).flat()),
-  ].filter((tag) => tag);
+  // console.log(posts.map((post) => post.filePath));
 
   return collections.map((collection) => {
     const filteredPosts = posts.filter(
@@ -45,19 +41,19 @@ export async function getStaticPaths() {
         collection.items.map((item) => `poki/${item}`).includes(post.filePath),
     );
     return {
-      params: { tag: collection.name },
+      params: { collection: collection.name },
       props: { posts: filteredPosts },
     };
   });
 }
 
-const { tag } = Astro.params!;
+const { collection } = Astro.params!;
 const { posts } = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={tag} description={""} />
+    <BaseHead title={collection} description={""} />
     <style>
       ul {
         list-style-type: none;
@@ -68,7 +64,7 @@ const { posts } = Astro.props;
   <body>
     <Header />
     <main>
-      <h2>Posts tagged with {tag} ({posts.length})</h2>
+      <h2>Posts that comprise {collection} ({posts.length})</h2>
       <ul>
         {posts.map((post) => <FoundPost {...post} />)}
       </ul>
