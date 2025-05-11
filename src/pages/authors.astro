@@ -1,0 +1,61 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Footer from "@/components/Footer.astro";
+import FoundPost from "@/components/FoundPost.astro";
+import Header from "@/components/Header.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const uniqueAuthors = [
+  ...new Set(posts.map((post) => post.data.authors).flat()),
+].filter((author) => author);
+
+const uniqueAuthorsWithArticles = uniqueAuthors.map((author) => {
+  if (!author) return;
+  const filteredPosts = posts.filter(
+    (post) => post.data.authors && post.data.authors.includes(author),
+  );
+  return {
+    params: { author: author.replaceAll(/[/ ]/g, "_") },
+    props: { posts: filteredPosts },
+  };
+});
+
+const sortedUniqueAuthorsWithArticles = uniqueAuthorsWithArticles.sort(
+  (a, b) => b!.props.posts.length - a!.props.posts.length,
+);
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title="authors" description={""} />
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h2>Authors ({sortedUniqueAuthorsWithArticles.length})</h2>
+      <ul>
+        {
+          sortedUniqueAuthorsWithArticles.map((author) => (
+            <li>
+              <a href={`./a/${author!.params.author}`}>
+                {author!.params.author.replaceAll("_", " ")}{" "}
+              </a>
+              {`(${author!.props.posts.length} posts)`}
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <Footer />
+  </body>
+</html>
