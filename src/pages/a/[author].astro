@@ -20,13 +20,13 @@ export async function getStaticPaths() {
       (post) => post.data.authors && post.data.authors.includes(author),
     );
     return {
-      params: { author },
+      params: { author: author.replaceAll(/[/ ]/g, "_") },
       props: { posts: filteredPosts },
     };
   });
 }
 
-const { author } = Astro.params!;
+const author = Astro.params!.author.replaceAll("_", " ");
 const { posts } = Astro.props;
 ---
 
