@@ -18,10 +18,19 @@ const post = Astro.props;
   p {
     margin: 0;
   }
+  .author {
+    font-weight: initial;
+  }
 </style>
 <li>
   <p>
-    {post.data.authors?.join(", ")} ·{" "}
+    {
+      post.data.authors?.map((author) => (
+        <a class="author" href={`./a/${author.replaceAll(/[/ ]/g, "_")}`}>
+          {author}{" "}
+        </a>
+      ))
+    }
     <span class="date"
       >{formatDate(post.data.date, post.data["date-precision"])}</span
     >
