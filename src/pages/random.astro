@@ -1,5 +1,7 @@
 ---
 import BlogPost from "@/layouts/BlogPost.astro";
+import BaseHead from "@/components/BaseHead.astro";
+import "@/styles/global.css";
 import { type CollectionEntry, getCollection, render } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
@@ -10,9 +12,18 @@ const links = posts.map((post) => `${import.meta.env.BASE_URL}${post.id}`);
 // const links = posts.map((post) => `/${post.id}`);
 ---
 
-<span style="display: none" id="links">{JSON.stringify(links)}</span>
-<script lang="javascript">
-  const urls = JSON.parse(document.getElementById("links").textContent);
-  var randURL = Math.floor(Math.random() * urls.length);
-  window.open(urls[randURL], "_self");
-</script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline src="./light-mode.js"></script>
+  </head>
+  <body>
+    <span style="display: none" id="links">{JSON.stringify(links)}</span>
+    <script lang="javascript">
+      const urls = JSON.parse(document.getElementById("links").textContent);
+      var randURL = Math.floor(Math.random() * urls.length);
+      window.open(urls[randURL], "_self");
+    </script>
+    <span>Redirecting...</span>
+  </body>
+</html>
