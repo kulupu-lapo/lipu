@@ -18,7 +18,7 @@
 body {
     background-color: var(--bg);
     margin: 10px;
-    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-family: "Lato", serif; /* debugging font import */
     color: var(--txt);
     line-height: 1.7;
     font-size: 18px;
