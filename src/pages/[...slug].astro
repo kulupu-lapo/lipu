@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
+import Authors from "@/components/Authors.astro";
 import Metadata from "@/components/Metadata.astro";
 import PrevNext from "@/components/PrevNext.astro";
 import { posts } from "@/utils/content";
@@ -36,7 +37,7 @@ const { Content } = await render(post);
   <article>
     <Metadata post={post.data} />
     <h1>{post.data.title}</h1>
-    <center><b>{post.data.authors?.join(", ")}</b></center>
+    <center><b><Authors authors={post.data.authors} /></b></center>
     <center>{formatDate(post.data.date, post.data["date-precision"])}</center>
     <PrevNext prev={prevnext.prev} next={prevnext.next} />
     <section>

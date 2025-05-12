@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { formatDate } from "@/utils/date";
+import Authors from "@/components/Authors.astro";
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
@@ -18,19 +19,10 @@ const post = Astro.props;
   p {
     margin: 0;
   }
-  .author {
-    font-weight: initial;
-  }
 </style>
 <li>
   <p>
-    {
-      post.data.authors?.map((author) => (
-        <a class="author" href={`./a/${author.replaceAll(/[/ ]/g, "_")}`}>
-          {author}{" "}
-        </a>
-      ))
-    }
+    <Authors authors={post.data.authors} />
     <span class="date"
       >{formatDate(post.data.date, post.data["date-precision"])}</span
     >

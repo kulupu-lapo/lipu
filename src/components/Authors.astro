@@ -1,0 +1,25 @@
+---
+import { escape } from "@/utils/content";
+
+interface Props {
+  authors: string[] | null;
+}
+
+const { authors } = Astro.props;
+---
+
+<style>
+  a {
+    font-weight: inherit;
+  }
+</style>
+{
+  authors &&
+    authors
+      .map((author) => <a href={`./a/${escape(author)}`}>{author}</a>)
+      .reduce((prev, curr, i) => (
+        <>
+          {prev}, {curr}
+        </>
+      ))
+}
