@@ -69,5 +69,11 @@ img {
 }
 
 pre {
-    padding: 10px;
+    padding: 20px;
+}
+
+blockquote {
+    margin: 0px;
+    padding-inline: 15px 15px;
+    border-inline-start: 5px solid var(--grey);
 }
