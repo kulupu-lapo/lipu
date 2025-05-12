@@ -1,53 +1,22 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
-import Footer from "@/components/Footer.astro";
 import FoundPost from "@/components/FoundPost.astro";
-import Header from "@/components/Header.astro";
-import { getCollection } from "astro:content";
+import SearchPage from "@/layouts/SearchPage.astro";
+import { escape, getPostsByTag, tags, unescape } from "@/utils/content";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
-
-  const uniqueTags = [
-    ...new Set(posts.map((post) => post.data.tags).flat()),
-  ].filter((tag) => tag);
-
-  return uniqueTags.map((tag) => {
-    if (!tag) return;
-    const filteredPosts = posts.filter(
-      (post) => post.data.tags && post.data.tags.includes(tag),
-    );
-    return {
-      params: { tag },
-      props: { posts: filteredPosts },
-    };
-  });
+  return tags.map((tag) => ({
+    params: { tag: escape(tag) },
+    props: { posts: getPostsByTag(tag) },
+  }));
 }
 
-const { tag } = Astro.params!;
+const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title={tag} description={""} />
-    <style>
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <h2>Posts tagged with {tag} ({posts.length})</h2>
-      <ul>
-        {posts.map((post) => <FoundPost {...post} />)}
-      </ul>
-    </main>
-    <Footer />
-  </body>
-</html>
+<SearchPage title={unescape(tag)}>
+  <h2>Posts tagged with {unescape(tag)} ({posts.length})</h2>
+  <ul>
+    {posts.map((post) => <FoundPost {...post} />)}
+  </ul>
+</SearchPage>

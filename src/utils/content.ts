@@ -10,7 +10,7 @@ export const by =
 
 // posts, sorted from newest to oldest.
 export const posts = (await getCollection("blog")).sort(
-  by((x) => x.data.date.valueOf()),
+  by((x) => x.data.date.valueOf(), false),
 );
 
 // authors
