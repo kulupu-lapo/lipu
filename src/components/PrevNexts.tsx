@@ -21,24 +21,20 @@ export const PrevNexts: React.FC<{
       <hr />
       <div className="nav">
         <span>
-          {prev ? (
+          {prev && (
             <a href={"./" + prev.id}>
               <span aria-hidden="true">«</span> Previous
             </a>
-          ) : (
-            ""
           )}
         </span>
         <span>
           <a href={"./" + name}>{name}</a>
         </span>
         <span>
-          {next ? (
+          {next && (
             <a href={"./" + next.id}>
               Next <span aria-hidden="true">»</span>
             </a>
-          ) : (
-            ""
           )}
         </span>
       </div>
