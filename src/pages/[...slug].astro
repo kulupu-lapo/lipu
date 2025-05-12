@@ -1,6 +1,9 @@
 ---
-import BlogPost from "@/layouts/BlogPost.astro";
+import Metadata from "@/components/Metadata.astro";
+import PrevNext from "@/components/PrevNext.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { posts } from "@/utils/content";
+import { formatDate } from "@/utils/date";
 import { type CollectionEntry, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -28,6 +31,16 @@ const { post, prevnext } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...{ ...post.data, ...prevnext }}>
-  <Content />
-</BlogPost>
+<BaseLayout title={post.data.title} description={post.data.description || ""}>
+  <article>
+    <Metadata post={post.data} />
+    <h1>{post.data.title}</h1>
+    <center><b>{post.data.authors?.join(", ")}</b></center>
+    <center>{formatDate(post.data.date, post.data["date-precision"])}</center>
+    <PrevNext prev={prevnext.prev} next={prevnext.next} />
+    <section>
+      <Content />
+    </section>
+    <PrevNext prev={prevnext.prev} next={prevnext.next} />
+  </article>
+</BaseLayout>

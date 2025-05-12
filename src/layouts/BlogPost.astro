@@ -1,38 +1,25 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
-import Footer from "@/components/Footer.astro";
-import Header from "@/components/Header.astro";
 import Metadata from "@/components/Metadata.astro";
 import PrevNext from "@/components/PrevNext.astro";
 import { formatDate } from "@/utils/date";
 import type { CollectionEntry } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 type Props = CollectionEntry<"blog">["data"];
 
 const post = Astro.props;
 const { prev, next } = Astro.props;
 ---
 
-<!-- <Debug answer={Astro.props} /> -->
-<html lang="en">
-  <head>
-    <BaseHead title={post.title} description={post.description || ""} />
-  </head>
-
-  <body>
-    <Header />
-    <main>
-      <article>
-        <Metadata post={post} />
-        <h1>{post.title}</h1>
-        <center><b>{post.authors?.join(", ")}</b></center>
-        <center>{formatDate(post.date, post["date-precision"])}</center>
-        <PrevNext prev={prev} next={next} />
-        <section>
-          <slot />
-        </section>
-        <PrevNext prev={prev} next={next} />
-      </article>
-    </main>
-    <Footer />
-  </body>
-</html>
+<BaseLayout title={post.title} description={post.description || ""}>
+  <article>
+    <Metadata post={post} />
+    <h1>{post.title}</h1>
+    <center><b>{post.authors?.join(", ")}</b></center>
+    <center>{formatDate(post.date, post["date-precision"])}</center>
+    <PrevNext prev={prev} next={next} />
+    <section>
+      <slot />
+    </section>
+    <PrevNext prev={prev} next={next} />
+  </article>
+</BaseLayout>

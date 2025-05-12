@@ -1,42 +1,25 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
-import Footer from "@/components/Footer.astro";
-import Header from "@/components/Header.astro";
-import { posts, escape, authors, getPostsByAuthor, by } from "@/utils/content";
+import SearchPage from "@/layouts/SearchPage.astro";
+import { escape, authors, getPostsByAuthor, by } from "@/utils/content";
 
 const query = authors
   .map((author) => ({
     author,
     posts: getPostsByAuthor(author).length,
   }))
-  .sort(by((x: any) => x.posts, false));
+  .sort(by((x) => x.posts, false));
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title="authors" description={""} />
-    <style>
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <h2>Authors ({query.length})</h2>
-      <ul>
-        {
-          query.map((row) => (
-            <li>
-              <a href={`./a/${escape(row.author)}`}>{row.author}</a>
-              {`(${row.posts} posts)`}
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-    <Footer />
-  </body>
-</html>
+<SearchPage title="authors">
+  <h2>Authors ({query.length})</h2>
+  <ul>
+    {
+      query.map((row) => (
+        <li>
+          <a href={`./a/${escape(row.author)}`}>{row.author}</a>
+          {` (${row.posts} posts)`}
+        </li>
+      ))
+    }
+  </ul>
+</SearchPage>

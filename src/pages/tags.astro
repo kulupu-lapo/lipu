@@ -1,59 +1,25 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
-import Footer from "@/components/Footer.astro";
-import FoundPost from "@/components/FoundPost.astro";
-import Header from "@/components/Header.astro";
-import { getCollection } from "astro:content";
+import SearchPage from "@/layouts/SearchPage.astro";
+import { getPostsByTag, by, tags, escape } from "@/utils/content";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-
-const uniqueTags = [
-  ...new Set(posts.map((post) => post.data.tags).flat()),
-].filter((tag) => tag);
-
-const tagsEndpoints = uniqueTags.map((tag) => {
-  if (!tag) return;
-  const filteredPosts = posts.filter(
-    (post) => post.data.tags && post.data.tags.includes(tag),
-  );
-  return {
-    params: { tag },
-    props: { posts: filteredPosts },
-  };
-});
-
-const sortedTagsEndpoints = tagsEndpoints.sort(
-  (a, b) => b!.props.posts.length - a!.props.posts.length,
-);
+const query = tags
+  .map((tag) => ({
+    tag,
+    posts: getPostsByTag(tag).length,
+  }))
+  .sort(by((x) => x.posts, false));
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title="tags" description={""} />
-    <style>
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <h2>Authors ({sortedTagsEndpoints.length})</h2>
-      <ul>
-        {
-          sortedTagsEndpoints.map((tag) => (
-            <li>
-              <a href={`./t/${tag!.params.tag}`}>{tag!.params.tag} </a>
-              {`(${tag!.props.posts.length} posts)`}
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-    <Footer />
-  </body>
-</html>
+<SearchPage title="tags">
+  <h2>Tags ({query.length})</h2>
+  <ul>
+    {
+      query.map((row) => (
+        <li>
+          <a href={`./t/${escape(row.tag)}`}>{row.tag}</a>
+          {` (${row.posts} posts)`}
+        </li>
+      ))
+    }
+  </ul>
+</SearchPage>
