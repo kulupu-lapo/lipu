@@ -1,7 +1,7 @@
 ---
-import BlogPost from "@/layouts/BlogPost.astro";
 import BaseHead from "@/components/BaseHead.astro";
-import "@/styles/global.css";
+
+import BlogPost from "@/layouts/BlogPost.astro";
 import { type CollectionEntry, getCollection, render } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
