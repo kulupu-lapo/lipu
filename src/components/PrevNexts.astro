@@ -1,0 +1,76 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+interface Props {
+  prevnexts: {
+    [v: string]: {
+      prev?: CollectionEntry<"blog">;
+      next?: CollectionEntry<"blog">;
+    };
+  };
+}
+
+const { prevnexts } = Astro.props;
+---
+
+<style>
+  nav {
+    width: 100%;
+    padding: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+    align-items: center;
+  }
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* padding: 15px 0px; */
+  }
+  hr {
+    /* margin: 0; */
+    color: var(--accent);
+  }
+  span:first-child {
+    text-align: left;
+  }
+  span:last-child {
+    text-align: right;
+  }
+  div {
+    padding: 10px 0px;
+  }
+</style>
+
+<div>
+  <hr />
+  {
+    Object.entries(prevnexts).map(([name, { prev, next }]) => (
+      <nav>
+        <span>
+          {prev ? (
+            <a href={"./" + prev.id}>
+              <span aria-hidden="true">«</span> Previous
+            </a>
+          ) : (
+            ""
+          )}
+        </span>
+        <span>
+          <a href={"./" + name}>{name}</a>
+        </span>
+        <span>
+          {next ? (
+            <a href={"./" + next.id}>
+              Next <span aria-hidden="true">»</span>
+            </a>
+          ) : (
+            ""
+          )}
+        </span>
+      </nav>
+    ))
+  }
+  <hr />
+</div>

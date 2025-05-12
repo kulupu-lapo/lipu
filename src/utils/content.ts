@@ -117,7 +117,7 @@ export const prevnexts = (() => {
 
   postsByAuthor.map(({ author, posts: arrayPosts }, i) => {
     arrayPosts.map((post, j) => {
-      prevnexts[post.id][`t/${escape(author)}`] = {
+      prevnexts[post.id][`a/${escape(author)}`] = {
         prev: arrayPosts[j - 1],
         next: arrayPosts[j + 1],
       };
