@@ -1,24 +1,17 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-import { authors, by, escape, getPostsByAuthor } from "@/utils/content";
-
-const query = authors
-  .map((author) => ({
-    author,
-    posts: getPostsByAuthor(author).length,
-  }))
-  .sort(by((x) => x.posts, false));
+import { escape, postsByAuthor } from "@/utils/content";
 ---
 
 <BaseLayout title="authors">
-  <h2>Authors ({query.length})</h2>
+  <h2>Authors ({postsByAuthor.length})</h2>
   <ul>
     {
-      query.map((row) => (
+      postsByAuthor.map((row) => (
         <li>
           <a href={`./a/${escape(row.author)}`}>{row.author}</a>
-          {` (${row.posts} posts)`}
+          {` (${row.posts.length} posts)`}
         </li>
       ))
     }

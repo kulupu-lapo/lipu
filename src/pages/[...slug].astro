@@ -4,32 +4,22 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Authors from "@/components/Authors.astro";
 import Metadata from "@/components/Metadata.astro";
 import PrevNext from "@/components/PrevNext.astro";
-import { posts } from "@/utils/content";
+import { posts, prevnexts } from "@/utils/content";
 import { formatDate } from "@/utils/date";
 import { type CollectionEntry, render } from "astro:content";
 
 export async function getStaticPaths() {
   return posts.map((post, i) => ({
     params: { slug: post.id },
-    props: {
-      post,
-      prevnext: {
-        prev: i + 1 === posts.length ? "" : posts[i + 1].id,
-        next: i === 0 ? "" : posts[i - 1].id,
-      },
-    },
+    props: post,
   }));
 }
 
-interface Props {
-  post: CollectionEntry<"blog">;
-  prevnext: {
-    prev?: string;
-    next?: string;
-  };
-}
+type Props = CollectionEntry<"blog">;
 
-const { post, prevnext } = Astro.props;
+const post = Astro.props;
+const prevnext = prevnexts[post.id];
+
 const { Content } = await render(post);
 ---
 
@@ -39,10 +29,15 @@ const { Content } = await render(post);
     <h1>{post.data.title}</h1>
     <center><b><Authors authors={post.data.authors} /></b></center>
     <center>{formatDate(post.data.date, post.data["date-precision"])}</center>
-    <PrevNext prev={prevnext.prev} next={prevnext.next} />
+
+    {
+      Object.entries(prevnext).map(([name, pair]) => (
+        <PrevNext prev={pair.prev?.id} name={name} next={pair.next?.id} />
+      ))
+    }
+
     <section>
       <Content />
     </section>
-    <PrevNext prev={prevnext.prev} next={prevnext.next} />
   </article>
 </BaseLayout>

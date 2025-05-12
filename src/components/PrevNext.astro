@@ -1,10 +1,11 @@
 ---
 interface Props {
   prev?: string;
+  name: string;
   next?: string;
 }
 
-const { prev, next } = Astro.props;
+const { prev, name = "Index", next } = Astro.props;
 ---
 
 <style>
@@ -51,7 +52,7 @@ const { prev, next } = Astro.props;
         )
       }</span
     >
-    <span><a href={"./"}>Index</a></span>
+    <span><a href={"./" + name}>{name}</a></span>
     <span
       >{
         next ? (

@@ -1,23 +1,17 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { by, escape, getPostsByTag, tags } from "@/utils/content";
 
-const query = tags
-  .map((tag) => ({
-    tag,
-    posts: getPostsByTag(tag).length,
-  }))
-  .sort(by((x) => x.posts, false));
+import { escape, postsByTag } from "@/utils/content";
 ---
 
 <BaseLayout title="tags">
-  <h2>Tags ({query.length})</h2>
+  <h2>Tags ({postsByTag.length})</h2>
   <ul>
     {
-      query.map((row) => (
+      postsByTag.map((row) => (
         <li>
           <a href={`./t/${escape(row.tag)}`}>{row.tag}</a>
-          {` (${row.posts} posts)`}
+          {` (${row.posts.length} posts)`}
         </li>
       ))
     }

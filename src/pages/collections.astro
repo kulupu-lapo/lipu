@@ -1,22 +1,17 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-import { collections, escape, getPostsByCollection } from "@/utils/content";
-
-const query = collections.map((collection) => ({
-  collection: collection.name,
-  posts: getPostsByCollection(collection).length,
-}));
+import { escape, postsByCollection } from "@/utils/content";
 ---
 
 <BaseLayout title="collections">
-  <h2>Collections ({query.length})</h2>
+  <h2>Collections ({postsByCollection.length})</h2>
   <ul>
     {
-      query.map((row) => (
+      postsByCollection.map((row) => (
         <li>
           <a href={`./c/${escape(row.collection)}`}>{row.collection}</a>
-          {` (${row.posts} posts)`}
+          {` (${row.posts.length} posts)`}
         </li>
       ))
     }

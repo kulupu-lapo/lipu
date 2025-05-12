@@ -1,4 +1,4 @@
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { glob } from "glob";
 import { readFileSync } from "node:fs";
 import { parse as parseYaml } from "yaml";
@@ -31,6 +31,13 @@ export const getPostsByAuthor = (author: string) =>
     (post) => post.data.authors && post.data.authors.includes(author),
   );
 
+export const postsByAuthor = authors
+  .map((author) => ({
+    author,
+    posts: getPostsByAuthor(author),
+  }))
+  .sort(by((x) => x.posts.length, false));
+
 // tags
 
 export const tags = [
@@ -39,6 +46,13 @@ export const tags = [
 
 export const getPostsByTag = (tag: string) =>
   posts.filter((post) => post.data.tags && post.data.tags.includes(tag));
+
+export const postsByTag = tags
+  .map((tag) => ({
+    tag,
+    posts: getPostsByTag(tag),
+  }))
+  .sort(by((x) => x.posts.length, false));
 
 // collections
 
@@ -67,3 +81,48 @@ export const getPostsByCollection = (collection: CollectionT) =>
           posts.find((post) => `poki/${filepath}` === post.filePath),
         )
         .filter((x) => x !== undefined);
+
+export const postsByCollection = collections.map((collection) => ({
+  collection: collection.name,
+  posts: getPostsByCollection(collection),
+}));
+
+export const prevnexts = (() => {
+  const prevnexts: {
+    [k: string]: {
+      [v: string]: {
+        prev?: CollectionEntry<"blog">;
+        next?: CollectionEntry<"blog">;
+      };
+    };
+  } = Object.fromEntries(posts.map((post) => [post.id, {}]));
+
+  postsByCollection.map(({ collection, posts: arrayPosts }, i) => {
+    arrayPosts.map((post, j) => {
+      prevnexts[post.id][`c/${escape(collection)}`] = {
+        prev: arrayPosts[j - 1],
+        next: arrayPosts[j + 1],
+      };
+    });
+  });
+
+  postsByTag.map(({ tag, posts: arrayPosts }, i) => {
+    arrayPosts.map((post, j) => {
+      prevnexts[post.id][`t/${escape(tag)}`] = {
+        prev: arrayPosts[j - 1],
+        next: arrayPosts[j + 1],
+      };
+    });
+  });
+
+  postsByAuthor.map(({ author, posts: arrayPosts }, i) => {
+    arrayPosts.map((post, j) => {
+      prevnexts[post.id][`t/${escape(author)}`] = {
+        prev: arrayPosts[j - 1],
+        next: arrayPosts[j + 1],
+      };
+    });
+  });
+
+  return prevnexts;
+})();
