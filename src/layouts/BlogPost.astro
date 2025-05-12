@@ -1,9 +1,9 @@
 ---
 import Metadata from "@/components/Metadata.astro";
 import PrevNext from "@/components/PrevNext.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { formatDate } from "@/utils/date";
 import type { CollectionEntry } from "astro:content";
-import BaseLayout from "@/layouts/BaseLayout.astro";
 type Props = CollectionEntry<"blog">["data"];
 
 const post = Astro.props;
