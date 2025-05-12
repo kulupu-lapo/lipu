@@ -6,13 +6,27 @@
     --grey: #666;
     --accent: #0068d3;
 }
+.dark {
+    --bg: #0f0f0f;
+    --txt: #dbdbdb;
+    --grey: #999;
+    --accent: #49a3ff;
+}
 
 body {
+    background-color: var(--bg);
     margin: 10px;
     font-family: "Lato", Helvetica, Arial, sans-serif;
     color: var(--txt);
     line-height: 1.7;
     font-size: 18px;
+}
+
+* {
+    transition:
+        color 0.2s,
+        background-color 0.2s,
+        border 0.2s;
 }
 
 main {

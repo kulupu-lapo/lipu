@@ -1,5 +1,10 @@
+---
+import DarkModeToggle from "@/components/DarkModeToggle.astro";
+---
+
 <style>
   header {
+    position: relative;
     max-width: 1000px;
     text-align: center;
     border-bottom: 5px dotted var(--accent);
@@ -15,10 +20,9 @@
 
 <header>
   <a href="./">
-    <!-- <img height="80" width="80" src="./sin-kulupu.svg" /> -->
-    <!-- <span>sin kulupu</span> -->
-    <img alt="sin kulupu" src="./open-lapo.svg" />
+    <img alt="open Lapo" src="./open-lapo.svg" />
   </a>
+  <DarkModeToggle />
   <a href="./">All</a>{" · "}<a href="./collections">Collections</a>{" · "}<a
     href="./tags">Tags</a
   >{" · "}<a href="./authors">Authors</a>{" · "}<a href="./random">Random</a>

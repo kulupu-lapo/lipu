@@ -1,8 +1,8 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import { SITE_TITLE, SITE_URL } from "@consts";
 import "@/styles/global.css";
+import { SITE_TITLE, SITE_URL } from "@consts";
 
 interface Props {
   title: string;
@@ -55,3 +55,5 @@ const { title, description, image = "./open-lapo-big.png" } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={Astro.url + image} />
+
+<script is:inline src="./light-mode.js"></script>
