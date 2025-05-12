@@ -1,79 +1,23 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
-import Footer from "@/components/Footer.astro";
-import FoundPost from "@/components/FoundPost.astro";
-import Header from "@/components/Header.astro";
-import { getCollection } from "astro:content";
-import { getCollection } from "astro:content";
-import { glob } from "glob";
-import { readFileSync } from "node:fs";
-import { parse as parseYaml } from "yaml";
-import { z } from "zod";
+import SearchPage from "@/layouts/SearchPage.astro";
+import { collections, escape, getPostsByCollection } from "@/utils/content";
 
-const Collection = z
-  .object({
-    name: z.string(),
-    sources: z.array(z.string()).nonempty().optional(),
-    // not optional; can be empty for upcoming collections
-    items: z.array(z.string()).nullable(),
-  })
-  .strict();
-
-type CollectionT = z.infer<typeof Collection>;
-
-const collections: CollectionT[] = (
-  await glob("poki/collections/**/*.yaml")
-).map((filepath: string) =>
-  Collection.parse(parseYaml(readFileSync(filepath, "utf8"))),
-);
-
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-
-// console.log(posts.map((post) => post.filePath));
-
-const collectionsEndpoints = collections.map((collection) => {
-  const filteredPosts = posts.filter(
-    (post) =>
-      post.filePath &&
-      collection.items &&
-      collection.items.map((item) => `poki/${item}`).includes(post.filePath),
-  );
-  return {
-    params: { collection: collection.name },
-    props: { posts: filteredPosts },
-  };
-});
+const query = collections.map((collection) => ({
+  collection: collection.name,
+  posts: getPostsByCollection(collection).length,
+}));
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title="collections" description={""} />
-    <style>
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <h2>Collections ({collectionsEndpoints.length})</h2>
-      <ul>
-        {
-          collectionsEndpoints.map((collection) => (
-            <li>
-              <a href={`./c/${collection!.params.collection}`}>
-                {collection!.params.collection}{" "}
-              </a>
-              {`(${collection!.props.posts.length} posts)`}
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-    <Footer />
-  </body>
-</html>
+<SearchPage title="collections">
+  <h2>Collections ({query.length})</h2>
+  <ul>
+    {
+      query.map((row) => (
+        <li>
+          <a href={`./c/${escape(row.collection)}`}>{row.collection}</a>
+          {` (${row.posts} posts)`}
+        </li>
+      ))
+    }
+  </ul>
+</SearchPage>

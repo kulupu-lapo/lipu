@@ -1,74 +1,26 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
-import Footer from "@/components/Footer.astro";
 import FoundPost from "@/components/FoundPost.astro";
-import Header from "@/components/Header.astro";
-import { getCollection } from "astro:content";
-import { glob } from "glob";
-import { readFileSync } from "node:fs";
-import { parse as parseYaml } from "yaml";
-import { z } from "zod";
+import SearchPage from "@/layouts/SearchPage.astro";
+import {
+  collections,
+  escape,
+  getPostsByCollection,
+  unescape,
+} from "@/utils/content";
 
 export async function getStaticPaths() {
-  const Collection = z
-    .object({
-      name: z.string(),
-      sources: z.array(z.string()).nonempty().optional(),
-      // not optional; can be empty for upcoming collections
-      items: z.array(z.string()).nullable(),
-    })
-    .strict();
-
-  type CollectionT = z.infer<typeof Collection>;
-
-  const collections: CollectionT[] = (
-    await glob("poki/collections/**/*.yaml")
-  ).map((filepath: string) =>
-    Collection.parse(parseYaml(readFileSync(filepath, "utf8"))),
-  );
-
-  const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
-
-  // console.log(posts.map((post) => post.filePath));
-
-  return collections.map((collection) => {
-    const filteredPosts = posts.filter(
-      (post) =>
-        post.filePath &&
-        collection.items &&
-        collection.items.map((item) => `poki/${item}`).includes(post.filePath),
-    );
-    return {
-      params: { collection: collection.name },
-      props: { posts: filteredPosts },
-    };
-  });
+  return collections.map((collection) => ({
+    params: { collection: escape(collection.name) },
+    props: { posts: getPostsByCollection(collection) },
+  }));
 }
-
-const { collection } = Astro.params!;
+const { collection } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title={collection} description={""} />
-    <style>
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <h2>Posts that comprise {collection} ({posts.length})</h2>
-      <ul>
-        {posts.map((post) => <FoundPost {...post} />)}
-      </ul>
-    </main>
-    <Footer />
-  </body>
-</html>
+<SearchPage title={unescape(collection)}>
+  <h2>Posts that comprise {unescape(collection)} ({posts.length})</h2>
+  <ol>
+    {posts.map((post) => <FoundPost {...post} />)}
+  </ol>
+</SearchPage>
