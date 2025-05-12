@@ -1,15 +1,10 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
+import "@/styles/global.css";
 
-import BlogPost from "@/layouts/BlogPost.astro";
+import { posts } from "@/utils/content";
 import { type CollectionEntry, getCollection, render } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-
 const links = posts.map((post) => `${import.meta.env.BASE_URL}${post.id}`);
-// const links = posts.map((post) => `/${post.id}`);
 ---
 
 <!doctype html>
