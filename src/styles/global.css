@@ -77,3 +77,36 @@ blockquote {
     padding-inline: 15px 15px;
     border-inline-start: 5px solid var(--grey);
 }
+
+/*
+This would normally go in a React component,
+but I can't stand React handling of css, so here we go
+*/
+
+nav {
+    padding: 10px 0px;
+}
+nav hr {
+    /* margin: 0; */
+    color: var(--accent);
+}
+.nav {
+    width: 100%;
+    padding: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+    align-items: center;
+}
+.nav a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* padding: 15px 0px; */
+}
+.nav span:first-child {
+    text-align: left;
+}
+.nav span:last-child {
+    text-align: right;
+}

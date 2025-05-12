@@ -9,5 +9,7 @@
       "@/*": ["src/*"],
       "@consts": ["src/consts.ts"]
     }
-  }
+  },
+  "jsx": "react-jsx",
+  "jsxImportSource": "react"
 }

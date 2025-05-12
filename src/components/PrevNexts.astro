@@ -14,7 +14,7 @@ const { prevnexts } = Astro.props;
 ---
 
 <style>
-  nav {
+  div {
     width: 100%;
     padding: 0px;
     display: grid;
@@ -38,16 +38,16 @@ const { prevnexts } = Astro.props;
   span:last-child {
     text-align: right;
   }
-  div {
+  nav {
     padding: 10px 0px;
   }
 </style>
 
-<div>
+<nav>
   <hr />
   {
     Object.entries(prevnexts).map(([name, { prev, next }]) => (
-      <nav>
+      <div>
         <span>
           {prev ? (
             <a href={"./" + prev.id}>
@@ -69,8 +69,8 @@ const { prevnexts } = Astro.props;
             ""
           )}
         </span>
-      </nav>
+      </div>
     ))
   }
   <hr />
-</div>
+</nav>
