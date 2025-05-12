@@ -4,14 +4,14 @@
     --bg: #ffffff;
     --bg-1: #eee;
     --txt: #080808;
-    --grey: #666;
+    --grey: #999;
     --accent: #0068d3;
 }
 .dark {
     --bg: #0f0f0f;
     --bg-1: #222;
     --txt: #dbdbdb;
-    --grey: #999;
+    --grey: #666;
     --accent: #49a3ff;
 }
 
@@ -58,7 +58,7 @@ h1 {
 }
 
 hr {
-    color: var(--accent);
+    color: var(--grey);
 }
 
 img {
