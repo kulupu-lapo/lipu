@@ -97,6 +97,13 @@ export const prevnexts = (() => {
     };
   } = Object.fromEntries(posts.map((post) => [post.id, {}]));
 
+  posts.map((post, j) => {
+    prevnexts[post.id][`/`] = {
+      prev: posts[j - 1],
+      next: posts[j + 1],
+    };
+  });
+
   postsByCollection.map(({ collection, posts: arrayPosts }, i) => {
     arrayPosts.map((post, j) => {
       prevnexts[post.id][`c/${escape(collection)}`] = {
