@@ -8,13 +8,13 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<style is:global>
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-</style>
-
 <BaseLayout title={title} description={description}>
+  <style is:global>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
+
   <slot />
 </BaseLayout>
