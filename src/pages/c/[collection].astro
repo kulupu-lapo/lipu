@@ -1,6 +1,6 @@
 ---
 import FoundPost from "@/components/FoundPost.astro";
-import SearchPage from "@/layouts/SearchPage.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
   collections,
   escape,
@@ -18,9 +18,9 @@ const { collection } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<SearchPage title={unescape(collection)}>
+<BaseLayout title={unescape(collection)}>
   <h2>Posts that comprise {unescape(collection)} ({posts.length})</h2>
   <ol>
     {posts.map((post) => <FoundPost {...post} />)}
   </ol>
-</SearchPage>
+</BaseLayout>

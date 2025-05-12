@@ -1,6 +1,6 @@
 ---
 import FoundPost from "@/components/FoundPost.astro";
-import SearchPage from "@/layouts/SearchPage.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { posts } from "@/utils/content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 import { getCollection, render } from "astro:content";
@@ -9,7 +9,7 @@ const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
 const { Content: Meta } = await render(meta);
 ---
 
-<SearchPage title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section>
     <Meta />
   </section>
@@ -19,4 +19,4 @@ const { Content: Meta } = await render(meta);
       {posts.map((post) => <FoundPost {...post} />)}
     </ul>
   </section>
-</SearchPage>
+</BaseLayout>

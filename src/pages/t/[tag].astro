@@ -1,6 +1,6 @@
 ---
 import FoundPost from "@/components/FoundPost.astro";
-import SearchPage from "@/layouts/SearchPage.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { escape, getPostsByTag, tags, unescape } from "@/utils/content";
 
 export async function getStaticPaths() {
@@ -14,9 +14,9 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<SearchPage title={unescape(tag)}>
+<BaseLayout title={unescape(tag)}>
   <h2>Posts tagged with {unescape(tag)} ({posts.length})</h2>
   <ul>
     {posts.map((post) => <FoundPost {...post} />)}
   </ul>
-</SearchPage>
+</BaseLayout>

@@ -1,5 +1,5 @@
 ---
-import SearchPage from "@/layouts/SearchPage.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { collections, escape, getPostsByCollection } from "@/utils/content";
 
 const query = collections.map((collection) => ({
@@ -8,7 +8,7 @@ const query = collections.map((collection) => ({
 }));
 ---
 
-<SearchPage title="collections">
+<BaseLayout title="collections">
   <h2>Collections ({query.length})</h2>
   <ul>
     {
@@ -20,4 +20,4 @@ const query = collections.map((collection) => ({
       ))
     }
   </ul>
-</SearchPage>
+</BaseLayout>

@@ -1,6 +1,6 @@
 ---
-import SearchPage from "@/layouts/SearchPage.astro";
-import { getPostsByTag, by, tags, escape } from "@/utils/content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { by, escape, getPostsByTag, tags } from "@/utils/content";
 
 const query = tags
   .map((tag) => ({
@@ -10,7 +10,7 @@ const query = tags
   .sort(by((x) => x.posts, false));
 ---
 
-<SearchPage title="tags">
+<BaseLayout title="tags">
   <h2>Tags ({query.length})</h2>
   <ul>
     {
@@ -22,4 +22,4 @@ const query = tags
       ))
     }
   </ul>
-</SearchPage>
+</BaseLayout>
