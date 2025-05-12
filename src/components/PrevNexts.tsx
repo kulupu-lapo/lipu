@@ -28,7 +28,16 @@ export const PrevNexts: React.FC<{
           )}
         </span>
         <span>
-          <a href={"./" + name}>{name}</a>
+          <select
+            id="prevnext-select"
+            value={selected}
+            onChange={(e) => setSelected(e.target.value)}
+          >
+            {Object.entries(prevnexts).map(([name, pn]) => (
+              <option value={name}>{name}</option>
+            ))}
+          </select>
+          {/* <a href={"./" + name}>{name}</a> */}
         </span>
         <span>
           {next && (
