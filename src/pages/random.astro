@@ -15,6 +15,7 @@ const links = posts.map((post) => `${import.meta.env.BASE_URL}${post.id}`);
 <!doctype html>
 <html lang="en">
   <head>
+    <base href={import.meta.env.BASE_URL} />
     <script is:inline src="./light-mode.js"></script>
   </head>
   <body>
