@@ -43,34 +43,79 @@ const { prevnexts } = Astro.props;
   }
 </style>
 
+<script>
+  const prevnexts = JSON.parse(
+    document.getElementById("prevnext-json")!.innerText,
+  );
+
+  const getQuery = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryParam = urlParams.get("q");
+    return queryParam ?? "/";
+  };
+
+  const setQuery = (value: string) => {
+    const urlParams = new URLSearchParams();
+    urlParams.append("q", value);
+    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    window.history.replaceState({}, "", newUrl);
+  };
+
+  const navSelect = document.getElementById("nav-select")! as HTMLSelectElement;
+  navSelect.addEventListener("change", async () => {
+    setQuery(navSelect.value);
+    updatePage();
+  });
+
+  const abbreviate = (string: string | undefined) =>
+    string
+      ? string.length < 20
+        ? string
+        : `${string.slice(0, 20)}...`
+      : undefined;
+
+  const updatePage = () => {
+    const prevnext = prevnexts[getQuery()];
+    navSelect.value = getQuery();
+
+    const prev = document.getElementById("nav-prev-link")!;
+    if (prevnext.prev) {
+      prev.setAttribute("href", `./${prevnext.prev?.id}?q=${getQuery()}`);
+      prev.innerText = `« ${abbreviate(prevnext.prev?.data.title)}`;
+    } else {
+      prev.innerText = "";
+    }
+
+    const next = document.getElementById("nav-next-link")!;
+    if (prevnext.next) {
+      next.setAttribute("href", `./${prevnext.next?.id}?q=${getQuery()}`);
+      next.innerText = `${abbreviate(prevnext.next?.data.title)} »`;
+    } else {
+      next.innerText = "";
+    }
+  };
+
+  // console.log(prevnexts);
+  // console.log(getQuery());
+
+  updatePage();
+</script>
+
 <nav>
+  <span id="prevnext-json" style="display: none;"
+    >{JSON.stringify(prevnexts)}</span
+  >
   <hr />
-  {
-    Object.entries(prevnexts).map(([name, { prev, next }]) => (
-      <div>
-        <span>
-          {prev ? (
-            <a href={"./" + prev.id}>
-              <span aria-hidden="true">«</span> Previous
-            </a>
-          ) : (
-            ""
-          )}
-        </span>
-        <span>
-          <a href={"./" + name}>{name}</a>
-        </span>
-        <span>
-          {next ? (
-            <a href={"./" + next.id}>
-              Next <span aria-hidden="true">»</span>
-            </a>
-          ) : (
-            ""
-          )}
-        </span>
-      </div>
-    ))
-  }
+  <div>
+    <a id="nav-prev-link"></a>
+    <select id="nav-select" value="/">
+      {
+        Object.entries(prevnexts).map(([name, pn]) => (
+          <option value={name}>{name}</option>
+        ))
+      }
+    </select>
+    <a id="nav-next-link"></a>
+  </div>
   <hr />
 </nav>
