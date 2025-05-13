@@ -20,26 +20,39 @@ const { prevnexts } = Astro.props;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     text-align: center;
-    align-items: center;
+  }
+  div * {
+    min-height: 60px;
   }
   a {
-    display: block;
     width: 100%;
     height: 100%;
+    align-content: center;
     /* padding: 15px 0px; */
   }
   hr {
-    /* margin: 0; */
+    margin: 0;
     color: var(--accent);
   }
-  span:first-child {
+  a:first-child {
     text-align: left;
   }
-  span:last-child {
+  a:last-child {
     text-align: right;
   }
   nav {
-    padding: 10px 0px;
+  }
+  select {
+    background-color: inherit;
+    border: 0px solid var(--grey);
+    padding: 10px 0;
+    text-align: center;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+  }
+  select:hover {
+    background-color: var(--bg-1);
   }
 </style>
 
