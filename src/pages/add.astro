@@ -45,6 +45,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       text: document.getElementById("md-input").value,
     };
     console.log(data);
+
+    let submitButton = document.getElementById("submit");
+    submitButton.value = "Submitting, please wait...";
+    submitButton.onclick = "";
     let response = await fetch("https://submit-4gx.pages.dev/api/submit", {
       method: "POST",
       body: JSON.stringify(data),
@@ -56,11 +60,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
     if (responseBody.success) {
       document.getElementById("response").innerHTML =
-        `Your article has been <a href="${responseBody.data.html_url}">received</a> and will be reviewed by volunteers!`;
+        `Your article has been <a href="${responseBody.data.html_url}">received</a> and will be reviewed by volunteers!<br />Please make sure not to submit the same thing several times, thanks in advance!`;
     } else {
       document.getElementById("response").innerHTML =
         `Failed to upload article. Error message:<br />${JSON.stringify(responseBody.error)}<br />Show this to kala Asi at ma pona!`;
     }
+    submitButton.value = "Submit article";
+    submitButton.onclick = "submit()";
   };
 
   // document.getElementById("form").addEventListener("submit", (e) => {
