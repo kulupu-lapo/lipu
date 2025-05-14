@@ -10,6 +10,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     // console.log(input.value);
     render.innerHTML = marked.parse(input.value);
   };
+
+  const updateFileName = () => {
+    let title = document.getElementById("title");
+    let filename = document.getElementById("filename");
+    filename.value = title.value
+      .toLowerCase()
+      .replaceAll(/[ _]/g, "-")
+      .replaceAll(/[^\w\s\-]/g, "");
+  };
   // const toggleAdvanced = async () => {
   //   let value = document.getElementById("toggle-advanced").checked;
   //   // console.log(value);
@@ -81,9 +90,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     font-family: inherit;
     color: inherit;
     display: block;
-    background-color: var(--bg-1);
+    background-color: var(--bg);
     border: 1px solid var(--grey);
   }
+  input:hover,
+  select:hover {
+    background-color: var(--bg-1);
+  }
+
   input:not([type="checkbox"]),
   select {
     box-sizing: border-box;
@@ -122,7 +136,12 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       </div>
       <div>
         <h3>Title</h3>
-        <input id="title" required placeholder="carry (feat.) jan kekan san" />
+        <input
+          id="title"
+          required
+          oninput="updateFileName()"
+          placeholder="carry (feat.) jan kekan san"
+        />
       </div>
       <div>
         <h3>Description</h3>
