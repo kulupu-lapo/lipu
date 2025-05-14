@@ -76,47 +76,6 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   // document.getElementById('output').innerHTML = JSON.stringify(data);
   // });
 </script>
-<style>
-  h3 {
-    margin: 0;
-  }
-  div {
-    display: block;
-  }
-  input,
-  select {
-    padding: 10px;
-    font-size: inherit;
-    font-family: inherit;
-    color: inherit;
-    display: block;
-    background-color: var(--bg);
-    border: 1px solid var(--grey);
-  }
-  input:hover,
-  select:hover {
-    background-color: var(--bg-1);
-  }
-
-  input:not([type="checkbox"]),
-  select {
-    box-sizing: border-box;
-    width: 100%;
-  }
-  #date,
-  #date-precision {
-    width: 50%;
-  }
-  textarea {
-    box-sizing: border-box;
-    padding: 10px;
-    width: 100%;
-    height: 200px;
-  }
-  /* .advanced {
-    display: none;
-  } */
-</style>
 
 <BaseLayout title={"Add an article"}>
   <section>
@@ -218,3 +177,45 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     <div id="response"></div>
   </section>
 </BaseLayout>
+
+<style>
+  h3 {
+    margin: 0;
+  }
+  div {
+    display: block;
+  }
+  input,
+  select {
+    padding: 10px;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    display: block;
+    background-color: var(--bg);
+    border: 1px solid var(--grey);
+  }
+  input:hover,
+  select:hover {
+    background-color: var(--bg-1);
+  }
+
+  input:not([type="checkbox"]),
+  select {
+    box-sizing: border-box;
+    width: 100%;
+  }
+  #date,
+  #date-precision {
+    width: 50%;
+  }
+  textarea {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    height: 200px;
+  }
+  /* .advanced {
+    display: none;
+  } */
+</style>
