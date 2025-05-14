@@ -45,7 +45,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       text: document.getElementById("md-input").value,
     };
     console.log(data);
-    let response = await fetch("http://submit-4gx.pages.dev/api/submit", {
+    let response = await fetch("https://submit-4gx.pages.dev/api/submit", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
