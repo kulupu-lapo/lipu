@@ -1,6 +1,6 @@
-# open Lapo
+# lipu.pona.la
 
-A test frontend for the Lapo library of Toki Pona texts.
+The frontend for **poki Lapo**, a library of Toki Pona texts.
 
 ## Local development
 
