@@ -1,0 +1,85 @@
+---
+import type { HTMLTag } from "astro/types";
+interface Props {
+  tag?: HTMLTag;
+  title: string;
+  id: string;
+  placeholder: string;
+  type?: string;
+  required?: boolean;
+  oninput?: string;
+  top?: boolean;
+  bottom?: boolean;
+}
+
+const {
+  tag: Element = "input",
+  title,
+  id,
+  placeholder = undefined,
+  type = undefined,
+  oninput = undefined,
+  required = false,
+  top = false,
+  bottom = false,
+} = Astro.props;
+---
+
+<style>
+  label {
+    background-color: var(--bg);
+    /* border: 1px solid var(--grey); */
+    outline: 1px solid #bbb;
+    padding: 7px 12px;
+    width: 100%;
+  }
+  label:hover {
+    background-color: var(--bg-1);
+  }
+  label:focus-within {
+    outline: 2px solid var(--accent);
+    z-index: 1;
+  }
+  .top {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+  .bottom {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  input,
+  select {
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    display: block;
+    border: 0;
+    background-color: initial;
+  }
+  input:focus,
+  select:focus {
+    outline: none;
+  }
+
+  input:not([type="checkbox"]),
+  select {
+    box-sizing: border-box;
+    width: 100%;
+  }
+</style>
+
+<label for={id} class={`${top ? "top" : ""} ${bottom ? "bottom" : ""}`}>
+  <span>{title}</span>
+  <Element
+    id={id}
+    name={id}
+    required={required}
+    placeholder={placeholder}
+    oninput={oninput}
+    type={type}
+  >
+    <slot />
+  </Element>
+</label>
