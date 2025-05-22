@@ -38,6 +38,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       authors: document.getElementById("authors").value,
       date: document.getElementById("date").value,
       "date-precision": document.getElementById("date-precision").value,
+      "original-title": document.getElementById("original-title").value,
+      "original-authors": document.getElementById("original-authors").value,
       tags: document.getElementById("tags").value,
       license: document.getElementById("license").value,
       sources: document.getElementById("sources").value,
@@ -66,7 +68,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         `Failed to upload article. Error message:<br />${JSON.stringify(responseBody.error)}<br />Show this to kala Asi at ma pona!`;
     }
     submitButton.value = "Submit article";
-    submitButton.onclick = "submit()";
+    submitButton.onclick = submit;
   };
 
   // document.getElementById("form").addEventListener("submit", (e) => {
@@ -99,26 +101,45 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         <h3>File name</h3>
         <input id="filename" required placeholder="carry-feat-jan-kekan-san" />
       </div>
-      <div>
-        <h3>Title</h3>
-        <input
-          id="title"
-          required
-          oninput="updateFileName()"
-          placeholder="carry (feat.) jan kekan san"
-        />
+      <div class="columns">
+        <div>
+          <h3>Title</h3>
+          <input
+            id="title"
+            required
+            oninput="updateFileName()"
+            placeholder="carry (feat.) jan kekan san"
+          />
+        </div><div>
+          <h3>Original title</h3>
+          <input
+            id="original-title"
+            required
+            placeholder="(use this if the work is a translation)"
+          />
+        </div>
+      </div>
+      <div class="columns">
+        <div>
+          <h3>Authors</h3>
+          <input id="authors" required placeholder="jan Usawi, jan Kekan San" />
+        </div>
+        <div>
+          <h3>Original authors</h3>
+          <input
+            id="original-authors"
+            required
+            placeholder="(use this if the work is a translation)"
+          />
+        </div>
       </div>
       <div>
         <h3>Description</h3>
         <input id="description" placeholder="A punny parody of Wayward Son" />
       </div>
       <div>
-        <h3>Authors</h3>
-        <input id="authors" required placeholder="jan Usawi, jan Kekan San" />
-      </div>
-      <div>
         <h3>Date published</h3>
-        <div style="display: flex;">
+        <div class="columns">
           <input id="date" type="date" required />
           <select id="date-precision">
             <option selected value="day">Precise to the day</option>
@@ -128,13 +149,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
           </select>
         </div>
       </div>
-      <div>
-        <h3>Tags</h3>
-        <input id="tags" placeholder="music, pop, parody" />
-      </div>
-      <div>
-        <h3>License</h3>
-        <input id="license" placeholder="CC BY-SA-NC 4.0" />
+      <div class="columns">
+        <div>
+          <h3>Tags</h3>
+          <input id="tags" placeholder="music, pop, parody" />
+        </div>
+        <div>
+          <h3>License</h3>
+          <input id="license" placeholder="CC BY-SA 3.0" />
+        </div>
       </div>
       <div>
         <h3>Sources</h3>
@@ -165,14 +188,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         <h3>Accessibility notes</h3>
         <input id="accessibility-notes" />
       </div> -->
+      <div>
+        <h3>Text</h3>
+        <textarea
+          id="md-input"
+          placeholder="## o sitelen kepeken nasin *Markdown*!"
+          oninput="rerender()"></textarea>
+      </div>
     </form>
-    <div>
-      <h3>Text</h3>
-      <textarea
-        id="md-input"
-        placeholder="## o sitelen kepeken nasin *Markdown*!"
-        oninput="rerender()"></textarea>
-    </div>
     <div id="md-render"></div>
     <input
       type="submit"
@@ -185,21 +208,29 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 </BaseLayout>
 
 <style>
-  h3 {
-    margin: 0;
+  form h3 {
+    margin: 5px 0;
+    /* margin-top: 10px; */
   }
   div {
     display: block;
   }
+  .columns {
+    display: flex;
+  }
+  .columns > * {
+    width: 100%;
+  }
   input,
   select {
-    padding: 10px;
+    padding: 7px;
     font-size: inherit;
     font-family: inherit;
     color: inherit;
     display: block;
     background-color: var(--bg);
     border: 1px solid var(--grey);
+    border-radius: 4px;
   }
   input:hover,
   select:hover {
@@ -211,10 +242,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     box-sizing: border-box;
     width: 100%;
   }
-  #date,
+  /* #date,
   #date-precision {
     width: 50%;
-  }
+  } */
   textarea {
     box-sizing: border-box;
     padding: 10px;
