@@ -6,7 +6,8 @@ import { z } from "zod";
 
 // utilities
 
-export const escape = (string: string) => string.replaceAll(/[/ ]/g, "_");
+export const escape = (string: string) =>
+  string.replaceAll(/[/ ]/g, "_").replaceAll(/[\?\.]/g, "");
 export const unescape = (string: string) => string.replaceAll("_", " ");
 
 export const by =

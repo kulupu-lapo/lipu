@@ -17,7 +17,7 @@ const { Content: Meta } = await render(meta);
   <section>
     <h2>{posts.length} Works:</h2>
     <ul>
-      {posts.map((post) => <FoundPost {...post} />)}
+      {posts.map((post) => <FoundPost {post} />)}
     </ul>
   </section>
 </BaseLayout>

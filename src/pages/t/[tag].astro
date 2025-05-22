@@ -18,6 +18,6 @@ const { posts } = Astro.props;
 <BaseLayout title={unescape(tag)}>
   <h2>Posts tagged with {unescape(tag)} ({posts.length})</h2>
   <ul>
-    {posts.map((post) => <FoundPost {...post} />)}
+    {posts.map((post) => <FoundPost {post} query={`t/${tag}`} />)}
   </ul>
 </BaseLayout>
