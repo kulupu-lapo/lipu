@@ -63,7 +63,7 @@ import Input from "@/components/Input.astro";
 
     if (responseBody.success) {
       document.getElementById("response").innerHTML =
-        `Your article has been <a href="${responseBody.data.html_url}">received</a> and will be reviewed by volunteers!<br />Please make sure not to submit the same thing several times, thanks in advance!`;
+        `Your article has been received and will be reviewed by volunteers!<br /><a href="${responseBody.data.html_url}">${responseBody.data.title}</a><br />Please make sure not to submit the same thing several times, thanks in advance!`;
       document.getElementById("response-error").innerHTML = "";
     } else {
       document.getElementById("response").innerHTML =
