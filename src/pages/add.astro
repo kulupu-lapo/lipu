@@ -219,7 +219,7 @@ import Input from "@/components/Input.astro";
     font-family: inherit;
     color: inherit;
     display: block;
-    border: 1px solid var(--grey);
+    border: 1px solid var(--grey-1);
     padding: 10px 40px;
     font-weight: bold;
     border-radius: 10px;
@@ -234,5 +234,15 @@ import Input from "@/components/Input.astro";
     padding: 10px;
     width: 100%;
     height: 200px;
+    background-color: initial;
+    color: inherit;
+    border: 0;
+    outline: 1px solid var(--grey-1);
+    border-radius: 15px;
+    font-size: 16px;
+  }
+  textarea:focus {
+    border: 0;
+    outline: 2px solid var(--accent);
   }
 </style>
