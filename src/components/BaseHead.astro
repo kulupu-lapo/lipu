@@ -28,6 +28,7 @@ const { title, description, image = "./logo.png" } = Astro.props;
   href={new URL("./rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
+<meta name="robots" content="index, nofollow" />
 
 <!-- Font preloads -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
