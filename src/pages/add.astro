@@ -64,9 +64,12 @@ import Input from "@/components/Input.astro";
     if (responseBody.success) {
       document.getElementById("response").innerHTML =
         `Your article has been <a href="${responseBody.data.html_url}">received</a> and will be reviewed by volunteers!<br />Please make sure not to submit the same thing several times, thanks in advance!`;
+      document.getElementById("response-error").innerHTML = "";
     } else {
       document.getElementById("response").innerHTML =
-        `Failed to upload article. Error message:<br />${JSON.stringify(responseBody.error)}<br />Show this to kala Asi at ma pona!`;
+        `Failed to upload article. Show this to kala Asi at ma pona! Error message:`;
+      document.getElementById("response-error").innerHTML =
+        `${JSON.stringify(responseBody.error, null, " ")}`;
     }
     submitButton.value = "Submit article";
     submitButton.onclick = submit;
@@ -96,7 +99,7 @@ import Input from "@/components/Input.astro";
           title="Submitted by"
           id="submitted-by"
           required
-          placeholder="your Toki Pona name goes here!"
+          placeholder="your Toki Pona name"
         />
       </div>
       <div class="row">
@@ -189,7 +192,7 @@ import Input from "@/components/Input.astro";
       </div> -->
   </section>
   <div>
-    <h3>Text</h3>
+    <h1>Text</h1>
     <textarea
       id="md-input"
       placeholder="# Start typing! o kama sitelen e ijo!\n\nYou can use **Markdown**! o nasin **Markdown**!"
@@ -204,6 +207,7 @@ import Input from "@/components/Input.astro";
     onclick="submit()"
   />
   <div id="response"></div>
+  <pre id="response-error"></pre>
 </BaseLayout>
 
 <style>
