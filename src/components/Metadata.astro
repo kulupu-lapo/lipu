@@ -29,6 +29,7 @@ const { post } = Astro.props;
         .join("/")}.md?plain=1`}>Github</a
     >
   </p>
+  {post.description && <p>Description: {post.description}</p>}
   {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
   {
     post.tags && (
