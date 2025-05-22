@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { escape } from "@/utils/content";
 interface Props {
   post: CollectionEntry<"blog">["data"];
 }
@@ -25,7 +26,7 @@ const { post } = Astro.props;
       <p>
         Tags:{" "}
         {post.tags.map((tag) => (
-          <a href={`./t/${tag}`}>{tag} </a>
+          <a href={`./t/${escape(tag)}`}>{tag} </a>
         ))}
       </p>
     )
