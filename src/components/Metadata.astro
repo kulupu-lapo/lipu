@@ -19,7 +19,16 @@ const { post } = Astro.props;
   }
 </style>
 <details open>
-  <summary>More</summary>
+  <summary>Details</summary>
+  <p>
+    Edit on
+    <a
+      href={`https://github.com/kulupu-lapo/poki/blob/main/plaintext/${Astro.url.pathname
+        .split("/")
+        .filter((x) => x)
+        .join("/")}.md?plain=1`}>Github</a
+    >
+  </p>
   {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
   {
     post.tags && (
