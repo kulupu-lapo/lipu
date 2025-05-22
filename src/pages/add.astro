@@ -89,58 +89,72 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   <section>
     <h1>Add your article</h1>
     <form id="form">
-      <div>
-        <h3>Submitted by</h3>
-        <input
-          id="submitted-by"
-          required
-          placeholder="your Toki Pona name goes here!"
-        />
-      </div>
-      <div>
-        <h3>File name</h3>
-        <input id="filename" required placeholder="carry-feat-jan-kekan-san" />
+      <div class="columns">
+        <label class="row top">
+          <span>Submitted by</span>
+          <input
+            id="submitted-by"
+            required
+            placeholder="your Toki Pona name goes here!"
+          />
+        </label>
       </div>
       <div class="columns">
-        <div>
-          <h3>Title</h3>
+        <label class="row">
+          <span>File name</span>
+          <input
+            id="filename"
+            required
+            placeholder="carry-feat-jan-kekan-san"
+          />
+        </label>
+      </div>
+      <div class="columns">
+        <label class="row">
+          <span>Title</span>
           <input
             id="title"
             required
             oninput="updateFileName()"
             placeholder="carry (feat.) jan kekan san"
           />
-        </div><div>
-          <h3>Original title</h3>
+        </label>
+        <label class="row">
+          <span>Original title</span>
           <input
             id="original-title"
             required
             placeholder="(use this if the work is a translation)"
           />
-        </div>
+        </label>
       </div>
       <div class="columns">
-        <div>
-          <h3>Authors</h3>
+        <label class="row">
+          <span>Authors</span>
           <input id="authors" required placeholder="jan Usawi, jan Kekan San" />
-        </div>
-        <div>
-          <h3>Original authors</h3>
+        </label>
+        <label class="row">
+          <span>Original authors</span>
           <input
             id="original-authors"
             required
             placeholder="(use this if the work is a translation)"
           />
-        </div>
+        </label>
       </div>
-      <div>
-        <h3>Description</h3>
-        <input id="description" placeholder="A punny parody of Wayward Son" />
+      <div class="columns">
+        <label class="row">
+          <span>Description</span>
+          <input id="description" placeholder="A punny parody of Wayward Son" />
+        </label>
       </div>
-      <div>
-        <h3>Date published</h3>
-        <div class="columns">
+      <div class="columns">
+        <label class="row">
+          <span>Date published</span>
           <input id="date" type="date" required />
+        </label>
+        <div class="row">
+          <span>Date precision</span>
           <select id="date-precision">
             <option selected value="day">Precise to the day</option>
             <option value="month">Precise to the month</option>
@@ -150,54 +164,59 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         </div>
       </div>
       <div class="columns">
-        <div>
-          <h3>Tags</h3>
+        <label class="row">
+          <span>Tags</span>
           <input id="tags" placeholder="music, pop, parody" />
-        </div>
-        <div>
-          <h3>License</h3>
+        </label>
+        <label class="row">
+          <span>License</span>
           <input id="license" placeholder="CC BY-SA 3.0" />
-        </div>
+        </label>
       </div>
-      <div>
-        <h3>Sources</h3>
-        <input
-          id="sources"
-          placeholder="https://janusawi.bandcamp.com/album/toki-gaming"
-        />
+      <div class="columns">
+        <label class="row">
+          <span>Sources</span>
+          <input
+            id="sources"
+            placeholder="https://janusawi.bandcamp.com/album/toki-gaming"
+          />
+        </label>
       </div>
-      <div>
-        <h3>Notes</h3>
-        <input id="notes" />
+      <div class="columns">
+        <label class="row bottom">
+          <span>Notes</span>
+          <input id="notes" />
+        </label>
       </div>
       <!-- <input id="toggle-advanced" type="checkbox" oninput="toggleAdvanced()" />
       <label for="toggle-advanced">Show advanced options</label>
       <div class="advanced">
-        <h3>Proofreaders</h3>
+        <span>Proofreaders</span>
         <input id="proofreaders" />
       </div>
       <div class="advanced">
-        <h3>Archives</h3>
+        <span>Archives</span>
         <input id="archives" />
       </div>
       <div class="advanced">
-        <h3>Preprocessing</h3>
+        <span>Preprocessing</span>
         <input id="preprocessing" />
       </div>
       <div class="advanced">
-        <h3>Accessibility notes</h3>
+        <span>Accessibility notes</span>
         <input id="accessibility-notes" />
       </div> -->
-      <div>
-        <h3>Text</h3>
-        <textarea
-          id="md-input"
-          placeholder="## o sitelen kepeken nasin *Markdown*!"
-          oninput="rerender()"></textarea>
-      </div>
     </form>
+    <div>
+      <h3>Text</h3>
+      <textarea
+        id="md-input"
+        placeholder="## o sitelen kepeken nasin *Markdown*!"
+        oninput="rerender()"></textarea>
+    </div>
     <div id="md-render"></div>
     <input
+      class="row submit"
       type="submit"
       id="submit"
       value="Submit article"
@@ -208,8 +227,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 </BaseLayout>
 
 <style>
-  form h3 {
-    margin: 5px 0;
+  form span {
+    margin: 0;
     /* margin-top: 10px; */
   }
   div {
@@ -221,20 +240,46 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   .columns > * {
     width: 100%;
   }
+  .row {
+    background-color: var(--bg);
+    /* border: 1px solid var(--grey); */
+    outline: 1px solid #bbb;
+    padding: 7px 12px;
+  }
+  .row:hover {
+    background-color: var(--bg-1);
+  }
+  .row:focus-within {
+    outline: 2px solid var(--accent);
+    z-index: 1;
+  }
+  .top {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+  .bottom {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  .submit {
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
   input,
   select {
-    padding: 7px;
+    padding: 0;
     font-size: inherit;
     font-family: inherit;
     color: inherit;
     display: block;
-    background-color: var(--bg);
-    border: 1px solid var(--grey);
-    border-radius: 4px;
+    border: 0;
+    background-color: initial;
   }
-  input:hover,
-  select:hover {
-    background-color: var(--bg-1);
+  input:focus,
+  select:focus {
+    outline: none;
   }
 
   input:not([type="checkbox"]),
