@@ -12,13 +12,12 @@
     --bg: #131313;
     --bg-1: #222;
     --txt: #dadada;
-    --grey: #666;
-    --accent: #0068d3;
+    --grey: #888;
 }
 
 body {
     background-color: var(--bg);
-    margin: 10px;
+    margin: 1rem;
     font-family: "Lato", Arial, Helvetica, sans-serif;
     color: var(--txt);
     line-height: 1.7;
@@ -29,7 +28,8 @@ body {
     transition:
         color 0.2s,
         background-color 0.2s,
-        border 0.2s;
+        border 0.2s,
+        fill 0.2s;
 }
 
 main {
