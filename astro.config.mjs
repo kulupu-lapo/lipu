@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 const deploy = import.meta.env.PROD
-  ? { site: "https://kulupu-lapo.github.io/", base: "./open/" }
+  ? { site: "https://lipu.pona.la/", base: "./" }
   : { site: "http://localhost/", base: "./" };
 
 // https://astro.build/config

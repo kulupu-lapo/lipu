@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import Authors from "@/components/Authors.astro";
+import Embed from "@/components/Embed.astro";
 import Metadata from "@/components/Metadata.astro";
 import PrevNexts from "@/components/PrevNexts.astro";
 import { posts, prevnexts } from "@/utils/content";
@@ -20,6 +21,20 @@ type Props = CollectionEntry<"blog">;
 const post = Astro.props;
 const prevnext = prevnexts[post.id];
 
+const embed = (() => {
+  if (!post.data.sources) return;
+  const url = post.data.sources.filter(
+    (source) => source.includes("youtube.com") || source.includes("youtu.be"),
+  )[0];
+  if (!url) return;
+  var regExp =
+    /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(regExp);
+  if (match && match[2].length == 11) {
+    return match[2];
+  } else return;
+})();
+
 const { Content } = await render(post);
 ---
 
@@ -33,6 +48,7 @@ const { Content } = await render(post);
     <!-- <PrevNexts client:load prevnexts={prevnexts[post.id]} /> -->
     <PrevNexts prevnexts={prevnexts[post.id]} />
 
+    {embed && <Embed id={embed} />}
     <section>
       <Content />
     </section>

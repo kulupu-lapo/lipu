@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { escape } from "@/utils/content";
 interface Props {
   post: CollectionEntry<"blog">["data"];
 }
@@ -20,14 +21,24 @@ const { post } = Astro.props;
 </style>
 
 <details open>
-  <summary>Metadata</summary>
+  <summary>Details</summary>
+  <p>
+    Edit on
+    <a
+      href={`https://github.com/kulupu-lapo/poki/blob/main/plaintext/${Astro.url.pathname
+        .split("/")
+        .filter((x) => x)
+        .join("/")}.md?plain=1`}>Github</a
+    >
+  </p>
+  {post.description && <p>Description: {post.description}</p>}
   {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
   {
     post.tags && (
       <p>
         Tags:{" "}
         {post.tags.map((tag) => (
-          <a href={`./t/${tag}`}>{tag} </a>
+          <a href={`./t/${escape(tag)}`}>{tag} </a>
         ))}
       </p>
     )

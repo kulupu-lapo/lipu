@@ -18,6 +18,6 @@ const { posts } = Astro.props;
 <BaseLayout title={unescape(author)}>
   <h2>Posts by {unescape(author)} ({posts.length})</h2>
   <ul>
-    {posts.map((post) => <FoundPost {...post} />)}
+    {posts.map((post) => <FoundPost {post} query={`a/${author}`} />)}
   </ul>
 </BaseLayout>

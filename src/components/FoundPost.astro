@@ -2,9 +2,13 @@
 import type { CollectionEntry } from "astro:content";
 import { formatDate } from "@/utils/date";
 import Authors from "@/components/Authors.astro";
-type Props = CollectionEntry<"blog">;
 
-const post = Astro.props;
+interface Props {
+  post: CollectionEntry<"blog">;
+  query?: string;
+}
+
+const { post, query = "" } = Astro.props;
 ---
 
 <style>
@@ -27,5 +31,5 @@ const post = Astro.props;
       >{formatDate(post.data.date, post.data["date-precision"])}</span
     >
   </p>
-  <a href={`./${post.id}/`}>{post.data.title}</a>
+  <a href={`./${post.id}/${query ? `?q=${query}` : ""}`}>{post.data.title}</a>
 </li>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Input from "@/components/Input.astro";
 ---
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -38,6 +39,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       authors: document.getElementById("authors").value,
       date: document.getElementById("date").value,
       "date-precision": document.getElementById("date-precision").value,
+      "original-title": document.getElementById("original-title").value,
+      "original-authors": document.getElementById("original-authors").value,
       tags: document.getElementById("tags").value,
       license: document.getElementById("license").value,
       sources: document.getElementById("sources").value,
@@ -60,13 +63,16 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
     if (responseBody.success) {
       document.getElementById("response").innerHTML =
-        `Your article has been <a href="${responseBody.data.html_url}">received</a> and will be reviewed by volunteers!<br />Please make sure not to submit the same thing several times, thanks in advance!`;
+        `Your article has been received and will be reviewed by volunteers!<br /><a href="${responseBody.data.html_url}">${responseBody.data.title}</a><br />Please make sure not to submit the same thing several times, thanks in advance!`;
+      document.getElementById("response-error").innerHTML = "";
     } else {
       document.getElementById("response").innerHTML =
-        `Failed to upload article. Error message:<br />${JSON.stringify(responseBody.error)}<br />Show this to kala Asi at ma pona!`;
+        `Failed to upload article. Show this to kala Asi at ma pona! Error message:`;
+      document.getElementById("response-error").innerHTML =
+        `${JSON.stringify(responseBody.error, null, " ")}`;
     }
     submitButton.value = "Submit article";
-    submitButton.onclick = "submit()";
+    submitButton.onclick = submit;
   };
 
   // document.getElementById("form").addEventListener("submit", (e) => {
@@ -87,141 +93,156 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   <section>
     <h1>Add your article</h1>
     <form id="form">
-      <div>
-        <h3>Submitted by</h3>
-        <input
+      <div class="row">
+        <Input
+          top
+          title="Submitted by"
           id="submitted-by"
           required
-          placeholder="your Toki Pona name goes here!"
+          placeholder="your Toki Pona name"
         />
       </div>
-      <div>
-        <h3>File name</h3>
-        <input id="filename" required placeholder="carry-feat-jan-kekan-san" />
+      <div class="row">
+        <Input
+          title="File name"
+          id="filename"
+          required
+          placeholder="carry-feat-jan-kekan-san"
+        />
       </div>
-      <div>
-        <h3>Title</h3>
-        <input
+      <div class="row">
+        <Input
+          title="Title"
           id="title"
           required
+          placeholder="carry-feat-jan-kekan-san"
           oninput="updateFileName()"
           placeholder="carry (feat.) jan kekan san"
         />
+        <Input
+          title="Original title"
+          id="original-title"
+          required
+          placeholder="carry-feat-jan-kekan-san"
+          placeholder="(use this if the work is a translation)"
+        />
       </div>
-      <div>
-        <h3>Description</h3>
-        <input id="description" placeholder="A punny parody of Wayward Son" />
+      <div class="row">
+        <Input
+          title="Authors"
+          id="authors"
+          required
+          placeholder="jan Usawi, jan Kekan San"
+        />
+        <Input
+          title="Original authors"
+          id="original-authors"
+          required
+          placeholder="(use this if the work is a translation)"
+        />
       </div>
-      <div>
-        <h3>Authors</h3>
-        <input id="authors" required placeholder="jan Usawi, jan Kekan San" />
+      <div class="row">
+        <Input
+          title="Description"
+          id="description"
+          placeholder="A punny parody of Wayward Son"
+        />
       </div>
-      <div>
-        <h3>Date published</h3>
-        <div style="display: flex;">
-          <input id="date" type="date" required />
-          <select id="date-precision">
-            <option selected value="day">Precise to the day</option>
-            <option value="month">Precise to the month</option>
-            <option value="year">Precise to the year</option>
-            <option value="none">Complete guess</option>
-          </select>
-        </div>
+      <div class="row">
+        <Input title="Date published" id="date" type="date" required />
+        <Input title="Date precision" id="date-precision" tag="select">
+          <option selected value="day">Precise to the day</option>
+          <option value="month">Precise to the month</option>
+          <option value="year">Precise to the year</option>
+          <option value="none">Complete guess</option>
+        </Input>
       </div>
-      <div>
-        <h3>Tags</h3>
-        <input id="tags" placeholder="music, pop, parody" />
+      <div class="row">
+        <Input title="Tags" id="tags" placeholder="music, pop, parody" />
+        <Input title="License" id="license" placeholder="CC BY-SA 3.0" />
       </div>
-      <div>
-        <h3>License</h3>
-        <input id="license" placeholder="CC BY-SA-NC 4.0" />
-      </div>
-      <div>
-        <h3>Sources</h3>
-        <input
+      <div class="row">
+        <Input
+          title="Sources"
           id="sources"
           placeholder="https://janusawi.bandcamp.com/album/toki-gaming"
         />
       </div>
-      <div>
-        <h3>Notes</h3>
-        <input id="notes" />
+      <div class="row">
+        <Input bottom title="Notes" id="notes" />
       </div>
-      <!-- <input id="toggle-advanced" type="checkbox" oninput="toggleAdvanced()" />
+    </form>
+    <!-- <input id="toggle-advanced" type="checkbox" oninput="toggleAdvanced()" />
       <label for="toggle-advanced">Show advanced options</label>
       <div class="advanced">
-        <h3>Proofreaders</h3>
+        <span>Proofreaders</span>
         <input id="proofreaders" />
       </div>
       <div class="advanced">
-        <h3>Archives</h3>
+        <span>Archives</span>
         <input id="archives" />
       </div>
       <div class="advanced">
-        <h3>Preprocessing</h3>
+        <span>Preprocessing</span>
         <input id="preprocessing" />
       </div>
       <div class="advanced">
-        <h3>Accessibility notes</h3>
+        <span>Accessibility notes</span>
         <input id="accessibility-notes" />
       </div> -->
-    </form>
-    <div>
-      <h3>Text</h3>
-      <textarea
-        id="md-input"
-        placeholder="## o sitelen kepeken nasin *Markdown*!"
-        oninput="rerender()"></textarea>
-    </div>
-    <div id="md-render"></div>
-    <input
-      type="submit"
-      id="submit"
-      value="Submit article"
-      onclick="submit()"
-    />
-    <div id="response"></div>
   </section>
+  <div>
+    <h1>Text</h1>
+    <textarea
+      id="md-input"
+      placeholder="# Start typing! o kama sitelen e ijo!\n\nYou can use **Markdown**! o nasin **Markdown**!"
+      oninput="rerender()"></textarea>
+  </div>
+  <div id="md-render"></div>
+  <input
+    class="submit"
+    type="submit"
+    id="submit"
+    value="Submit article"
+    onclick="submit()"
+  />
+  <div id="response"></div>
+  <pre id="response-error"></pre>
 </BaseLayout>
 
 <style>
-  h3 {
-    margin: 0;
+  .row {
+    display: flex;
   }
-  div {
-    display: block;
-  }
-  input,
-  select {
-    padding: 10px;
+  .submit {
     font-size: inherit;
     font-family: inherit;
     color: inherit;
     display: block;
+    border: 1px solid var(--grey-1);
+    padding: 10px 40px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin: 10px auto;
     background-color: var(--bg);
-    border: 1px solid var(--grey);
   }
-  input:hover,
-  select:hover {
+  .submit:hover {
     background-color: var(--bg-1);
-  }
-
-  input:not([type="checkbox"]),
-  select {
-    box-sizing: border-box;
-    width: 100%;
-  }
-  #date,
-  #date-precision {
-    width: 50%;
   }
   textarea {
     box-sizing: border-box;
     padding: 10px;
     width: 100%;
     height: 200px;
+    background-color: initial;
+    color: inherit;
+    border: 0;
+    outline: 1px solid var(--grey-1);
+    border-radius: 15px;
+    font-size: 16px;
   }
-  /* .advanced {
-    display: none;
-  } */
+  textarea:focus {
+    border: 0;
+    outline: 2px solid var(--accent);
+  }
 </style>

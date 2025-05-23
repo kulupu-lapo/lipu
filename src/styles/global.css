@@ -3,6 +3,7 @@
     --bg-1: #eee;
     --txt: #080808;
     --grey: #888;
+    --grey-1: #bbb;
     --accent: #0068d3;
 
     --block-padding: 0.5rem 1rem;
@@ -11,14 +12,15 @@
 .dark {
     --bg: #131313;
     --bg-1: #222;
-    --txt: #dadada;
+    --txt: #dbdbdb;
     --grey: #888;
+    --grey-1: #666;
 }
 
 body {
     background-color: var(--bg);
     margin: 1rem;
-    font-family: "Lato", Arial, Helvetica, sans-serif;
+    font-family: "Nunito", Arial, Helvetica, sans-serif;
     color: var(--txt);
     line-height: 1.7;
     font-size: 18px;
@@ -30,6 +32,12 @@ body {
         background-color 0.2s,
         border 0.2s,
         fill 0.2s;
+}
+
+@media only screen and (max-width: 800px) {
+    body {
+        font-size: 16px;
+    }
 }
 
 main {
@@ -72,6 +80,7 @@ img {
 
 pre {
     padding: var(--block-padding);
+    border-radius: var(--block-border-radius);
 }
 
 blockquote {

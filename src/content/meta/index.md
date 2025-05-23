@@ -1,6 +1,6 @@
 ---
 ---
-# open Lapo: a test frontend for the Lapo library.
+# lipu.pona.la: the Toki Pona library
 
-Hi people! We have been working on a collection of all written Toki Pona works. It still needs a frontend, but until then, we benefit from a test environment. open Lapo will serve that role for now!
+**lipu.pona.la**, or **lipu Lapo**, aims to include all creative works in Toki Pona. Here you will find every poem, song, zine publication, blog post that we know of. Every work is a file stored in [poki Lapo](https://github.com/kulupu-lapo/poki). Have fun!  
 — kala Asi

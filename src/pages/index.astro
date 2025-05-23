@@ -32,7 +32,7 @@ const { Content: Meta } = await render(meta);
   <h2>Browse all {posts.length} works:</h2>
   <section class="all">
     <ul>
-      {posts.map((post) => <FoundPost {...post} />)}
+      {posts.map((post) => <FoundPost {post} />)}
     </ul>
   </section>
 </BaseLayout>

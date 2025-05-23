@@ -22,6 +22,6 @@ const { posts } = Astro.props;
 <BaseLayout title={unescape(collection)}>
   <h2>Posts that comprise {unescape(collection)} ({posts.length})</h2>
   <ol>
-    {posts.map((post) => <FoundPost {...post} />)}
+    {posts.map((post) => <FoundPost {post} query={`c/${collection}`} />)}
   </ol>
 </BaseLayout>
