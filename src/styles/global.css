@@ -2,15 +2,18 @@
     --bg: #ffffff;
     --bg-1: #eee;
     --txt: #080808;
-    --grey: #999;
+    --grey: #888;
     --accent: #0068d3;
+
+    --block-padding: 0.5rem 1rem;
+    --block-border-radius: 1rem;
 }
 .dark {
-    --bg: #0f0f0f;
+    --bg: #131313;
     --bg-1: #222;
-    --txt: #dbdbdb;
+    --txt: #dadada;
     --grey: #666;
-    --accent: #49a3ff;
+    --accent: #0068d3;
 }
 
 body {
@@ -30,17 +33,18 @@ body {
 }
 
 main {
-    max-width: 700px;
+    max-width: 850px;
     margin: auto;
     margin-bottom: 35px;
     text-align: justify;
 }
 a {
     color: var(--accent);
-    text-decoration: underline dotted;
+    text-decoration: dotted underline;
     text-underline-position: under;
     font-weight: bold;
 }
+
 header a:has(img) {
     display: block; /*fix focus styling on main header*/
 }
@@ -67,7 +71,7 @@ img {
 }
 
 pre {
-    padding: 20px;
+    padding: var(--block-padding);
 }
 
 blockquote {

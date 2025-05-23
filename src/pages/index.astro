@@ -10,6 +10,21 @@ const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
 const { Content: Meta } = await render(meta);
 ---
 
+<style>
+  small {
+    color: var(--grey);
+  }
+
+  .all {
+    height: 100vh;
+    overflow-y: scroll;
+    padding: 0 1rem;
+    background-color: var(--bg-1);
+    border: 2px solid var(--accent);
+    border-radius: var(--block-border-radius);
+  }
+</style>
+
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section>
     <Meta />

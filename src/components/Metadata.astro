@@ -13,12 +13,14 @@ const { post } = Astro.props;
   }
   details {
     background-color: var(--bg-1);
-    padding: 10px;
+    padding: var(--block-padding);
+    border-radius: var(--block-border-radius);
     margin: 10px auto;
   }
 </style>
+
 <details open>
-  <summary>More</summary>
+  <summary>Metadata</summary>
   {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
   {
     post.tags && (
@@ -37,7 +39,7 @@ const { post } = Astro.props;
       <p>
         <span>Sources:</span>
         {post.sources.map((source, i) => (
-          <a href={source}>{source.split("/")[2] ?? i + 1} </a>
+          <a href={source}>{source.split("/")[2] ?? i + 1}</a>
         ))}
       </p>
     )
