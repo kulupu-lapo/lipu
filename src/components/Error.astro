@@ -1,0 +1,26 @@
+---
+interface Props {
+  id?: string;
+  active: boolean;
+}
+const { id, active } = Astro.props;
+---
+
+<style>
+  .error {
+    display: none;
+    border: 1px solid var(--error);
+    padding: 7px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 1em;
+    white-space: pre-wrap;
+  }
+  .error[data-active="true"] {
+    display: block;
+  }
+</style>
+
+<div id={id} class="error" data-active={active}>
+  <slot />
+</div>

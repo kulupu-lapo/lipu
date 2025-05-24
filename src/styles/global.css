@@ -5,6 +5,7 @@
     --grey: #999;
     --grey-1: #bbb;
     --accent: #0068d3;
+    --error: #e61023;
 }
 .dark {
     --bg: #0f0f0f;
@@ -13,6 +14,7 @@
     --grey: #666;
     --grey-1: #444;
     --accent: #49a3ff;
+    --error: #ff495a;
 }
 
 body {
