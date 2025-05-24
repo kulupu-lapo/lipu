@@ -4,7 +4,7 @@ interface Props {
   tag?: HTMLTag;
   title: string;
   id: string;
-  placeholder: string;
+  placeholder?: string;
   type?: string;
   required?: boolean;
   oninput?: string;
@@ -30,7 +30,7 @@ const {
     background-color: var(--bg);
     /* border: 1px solid var(--grey); */
     outline: 1px solid var(--grey-1);
-    padding: 7px 12px;
+    padding: var(--block-padding);
     width: 100%;
   }
   label:hover {
@@ -41,12 +41,12 @@ const {
     z-index: 1;
   }
   .top {
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    border-top-right-radius: var(--block-border-radius);
+    border-top-left-radius: var(--block-border-radius);
   }
   .bottom {
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: var(--block-border-radius);
+    border-bottom-left-radius: var(--block-border-radius);
   }
   input,
   select {

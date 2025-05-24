@@ -4,7 +4,7 @@ import Input from "@/components/Input.astro";
 ---
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script lang="javascript">
+<script is:inline lang="javascript">
   const rerender = async () => {
     let render = document.getElementById("md-render");
     let input = document.getElementById("md-input");
@@ -28,7 +28,7 @@ import Input from "@/components/Input.astro";
   //   }
   // };
 </script>
-<script lang="javascript">
+<script is:inline lang="javascript">
   const submit = async () => {
     let form = document.getElementById("form");
     let data = {
@@ -158,7 +158,7 @@ import Input from "@/components/Input.astro";
         </Input>
       </div>
       <div class="row">
-        <Input title="Tags" id="tags" placeholder="music, pop, parody" />
+        <Input title="Tags" id="tags" placeholder="music, pop, parody etc." />
         <Input title="License" id="license" placeholder="CC BY-SA 3.0" />
       </div>
       <div class="row">
@@ -218,27 +218,27 @@ import Input from "@/components/Input.astro";
     font-size: inherit;
     font-family: inherit;
     color: inherit;
+    background-color: inherit;
     display: block;
     border: 1px solid var(--grey-1);
-    padding: 10px 40px;
+    padding: var(--block-padding);
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: var(--block-border-radius);
     margin: 10px auto;
-    background-color: var(--bg);
   }
   .submit:hover {
     background-color: var(--bg-1);
   }
   textarea {
     box-sizing: border-box;
-    padding: 10px;
+    padding: var(--block-padding);
     width: 100%;
     height: 200px;
     background-color: initial;
     color: inherit;
     border: 0;
     outline: 1px solid var(--grey-1);
-    border-radius: 15px;
+    border-radius: var(--block-border-radius);
     font-size: 16px;
   }
   textarea:focus {
