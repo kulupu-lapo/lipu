@@ -1,10 +1,11 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-import FoundPost from "@/components/FoundPost.astro";
+import Stats from "@/components/Stats.astro"
 import { posts } from "@/utils/content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 import { getCollection, render } from "astro:content";
+import FoundPost from "@/components/FoundPost.astro";
 
 const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
 const { Content: Meta } = await render(meta);
@@ -15,13 +16,23 @@ const { Content: Meta } = await render(meta);
     color: var(--grey);
   }
 
-  .all {
-    height: 100vh;
-    overflow-y: scroll;
+  .thanks {
+    display: block;
+    text-align: center;
+  }
+
+  .entries {
     padding: 0 1rem;
-    background-color: var(--bg-1);
-    border: 2px solid var(--accent);
+    border: 1px solid var(--grey);
+    margin: 0.25rem;
     border-radius: var(--block-border-radius);
+  }
+
+  .more {
+    display: block;
+    width: fit-content;
+    margin: 1rem auto;
+    text-decoration: none;
   }
 </style>
 
@@ -29,10 +40,12 @@ const { Content: Meta } = await render(meta);
   <section>
     <Meta />
   </section>
-  <h2>Browse all {posts.length} works:</h2>
-  <section class="all">
-    <ul>
-      {posts.map((post) => <FoundPost {post} />)}
-    </ul>
+  <Stats />
+  <section>
+    <h2>Contributors</h2>
+    <a href="https://github.com/kulupu-lapo/poki/graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki" />
+    </a>
+    <small class="thanks">Thank you all so much, wouldn't be possible without you! ❤️</small>
   </section>
 </BaseLayout>

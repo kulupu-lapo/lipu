@@ -1,5 +1,5 @@
 :root {
-    --bg: #ffffff;
+    --bg: #fff;
     --bg-1: #eee;
     --txt: #080808;
     --grey: #888;
@@ -32,6 +32,7 @@ body {
         background-color 0.2s,
         border 0.2s,
         fill 0.2s;
+        box-shadow: 0.2s;
 }
 
 @media only screen and (max-width: 800px) {
