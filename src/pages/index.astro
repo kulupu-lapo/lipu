@@ -8,7 +8,9 @@ import { getCollection, render } from "astro:content";
 import FoundPost from "@/components/FoundPost.astro";
 
 const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
+const overview = (await getCollection("meta")).find((post) => post.id == "overview")!;
 const { Content: Meta } = await render(meta);
+const { Content: Overview } = await render(overview);
 ---
 
 <style>
@@ -42,9 +44,14 @@ const { Content: Meta } = await render(meta);
   </section>
   <Stats />
   <section>
-    <h2>Contributors</h2>
+    <h2>Contributing and project overview</h2>
+    <Overview />
+    <h3 style="text-align: center;">Hall of fame</h3>
     <a href="https://github.com/kulupu-lapo/poki/graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki" />
+      <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki"
+           alt="poki Lapo contributors' profile pictures"
+           style="text-align: center;"
+      />
     </a>
     <small class="thanks">Thank you all so much, wouldn't be possible without you! ❤️</small>
   </section>
