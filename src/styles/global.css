@@ -35,6 +35,11 @@ body {
         box-shadow: 0.2s;
 }
 
+::selection {
+    color: #fff;
+    background-color: var(--accent);
+}
+
 @media only screen and (max-width: 800px) {
     body {
         font-size: 16px;
