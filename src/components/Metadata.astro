@@ -12,6 +12,9 @@ const { post } = Astro.props;
   p {
     margin: initial;
   }
+  a + a {
+    margin-left: 4px;
+  }
   details {
     background-color: var(--bg-1);
     padding: var(--block-padding);
@@ -38,7 +41,7 @@ const { post } = Astro.props;
       <p>
         Tags:{" "}
         {post.tags.map((tag) => (
-          <a href={`./t/${escape(tag)}`}>{tag} </a>
+          <a href={`./t/${escape(tag)}`}>{tag}</a>
         ))}
       </p>
     )
