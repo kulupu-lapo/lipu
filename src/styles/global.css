@@ -1,8 +1,8 @@
 :root {
     --bg: #fff;
     --bg-1: #eee;
-    --txt: #080808;
-    --grey: #888;
+    --txt: #111;
+    --grey: #666;
     --grey-1: #bbb;
     --accent: #0068d3;
 
@@ -10,10 +10,10 @@
     --block-border-radius: 1rem;
 }
 .dark {
-    --bg: #131313;
+    --bg: #111;
     --bg-1: #222;
     --txt: #dbdbdb;
-    --grey: #888;
+    --grey: #999;
     --grey-1: #666;
 }
 
@@ -53,18 +53,21 @@ main {
     text-align: justify;
 }
 a {
-    color: var(--accent);
+    color: var(--txt);
     text-decoration: dotted underline;
     text-underline-position: under;
-    font-weight: bold;
+}
+
+a:visited {
+    color: var(--txt);
+}
+
+a:active, a:hover {
+    color: var(--accent) !important;
 }
 
 header a:has(img) {
     display: block; /*fix focus styling on main header*/
-}
-
-a:visited {
-    color: var(--accent);
 }
 
 h1 {
