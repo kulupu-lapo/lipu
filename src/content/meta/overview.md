@@ -6,4 +6,4 @@ To commit works to poki Lapo, you can clone [the repo](https://github.com/kulupu
 You can also join the **ma pona pi toki pona** discord to talk to the maintainers on our [`#tomo-mute`](https://discord.com/channels/301377942062366741/1252224729977327647)-forum thread.
 
 ### lipu Lapo
-**lipu Lapo** (this site) is a frontend for [poki Lapo](#poki-lapo). It is based on the Astro static site generator hosted on Github pages that renders the entries and collections from the markdown files stored in poki Lapo.
+**lipu Lapo** (this site) is a frontend for [poki Lapo](#poki-lapo). It is hosted on Github pages and based on the Astro static site generator, that renders entries and collections from the markdown files stored in poki Lapo.
