@@ -95,7 +95,7 @@ pre {
 blockquote {
     margin: 0px;
     padding-inline: 15px 15px;
-    border-inline-start: 5px solid var(--grey);
+    border-inline-start: 5px solid var(--accent);
 }
 
 /*
