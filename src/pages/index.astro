@@ -1,23 +1,58 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-import FoundPost from "@/components/FoundPost.astro";
+import Stats from "@/components/Stats.astro"
 import { posts } from "@/utils/content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 import { getCollection, render } from "astro:content";
+import FoundPost from "@/components/FoundPost.astro";
 
 const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
+const overview = (await getCollection("meta")).find((post) => post.id == "overview")!;
 const { Content: Meta } = await render(meta);
+const { Content: Overview } = await render(overview);
 ---
+
+<style>
+  small {
+    color: var(--grey);
+  }
+
+  .thanks {
+    display: block;
+    text-align: center;
+  }
+
+  .entries {
+    padding: 0 1rem;
+    border: 1px solid var(--grey);
+    margin: 0.25rem;
+    border-radius: var(--block-border-radius);
+  }
+
+  .more {
+    display: block;
+    width: fit-content;
+    margin: 1rem auto;
+    text-decoration: none;
+  }
+</style>
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section>
     <Meta />
   </section>
+  <Stats />
   <section>
-    <h2>{posts.length} Works:</h2>
-    <ul>
-      {posts.map((post) => <FoundPost {post} />)}
-    </ul>
+    <h2>Contributing and project overview</h2>
+    <Overview />
+    <h3 style="text-align: center;">Hall of fame</h3>
+    <a href="https://github.com/kulupu-lapo/poki/graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki"
+           alt="poki Lapo contributors' profile pictures"
+           style="text-align: center;"
+      />
+    </a>
+    <small class="thanks">Thank you all so much, wouldn't be possible without you! ❤️</small>
   </section>
 </BaseLayout>
