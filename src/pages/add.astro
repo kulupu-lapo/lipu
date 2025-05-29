@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Error from "@/components/Error.astro";
 import Input from "@/components/Input.astro";
 ---
 
@@ -10,6 +11,7 @@ import Input from "@/components/Input.astro";
     let input = document.getElementById("md-input");
     // console.log(input.value);
     render.innerHTML = marked.parse(input.value);
+    validate();
   };
 
   const updateFileName = () => {
@@ -29,6 +31,43 @@ import Input from "@/components/Input.astro";
   // };
 </script>
 <script is:inline lang="javascript">
+ const validate = () => {
+    let submitButton = document.getElementById("submit");
+    let errorContainer = document.getElementById("error-div");
+    let errorText = document.getElementById("error-message");
+    let error = findInputError();
+
+    if (error === undefined) {
+      submitButton.disabled = false;
+      errorContainer.dataset.active = false;
+      return
+    };
+    submitButton.disabled = true;
+    errorContainer.dataset.active = true;
+    errorText.innerText = "Error: "+error;
+  };
+  const findInputError = () => {
+    let form = document.getElementById("form");
+    for (const input of form.elements) {
+      if (input.required && input.value === "") return `"${input.name}" field must be provided`;
+    };
+
+    let text = document.getElementById("md-input").value;
+    if (text === "") return `Text must not be empty`;
+    const banned_words = [
+      [/(<br ?\/?>)/, "Text should use markdown not HTML, \n\"toki$1toki\"\ncan be written as \n\"toki\\\ntoki\"\nor\n\"toki  \ntoki\"\n(with two spaces)"],
+      [/<\/p>/, "Text should use markdown not HTML, \n\"<p>toki open</p><p>toki pini</p>\"\ncan be written as \n\"toki open\ntoki pini\"\n"],
+      [/<\/(i|em)>/, "Text should use markdown not HTML, \"<$1>toki</$1>\" can be written as \"*toki*\""],
+      [/<\/(b|strong)>/, "Text should use markdown not HTML, \"<$1>toki</$1>\" can be written as \"**toki**\""],
+      [/<a href="?([^">]+)"?>/, "Text should use markdown not HTML, \"<a href=\"$1\">lipu</a>\" can be written as \"[lipu]($1)\""],
+    ];
+    for (const [word, error] of banned_words) {
+      let match = text.match(word);
+      if (match === null) continue;
+      return error.replaceAll("$1", match[1]);
+    };
+  };
+  
   const submit = async () => {
     let form = document.getElementById("form");
     let data = {
@@ -66,13 +105,21 @@ import Input from "@/components/Input.astro";
         `Your article has been received and will be reviewed by volunteers!<br /><a href="${responseBody.data.html_url}">${responseBody.data.title}</a><br />Please make sure not to submit the same thing several times, thanks in advance!`;
       document.getElementById("response-error").innerHTML = "";
     } else {
-      document.getElementById("response").innerHTML =
-        `Failed to upload article. Show this to kala Asi at ma pona! Error message:`;
-      document.getElementById("response-error").innerHTML =
-        `${JSON.stringify(responseBody.error, null, " ")}`;
+      document.getElementById("error-message").innerHTML = 
+        `Failed to upload article. Show this to kala Asi at ma pona! Error message:
+        <pre>\n${JSON.stringify(responseBody.error, null, " ")}</pre>`
+      document.getElementById("error-div").dataset.active = true;
+      submitButton.active = false;
     }
     submitButton.value = "Submit article";
     submitButton.onclick = submit;
+  };
+
+  const ignoreError = () => {
+    let submitButton = document.getElementById("submit");
+    let errorContainer = document.getElementById("error-div");
+    errorContainer.dataset.active = false;
+    submitButton.disabled = false;
   };
 
   // document.getElementById("form").addEventListener("submit", (e) => {
@@ -92,7 +139,7 @@ import Input from "@/components/Input.astro";
 <BaseLayout title={"Add an article"}>
   <section>
     <h1>Add your article</h1>
-    <form id="form">
+    <form id="form" oninput="validate()">
       <div class="row">
         <Input
           top
@@ -122,7 +169,6 @@ import Input from "@/components/Input.astro";
         <Input
           title="Original title"
           id="original-title"
-          required
           placeholder="carry-feat-jan-kekan-san"
           placeholder="(use this if the work is a translation)"
         />
@@ -131,13 +177,11 @@ import Input from "@/components/Input.astro";
         <Input
           title="Authors"
           id="authors"
-          required
           placeholder="jan Usawi, jan Kekan San"
         />
         <Input
           title="Original authors"
           id="original-authors"
-          required
           placeholder="(use this if the work is a translation)"
         />
       </div>
@@ -150,7 +194,7 @@ import Input from "@/components/Input.astro";
       </div>
       <div class="row">
         <Input title="Date published" id="date" type="date" required />
-        <Input title="Date precision" id="date-precision" tag="select">
+        <Input title="Date precision" id="date-precision" tag="select" required>
           <option selected value="day">Precise to the day</option>
           <option value="month">Precise to the month</option>
           <option value="year">Precise to the year</option>
@@ -165,6 +209,7 @@ import Input from "@/components/Input.astro";
         <Input
           title="Sources"
           id="sources"
+          required
           placeholder="https://janusawi.bandcamp.com/album/toki-gaming"
         />
       </div>
@@ -199,6 +244,9 @@ import Input from "@/components/Input.astro";
       oninput="rerender()"></textarea>
   </div>
   <div id="md-render"></div>
+  <Error id="error-div" active={false}><span id="error-message"></span>
+    <br><button class="ignore_error" onclick="ignoreError()">I know what I'm doing, ignore this</button>
+  </Error>
   <input
     class="submit"
     type="submit"
@@ -214,7 +262,7 @@ import Input from "@/components/Input.astro";
   .row {
     display: flex;
   }
-  .submit {
+  .submit, .ignore_error {
     font-size: inherit;
     font-family: inherit;
     color: inherit;
@@ -226,8 +274,16 @@ import Input from "@/components/Input.astro";
     border-radius: var(--block-border-radius);
     margin: 10px auto;
   }
-  .submit:hover {
+  .ignore_error {
+    font-style: italic;
+    padding: var(--block-padding);
+  }
+  .submit:hover, .ignore_error:hover {
     background-color: var(--bg-1);
+  }
+  .submit:disabled {
+    background-color: var(--grey-1);
+    cursor: not-allowed;
   }
   textarea {
     box-sizing: border-box;

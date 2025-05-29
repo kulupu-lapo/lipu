@@ -5,6 +5,7 @@
     --grey: #666;
     --grey-1: #bbb;
     --accent: #0068d3;
+    --error: #e61023;
 
     --block-padding: 1rem;
     --block-border-radius: 1rem;
@@ -15,6 +16,7 @@
     --txt: #dbdbdb;
     --grey: #999;
     --grey-1: #666;
+    --error: #ff495a;
 }
 
 body {
