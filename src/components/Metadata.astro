@@ -69,6 +69,25 @@ const { post } = Astro.props;
     )
   }
   {
+    post.original && (
+      <p>
+        <span>Original:</span>
+        <span>{post.original.title}</span>
+        {
+          post.original.authors && (
+            <span>
+              by {post.original.authors.reduce((prev, curr, i) => (
+                <>
+                  {prev}, {curr}
+                </>
+              ))}
+            </span>
+          )
+        }
+      </p>
+    ) 
+  }
+  {
     (post.preprocessing || post["accessibility-notes"] || post.notes) && (
       <p>
         <span>Notes:</span>
