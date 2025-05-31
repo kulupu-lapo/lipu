@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import { escape, postsByOriginal } from "@/utils/content";
+---
+
+<BaseLayout title="authors">
+  <h2>Translation sources ({postsByOriginal.length})</h2>
+  <ul>
+    {
+      postsByOriginal.map((row) => (
+        <li>
+          <a href={`./o/${escape(row.original)}`}>{row.original}</a>
+          {` (${row.posts.length} posts)`}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

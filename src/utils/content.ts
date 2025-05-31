@@ -39,6 +39,30 @@ export const postsByAuthor = authors
   }))
   .sort(by((x) => x.posts.length, false));
 
+// originals (indexed by .original.title)
+export const originals = [
+  ...new Set(posts.filter((post) => post.data.original !== null && post.data.original.title !== null)
+                  .map((post) => post.data.original!.title!)),
+]
+
+export const getAuthorsOfOriginal = (original: string) => [...new Set(
+  posts.filter(
+    (post) => post.data.original && post.data.original.title === original && post.data.original.authors !== null
+  ).flatMap((post) => post.data.original!.authors)
+)];
+
+export const getPostsByOriginal = (original: string) =>
+  posts.filter(
+    (post) => post.data.original && post.data.original.title === original,
+  );
+
+export const postsByOriginal = originals
+  .map((original) => ({
+    original,
+    posts: getPostsByOriginal(original),
+  }))
+  .sort(by((x) => x.posts.length, false));
+
 // tags
 
 export const tags = [

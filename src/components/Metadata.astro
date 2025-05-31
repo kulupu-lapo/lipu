@@ -69,10 +69,10 @@ const { post } = Astro.props;
     )
   }
   {
-    post.original && (
+    post.original && post.original.title !== null &&  (
       <p>
         <span>Original:</span>
-        <span>{post.original.title}</span>
+        <a href={`./o/${escape(post.original.title)}`}>{post.original.title}</a>
         {
           post.original.authors && (
             <span>
