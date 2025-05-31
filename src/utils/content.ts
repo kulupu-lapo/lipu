@@ -156,5 +156,14 @@ export const prevnexts = (() => {
     });
   });
 
+  postsByOriginal.map(({ original, posts: arrayPosts }, i) => {
+    arrayPosts.map((post, j) => {
+      prevnexts[post.id][`o/${escape(original)}`] = {
+        prev: arrayPosts[j - 1],
+        next: arrayPosts[j + 1],
+      };
+    });
+  });
+
   return prevnexts;
 })();
