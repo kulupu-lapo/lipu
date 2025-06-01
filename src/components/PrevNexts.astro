@@ -16,7 +16,7 @@ const humanReadable = (string: string) => {
   if (string.slice(0, 2) === "a/") return `by ${unescape(string.slice(2))}`;
   if (string.slice(0, 2) === "c/") return `from ${unescape(string.slice(2))}`;
   if (string.slice(0, 2) === "t/") return `${unescape(string.slice(2))}`;
-  if (string.slice(0, 2) === "o/") return `translating ${unescape(string.slice(2))}`;
+  if (string.slice(0, 2) === "o/") return `adapting ${unescape(string.slice(2))}`;
   return string;
 };
 

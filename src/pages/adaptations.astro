@@ -5,13 +5,13 @@ import { escape, postsByOriginal } from "@/utils/content";
 ---
 
 <BaseLayout title="authors">
-  <h2>Translation sources ({postsByOriginal.length})</h2>
+  <h2>Adaptation sources ({postsByOriginal.length})</h2>
   <ul>
     {
       postsByOriginal.map((row) => (
         <li>
           <a href={`./o/${escape(row.original)}`}>{row.original}</a>
-          {` (${row.posts.length} posts)`}
+          {` (${row.posts.length} adaptations)`}
         </li>
       ))
     }

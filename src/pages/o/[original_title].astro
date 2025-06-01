@@ -17,7 +17,7 @@ const authors = getAuthorsOfOriginal(unescape(original_title))
 ---
 
 <BaseLayout title={unescape(original_title)}>
-  <h2>Translations of {unescape(original_title)} { authors.length > 0 && (<>by {authors.join(', ')}</>)} ({posts.length})</h2>
+  <h2>Adaptations of {unescape(original_title)} { authors.length > 0 && (<>by {authors.join(', ')}</>)} ({posts.length})</h2>
   <ul>
     {posts.map((post) => <FoundPost {post} query={`o/${original_title}`} />)}
   </ul>
