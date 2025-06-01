@@ -60,6 +60,7 @@ export const postsByOriginal = originals
   .map((original) => ({
     original,
     posts: getPostsByOriginal(original),
+    authors: getAuthorsOfOriginal(original),
   }))
   .sort(by((x) => x.posts.length, false));
 

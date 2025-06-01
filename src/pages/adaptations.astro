@@ -10,7 +10,7 @@ import { escape, postsByOriginal } from "@/utils/content";
     {
       postsByOriginal.map((row) => (
         <li>
-          <a href={`./o/${escape(row.original)}`}>{row.original}</a>
+          <a href={`./o/${escape(row.original)}`}>{row.original}{row.authors.length > 0 && " (" + row.authors.join(', ') + ")" }</a>
           {` (${row.posts.length} adaptations)`}
         </li>
       ))
