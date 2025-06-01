@@ -43,7 +43,7 @@ export const postsByAuthor = authors
 export const originals = [
   ...new Set(posts.filter((post) => post.data.original !== null && post.data.original.title !== null)
                   .map((post) => post.data.original!.title!)),
-]
+].sort()
 
 export const getAuthorsOfOriginal = (original: string) => [...new Set(
   posts.filter(
