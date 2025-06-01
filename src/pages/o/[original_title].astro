@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import FoundPost from "@/components/FoundPost.astro";
+import { originals, getAuthorsOfOriginal, escape, getPostsByOriginal, unescape } from "@/utils/content";
+
+export async function getStaticPaths() {
+  return originals.map((original) => ({
+    params: { original_title: escape(original) },
+    props: { posts: getPostsByOriginal(original) },
+  }));
+}
+
+const { original_title } = Astro.params;
+const { posts } = Astro.props;
+const authors = getAuthorsOfOriginal(unescape(original_title))
+---
+
+<BaseLayout title={unescape(original_title)}>
+  <h2>Adaptations of {unescape(original_title)} { authors.length > 0 && (<>by {authors.join(', ')}</>)} ({posts.length})</h2>
+  <ul>
+    {posts.map((post) => <FoundPost {post} query={`o/${original_title}`} />)}
+  </ul>
+</BaseLayout>
