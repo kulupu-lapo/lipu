@@ -8,6 +8,10 @@ export const data = {
     'nav.random': "Random",
     'nav.add': "Add",
 
+    'stats.Entries': "Entries",
+    'stats.Collections': "Collections",
+    'stats.Tags': "Tags",
+    'stats.Authors': "Authors",
 
     'metadata.container_title': "Details",
 

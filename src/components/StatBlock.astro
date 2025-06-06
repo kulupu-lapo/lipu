@@ -1,15 +1,17 @@
 ---
 interface Props {
-  title: string,
+  title: 'Entries' | 'Collections' | 'Tags' | 'Authors',
   value: number,
   link: string
 }
 
+import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n.ts"
+import { data } from "@/i18n/ui";
+
 const { title, value, link } = Astro.props;
 
-
-import { urlLocaliser } from "@/utils/i18n.ts"
 const localUrl = urlLocaliser(Astro.url)
+const t = translator(data, getLangFromUrl(Astro.url))
 ---
 
 <style>
@@ -46,6 +48,6 @@ const localUrl = urlLocaliser(Astro.url)
 </style>
 
 <a href={localUrl('/'+link)}><div class={link}>
-  <small>{title}</small>
+  <small>{t(`stats.${title}`)}</small>
   <p>{value}</p>
 </div></a>
