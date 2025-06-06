@@ -1,7 +1,10 @@
 ---
 import DarkModeToggle from "@/components/DarkModeToggle.astro";
----
+import { translator, getLangFromUrl } from "@/utils/i18n.ts"
+import { data } from "@/i18n/ui.ts"
 
+const t = translator(data, getLangFromUrl(Astro.url))
+---
 <style>
   header {
     position: relative;
@@ -29,11 +32,11 @@ import DarkModeToggle from "@/components/DarkModeToggle.astro";
     <img alt="open Lapo" src="./header.svg" />
   </a>
   <DarkModeToggle />
-  <a href="./all">All</a>{" · "}
-  <a href="./collections">Collections</a>{" · "}
-  <a href="./tags">Tags</a>{" · "}
-  <a href="./authors">Authors</a>{" · "}
-  <a href="./adaptations">Adaptations</a>{" · "}
-  <a href="./random">Random</a>{" · "}
-  <a href="./add">Add</a>
+  <a href="./all">{t("nav.all")}</a>{" · "}
+  <a href="./collections">{t("nav.collections")}</a>{" · "}
+  <a href="./tags">{t("nav.tags")}</a>{" · "}
+  <a href="./authors">{t("nav.authors")}</a>{" · "}
+  <a href="./adaptations">{t("nav.adaptations")}</a>{" · "}
+  <a href="./random">{t("nav.random")}</a>{" · "}
+  <a href="./add">{t("nav.add")}</a>
 </header>

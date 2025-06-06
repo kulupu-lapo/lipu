@@ -2,10 +2,11 @@ export const languages = {
   en: 'English',
   tok: 'toki pona',
 };
-export const locales = Object.keys(languages);
+export type Langcode = keyof typeof languages;
+export const locales = Object.keys(languages) as Langcode[];
 export const defaultLang = 'en';
 
-const i18n_prefixes = locales.map( locale => ({ locale: locale, prefix: locale }) ).concat({ locale: defaultLang, prefix: '' });
+const i18n_prefixes = locales.map( locale => ({ locale: locale, prefix: locale as string }) ).concat({ locale: defaultLang, prefix: '' });
 
 export async function getStaticLanguagePaths() {
   return i18n_prefixes.map(({locale, prefix}) => {
@@ -26,4 +27,14 @@ export function internationaliseStaticPaths<T,E>(paths : {params: T, props: E}[]
             }
         }))
     )
+} 
+
+export function getLangFromUrl(url: URL) {
+    const [, lang] = url.pathname.split('/');
+    if ((locales as string[]).includes(lang)) return lang as Langcode;
+    return defaultLang;
+}
+export function translator<T extends Record<Langcode, Record<string, string>>>(dataset : T, langcode : Langcode) {
+    type TranslationKey = keyof T[typeof defaultLang]
+    return (key : TranslationKey) => key in dataset[langcode] ? dataset[langcode][key as string] : dataset[defaultLang][key as string]
 } 
