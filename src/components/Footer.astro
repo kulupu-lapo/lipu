@@ -1,7 +1,6 @@
 ---
-import { translator, getLangFromUrl } from "@/utils/i18n";
-import { data } from "@/i18n/info";
-const t = translator(data, getLangFromUrl(Astro.url))
+import { getLangFromUrl } from "@/utils/i18n";
+import MarkdownSnippet from "@/components/MarkdownSnippet.astro";
 ---
 <style>
   footer {
@@ -19,5 +18,6 @@ const t = translator(data, getLangFromUrl(Astro.url))
     font-weight: initial;
   }
 </style>
-
-<footer set:html={t('footer')} />
+<footer>
+  <MarkdownSnippet lang={getLangFromUrl(Astro.url)} filename='footer' />
+</footer>
