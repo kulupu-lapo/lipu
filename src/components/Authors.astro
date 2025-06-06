@@ -6,6 +6,9 @@ interface Props {
 }
 
 const { authors } = Astro.props;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <style>
@@ -16,7 +19,7 @@ const { authors } = Astro.props;
 {
   authors &&
     authors
-      .map((author) => <a href={`./a/${escape(author)}`}>{author}</a>)
+      .map((author) => <a href={localUrl(`/a/${escape(author)}`)}>{author}</a>)
       .reduce((prev, curr, i) => (
         <>
           {prev}, {curr}

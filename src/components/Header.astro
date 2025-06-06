@@ -1,9 +1,10 @@
 ---
 import DarkModeToggle from "@/components/DarkModeToggle.astro";
-import { translator, getLangFromUrl } from "@/utils/i18n.ts"
+import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n.ts"
 import { data } from "@/i18n/ui.ts"
 
 const t = translator(data, getLangFromUrl(Astro.url))
+const localUrl = urlLocaliser(Astro.url)
 ---
 <style>
   header {
@@ -28,15 +29,15 @@ const t = translator(data, getLangFromUrl(Astro.url))
 </style>
 
 <header>
-  <a href="./">
+  <a href={localUrl("/")}>
     <img alt="open Lapo" src="./header.svg" />
   </a>
   <DarkModeToggle />
-  <a href="./all">{t("nav.all")}</a>{" · "}
-  <a href="./collections">{t("nav.collections")}</a>{" · "}
-  <a href="./tags">{t("nav.tags")}</a>{" · "}
-  <a href="./authors">{t("nav.authors")}</a>{" · "}
-  <a href="./adaptations">{t("nav.adaptations")}</a>{" · "}
-  <a href="./random">{t("nav.random")}</a>{" · "}
-  <a href="./add">{t("nav.add")}</a>
+  <a href={localUrl("/all")}>{t("nav.all")}</a>{" · "}
+  <a href={localUrl("/collections")}>{t("nav.collections")}</a>{" · "}
+  <a href={localUrl("/tags")}>{t("nav.tags")}</a>{" · "}
+  <a href={localUrl("/authors")}>{t("nav.authors")}</a>{" · "}
+  <a href={localUrl("/adaptations")}>{t("nav.adaptations")}</a>{" · "}
+  <a href={localUrl("/random")}>{t("nav.random")}</a>{" · "}
+  <a href={localUrl("/add")}>{t("nav.add")}</a>
 </header>

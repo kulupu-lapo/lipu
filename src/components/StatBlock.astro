@@ -8,6 +8,8 @@ interface Props {
 const { title, value, link } = Astro.props;
 
 
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <style>
@@ -43,7 +45,7 @@ const { title, value, link } = Astro.props;
   }
 </style>
 
-<a href={link}><div class={link}>
+<a href={localUrl('/'+link)}><div class={link}>
   <small>{title}</small>
   <p>{value}</p>
 </div></a>

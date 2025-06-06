@@ -9,6 +9,9 @@ interface Props {
 }
 
 const { post, query = "" } = Astro.props;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <style>
@@ -32,7 +35,7 @@ const { post, query = "" } = Astro.props;
   }
 </style>
 <li>
-  <a href={`./${post.id}/${query ? `?q=${query}` : ""}`} class="post">{post.data.title}</a>
+  <a href={localUrl(`/${post.id}/${query ? `?q=${query}` : ""}`)} class="post">{post.data.title}</a>
   <p>
     by <Authors authors={post.data.authors} />,
     <span class="date">{formatDate(post.data.date, post.data["date-precision"])}</span>

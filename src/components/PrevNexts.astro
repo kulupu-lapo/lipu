@@ -9,6 +9,7 @@ interface Props {
       next?: CollectionEntry<"blog">;
     };
   };
+  langPrefix: string;
 }
 
 const humanReadable = (string: string) => {
@@ -20,7 +21,7 @@ const humanReadable = (string: string) => {
   return string;
 };
 
-const { prevnexts } = Astro.props;
+const { prevnexts, langPrefix } = Astro.props;
 ---
 
 <style>
@@ -105,10 +106,11 @@ const { prevnexts } = Astro.props;
   const updatePage = () => {
     const prevnext = prevnexts[getQuery()];
     navSelect.value = getQuery();
+    const lang = navSelect.dataset.langprefix || '.';
 
     const prev = document.getElementById("nav-prev-link")!;
     if (prevnext.prev) {
-      prev.setAttribute("href", `./${prevnext.prev?.id}?q=${getQuery()}`);
+      prev.setAttribute("href", `${lang}/${prevnext.prev?.id}?q=${getQuery()}`);
       prev.innerText = `« ${abbreviate(prevnext.prev?.data.title)}`;
     } else {
       prev.innerText = "";
@@ -116,7 +118,7 @@ const { prevnexts } = Astro.props;
 
     const next = document.getElementById("nav-next-link")!;
     if (prevnext.next) {
-      next.setAttribute("href", `./${prevnext.next?.id}?q=${getQuery()}`);
+      next.setAttribute("href", `${lang}/${prevnext.next?.id}?q=${getQuery()}`);
       next.innerText = `${abbreviate(prevnext.next?.data.title)} »`;
     } else {
       next.innerText = "";
@@ -136,7 +138,7 @@ const { prevnexts } = Astro.props;
   <hr />
   <div>
     <a id="nav-prev-link"></a>
-    <select id="nav-select" value="/">
+    <select id="nav-select" data-langprefix={langPrefix} value="/">
       {
         Object.entries(prevnexts).map(([name, pn]) => (
           <option value={name}>{humanReadable(name)}</option>

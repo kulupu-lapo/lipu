@@ -5,6 +5,9 @@ import { escape, postsByOriginal } from "@/utils/content";
 import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <BaseLayout title="authors">
@@ -13,7 +16,7 @@ export const getStaticPaths = getStaticLanguagePaths;
     {
       postsByOriginal.map((row) => (
         <li>
-          <a href={`./o/${escape(row.original)}`}>{row.original}{row.authors.length > 0 && " (" + row.authors.join(', ') + ")" }</a>
+          <a href={localUrl(`/o/${escape(row.original)}`)}>{row.original}{row.authors.length > 0 && " (" + row.authors.join(', ') + ")" }</a>
           {` (${row.posts.length} adaptations)`}
         </li>
       ))

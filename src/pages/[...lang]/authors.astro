@@ -5,6 +5,9 @@ import { escape, postsByAuthor } from "@/utils/content";
 import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <BaseLayout title="authors">
@@ -13,7 +16,7 @@ export const getStaticPaths = getStaticLanguagePaths;
     {
       postsByAuthor.map((row) => (
         <li>
-          <a href={`./a/${escape(row.author)}`}>{row.author}</a>
+          <a href={localUrl(`/a/${escape(row.author)}`)}>{row.author}</a>
           {` (${row.posts.length} posts)`}
         </li>
       ))

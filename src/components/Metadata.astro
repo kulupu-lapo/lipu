@@ -6,6 +6,9 @@ interface Props {
 }
 
 const { post } = Astro.props;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <style>
@@ -41,7 +44,7 @@ const { post } = Astro.props;
       <p>
         Tags:{" "}
         {post.tags.map((tag) => (
-          <a href={`./t/${escape(tag)}`}>{tag}</a>
+          <a href={localUrl(`/t/${escape(tag)}`)}>{tag}</a>
         ))}
       </p>
     )
@@ -72,7 +75,7 @@ const { post } = Astro.props;
     post.original && post.original.title !== null &&  (
       <p>
         <span>Original:</span>
-        <a href={`./o/${escape(post.original.title)}`}>{post.original.title}</a>
+        <a href={localUrl(`/o/${escape(post.original.title)}`)}>{post.original.title}</a>
         {
           post.original.authors && (
             <span>

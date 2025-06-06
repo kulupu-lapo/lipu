@@ -10,7 +10,7 @@ const i18n_prefixes = locales.map( locale => ({ locale: locale, prefix: locale a
 
 export async function getStaticLanguagePaths() {
   return i18n_prefixes.map(({locale, prefix}) => {
-    return { params: { lang: prefix }, props: { lang: locale }, };
+    return { params: { lang: prefix }, props: { lang: locale, langPrefix: prefix === '' ? '' : prefix + '/' }, };
   });
 }
 
@@ -34,6 +34,13 @@ export function getLangFromUrl(url: URL) {
     if ((locales as string[]).includes(lang)) return lang as Langcode;
     return defaultLang;
 }
+
+export function urlLocaliser(url: URL) {
+    const [, lang] = url.pathname.split('/');
+    const prefix = (locales as string[]).includes(lang) ? lang : ''
+    return (path : string) => prefix + path 
+}
+
 export function translator<T extends Record<Langcode, Record<string, string>>>(dataset : T, langcode : Langcode) {
     type TranslationKey = keyof T[typeof defaultLang]
     return (key : TranslationKey) => key in dataset[langcode] ? dataset[langcode][key as string] : dataset[defaultLang][key as string]

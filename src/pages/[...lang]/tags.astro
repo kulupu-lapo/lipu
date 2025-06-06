@@ -5,6 +5,9 @@ import { escape, postsByTag } from "@/utils/content";
 import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <BaseLayout title="tags">
@@ -13,7 +16,7 @@ export const getStaticPaths = getStaticLanguagePaths;
     {
       postsByTag.map((row) => (
         <li>
-          <a href={`./t/${escape(row.tag)}`}>{row.tag}</a>
+          <a href={localUrl(`/t/${escape(row.tag)}`)}>{row.tag}</a>
           {` (${row.posts.length} posts)`}
         </li>
       ))

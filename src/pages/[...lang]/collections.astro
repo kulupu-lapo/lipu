@@ -5,6 +5,9 @@ import { escape, postsByCollection } from "@/utils/content";
 import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
+
+import { urlLocaliser } from "@/utils/i18n.ts"
+const localUrl = urlLocaliser(Astro.url)
 ---
 
 <BaseLayout title="collections">
@@ -13,7 +16,7 @@ export const getStaticPaths = getStaticLanguagePaths;
     {
       postsByCollection.map((row) => (
         <li>
-          <a href={`./c/${escape(row.collection)}`}>{row.collection}</a>
+          <a href={localUrl(`/c/${escape(row.collection)}`)}>{row.collection}</a>
           {` (${row.posts.length} posts)`}
         </li>
       ))
