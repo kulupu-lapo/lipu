@@ -5,10 +5,14 @@ interface Props {
   post: CollectionEntry<"blog">["data"];
 }
 
+
+import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n.ts"
+import { data } from "@/i18n/ui";
+
 const { post } = Astro.props;
 
-import { urlLocaliser } from "@/utils/i18n.ts"
 const localUrl = urlLocaliser(Astro.url)
+const t = translator(data, getLangFromUrl(Astro.url))
 ---
 
 <style>
@@ -27,63 +31,81 @@ const localUrl = urlLocaliser(Astro.url)
 </style>
 
 <details open>
-  <summary>Details</summary>
+  <summary>{t('metadata.container_title')}</summary>
   <p>
-    Edit on
+    {t('metadata.github.pre')}
     <a
       href={`https://github.com/kulupu-lapo/poki/blob/main/plaintext/${Astro.url.pathname
         .split("/")
         .filter((x) => x)
-        .join("/")}.md?plain=1`}>Github</a
+        .join("/")}.md?plain=1`}>{t('metadata.github.github')}</a
     >
+    {t('metadata.github.post')}
   </p>
-  {post.description && <p>Description: {post.description}</p>}
-  {post.proofreaders && <p>Proofreaders: {post.proofreaders.join(", ")}</p>}
+  {post.description && <p>
+    {t('metadata.description.pre')}
+    {post.description}
+    {t('metadata.description.post')}
+  </p>}
+  {post.proofreaders && <p>
+    {t('metadata.proofreaders.pre')}
+    {post.proofreaders.join(t('metadata.proofreaders.between'))}
+    {t('metadata.proofreaders.post')}
+  </p>}
   {
     post.tags && (
       <p>
-        Tags:{" "}
+        {t('metadata.tags.pre')}
         {post.tags.map((tag) => (
           <a href={localUrl(`/t/${escape(tag)}`)}>{tag}</a>
         ))}
       </p>
     )
   }
-  {post.license && <p>License: {post.license}</p>}
+  {post.license && <p>
+    {t('metadata.license.pre')}
+    {post.license}
+    {t('metadata.license.post')}
+  </p>}
 
   {
     post.sources && (
       <p>
-        <span>Sources:</span>
+        <span>{t('metadata.sources.pre')}</span>
         {post.sources.map((source, i) => (
           <a href={source}>{source.split("/")[2] ?? i + 1}</a>
         ))}
+        {t('metadata.sources.post')}
       </p>
     )
   }
   {
     post.archives && (
       <p>
-        <span>Archives:</span>
+        <span>{t('metadata.archives.pre')}</span>
         {post.archives.map((archive, i) => (
           <a href={archive}>{archive.split("/")[2] ?? i + 1} </a>
         ))}
+        {t('metadata.archives.post')}
       </p>
     )
   }
   {
     post.original && post.original.title !== null &&  (
       <p>
-        <span>Original:</span>
+        <span>{t('metadata.original.pre')}</span>
         <a href={localUrl(`/o/${escape(post.original.title)}`)}>{post.original.title}</a>
+        {t('metadata.original.post')}
         {
           post.original.authors && (
             <span>
-              by {post.original.authors.reduce((prev, curr, i) => (
+              {t('metadata.originalauthors.pre')}
+              {post.original.authors.reduce((prev, curr, i) => (
                 <>
-                  {prev}, {curr}
+                  {prev}{t('metadata.originalauthors.between')}{curr}
                 </>
               ))}
+              {t('metadata.originalauthors.post')}
             </span>
           )
         }
@@ -93,12 +115,13 @@ const localUrl = urlLocaliser(Astro.url)
   {
     (post.preprocessing || post["accessibility-notes"] || post.notes) && (
       <p>
-        <span>Notes:</span>
+        <span>{t('metadata.notes.pre')}</span>
         {post.preprocessing && <span>{post.preprocessing}</span>}
         {post["accessibility-notes"] && (
           <span>{post["accessibility-notes"]}</span>
         )}
         {post.notes && <span>{post.notes}</span>}
+        <span>{t('metadata.notes.post')}</span>
       </p>
     )
   }
