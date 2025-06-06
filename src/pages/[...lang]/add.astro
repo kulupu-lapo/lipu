@@ -2,6 +2,9 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Error from "@/components/Error.astro";
 import Input from "@/components/Input.astro";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
+
+export const getStaticPaths = getStaticLanguagePaths;
 ---
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

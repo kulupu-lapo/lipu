@@ -8,12 +8,13 @@ import PrevNexts from "@/components/PrevNexts.astro";
 import { posts, prevnexts } from "@/utils/content";
 import { formatDate } from "@/utils/date";
 import { type CollectionEntry, render } from "astro:content";
+import { internationaliseStaticPaths } from "@/utils/i18n";
 
 export async function getStaticPaths() {
-  return posts.map((post, i) => ({
+  return internationaliseStaticPaths(posts.map((post, i) => ({
     params: { slug: post.id },
     props: post,
-  }));
+  })));
 }
 
 type Props = CollectionEntry<"blog">;

@@ -8,12 +8,15 @@ import {
   getPostsByCollection,
   unescape,
 } from "@/utils/content";
+import { internationaliseStaticPaths } from "@/utils/i18n";
 
 export async function getStaticPaths() {
-  return collections.map((collection) => ({
-    params: { collection: escape(collection.name) },
-    props: { posts: getPostsByCollection(collection) },
-  }));
+  return internationaliseStaticPaths(
+    collections.map((collection) => ({
+      params: { collection: escape(collection.name) },
+      props: { posts: getPostsByCollection(collection) },
+    }))
+  );
 }
 const { collection } = Astro.params;
 const { posts } = Astro.props;

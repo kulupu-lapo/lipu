@@ -3,12 +3,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import FoundPost from "@/components/FoundPost.astro";
 import { authors, escape, getPostsByAuthor, unescape } from "@/utils/content";
+import { internationaliseStaticPaths } from "@/utils/i18n";
 
 export async function getStaticPaths() {
-  return authors.map((author) => ({
-    params: { author: escape(author) },
-    props: { posts: getPostsByAuthor(author) },
-  }));
+  return internationaliseStaticPaths(
+    authors.map((author) => ({
+      params: { author: escape(author) },
+      props: { posts: getPostsByAuthor(author) },
+    }))
+  );
 }
 
 const { author } = Astro.params;

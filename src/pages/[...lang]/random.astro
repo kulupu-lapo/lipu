@@ -3,7 +3,9 @@ import "@/styles/global.css";
 
 import { posts } from "@/utils/content";
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
+export const getStaticPaths = getStaticLanguagePaths;
 const links = posts.map((post) => `${import.meta.env.BASE_URL}${post.id}`);
 ---
 

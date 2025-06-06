@@ -6,6 +6,9 @@ import { posts } from "@/utils/content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 import { getCollection, render } from "astro:content";
 import FoundPost from "@/components/FoundPost.astro";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
+
+export const getStaticPaths = getStaticLanguagePaths;
 
 const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
 const overview = (await getCollection("meta")).find((post) => post.id == "overview")!;

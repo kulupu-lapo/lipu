@@ -2,6 +2,9 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import { escape, postsByOriginal } from "@/utils/content";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
+
+export const getStaticPaths = getStaticLanguagePaths;
 ---
 
 <BaseLayout title="authors">

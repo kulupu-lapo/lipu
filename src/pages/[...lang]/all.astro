@@ -3,7 +3,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import FoundPost from "@/components/FoundPost.astro";
 import { posts } from "@/utils/content";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
+export const getStaticPaths = getStaticLanguagePaths;
 ---
 
 <BaseLayout title="All works">

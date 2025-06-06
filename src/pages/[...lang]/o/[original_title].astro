@@ -3,12 +3,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import FoundPost from "@/components/FoundPost.astro";
 import { originals, getAuthorsOfOriginal, escape, getPostsByOriginal, unescape } from "@/utils/content";
+import { internationaliseStaticPaths } from "@/utils/i18n";
 
 export async function getStaticPaths() {
-  return originals.map((original) => ({
-    params: { original_title: escape(original) },
-    props: { posts: getPostsByOriginal(original) },
-  }));
+  return internationaliseStaticPaths(
+    originals.map((original) => ({
+      params: { original_title: escape(original) },
+      props: { posts: getPostsByOriginal(original) },
+    }))
+  );
 }
 
 const { original_title } = Astro.params;
