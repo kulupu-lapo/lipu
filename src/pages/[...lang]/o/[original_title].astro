@@ -3,7 +3,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import FoundPost from "@/components/FoundPost.astro";
 import { originals, getAuthorsOfOriginal, escape, getPostsByOriginal, unescape } from "@/utils/content";
-import { internationaliseStaticPaths } from "@/utils/i18n";
+import { internationaliseStaticPaths, translator } from "@/utils/i18n";
+import { data } from "@/i18n/site";
 
 export async function getStaticPaths() {
   return internationaliseStaticPaths(
@@ -15,12 +16,25 @@ export async function getStaticPaths() {
 }
 
 const { original_title } = Astro.params;
-const { posts } = Astro.props;
+const { posts, lang } = Astro.props;
 const authors = getAuthorsOfOriginal(unescape(original_title))
+const t = translator(data, lang)
 ---
 
 <BaseLayout title={unescape(original_title)}>
-  <h2>Adaptations of {unescape(original_title)} { authors.length > 0 && (<>by {authors.join(', ')}</>)} ({posts.length})</h2>
+  <h2>
+    {t('original.pre')
+    }{unescape(original_title)
+    }{ authors.length > 0 && (
+      <>
+        {t('original.authors.pre')
+        }{authors.join(t('original.authors.between'))
+        }{t('original.authors.post')}</>
+    )}{t('original.mid')
+    }{posts.length
+    }{t('original.post')}
+  </h2>
+  <h2>Adaptations of {unescape(original_title)}  ({posts.length})</h2>
   <ul>
     {posts.map((post) => <FoundPost {post} query={`o/${original_title}`} />)}
   </ul>

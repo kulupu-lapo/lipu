@@ -8,7 +8,8 @@ import {
   getPostsByCollection,
   unescape,
 } from "@/utils/content";
-import { internationaliseStaticPaths } from "@/utils/i18n";
+import { internationaliseStaticPaths, translator } from "@/utils/i18n";
+import { data } from "@/i18n/site";
 
 export async function getStaticPaths() {
   return internationaliseStaticPaths(
@@ -19,12 +20,19 @@ export async function getStaticPaths() {
   );
 }
 const { collection } = Astro.params;
-const { posts } = Astro.props;
+const { posts, lang } = Astro.props;
+const t = translator(data, lang)
 ---
 
 <BaseLayout title={unescape(collection)}>
-  <h2>Posts that comprise {unescape(collection)} ({posts.length})</h2>
+  <h2>
+    {t('collection.pre')
+    }{unescape(collection)
+    }{t('collection.mid')
+    }{posts.length
+    }{t('collection.post')}
+  </h2>
   <ol>
-    {posts.map((post) => <FoundPost {post} query={`c/${collection}`} />)}
+    {posts.map((post) => post && <FoundPost {post} query={`c/${collection}`} />)}
   </ol>
 </BaseLayout>

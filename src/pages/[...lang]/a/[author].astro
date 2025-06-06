@@ -3,23 +3,31 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import FoundPost from "@/components/FoundPost.astro";
 import { authors, escape, getPostsByAuthor, unescape } from "@/utils/content";
-import { internationaliseStaticPaths } from "@/utils/i18n";
+import { internationaliseStaticPaths, translator } from "@/utils/i18n";
+import { data } from "@/i18n/site";
 
 export async function getStaticPaths() {
   return internationaliseStaticPaths(
     authors.map((author) => ({
-      params: { author: escape(author) },
-      props: { posts: getPostsByAuthor(author) },
+      params: { author: escape(author!) },
+      props: { posts: getPostsByAuthor(author!) },
     }))
   );
 }
 
 const { author } = Astro.params;
-const { posts } = Astro.props;
+const { posts, lang } = Astro.props;
+const t = translator(data, lang)
 ---
 
 <BaseLayout title={unescape(author)}>
-  <h2>Posts by {unescape(author)} ({posts.length})</h2>
+  <h2>
+    {t('author.pre')
+    }{unescape(author)
+    }{t('author.mid')
+    }{posts.length
+    }{t('author.post')}
+  </h2>
   <ul>
     {posts.map((post) => <FoundPost {post} query={`a/${author}`} />)}
   </ul>
