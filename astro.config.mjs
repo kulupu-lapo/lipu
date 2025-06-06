@@ -5,6 +5,8 @@ import sitemap from "@astrojs/sitemap";
 
 import react from "@astrojs/react";
 
+import { locales, defaultLang } from "./src/utils/i18n.ts"
+
 const deploy = import.meta.env.PROD
   ? { site: "https://lipu.pona.la/", base: "./" }
   : { site: "http://localhost/", base: "./" };
@@ -18,5 +20,13 @@ export default defineConfig({
       sitemap(),
       react(),
     ],
+  },
+  i18n: {
+    locales,
+    defaultLocale: defaultLang,
+    routing: {
+        prefixDefaultLocale: false,
+        redirectToDefaultLocale: true,
+    }
   },
 });
