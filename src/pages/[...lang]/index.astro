@@ -6,10 +6,12 @@ import { posts } from "@/utils/content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
 import MarkdownSnippet from "@/components/MarkdownSnippet.astro";
 import FoundPost from "@/components/FoundPost.astro";
-import { getStaticLanguagePaths, getLangFromUrl } from "@/utils/i18n.ts"
+import { getStaticLanguagePaths, getLangFromUrl, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
 
 export const getStaticPaths = getStaticLanguagePaths;
 const lang = getLangFromUrl(Astro.url)
+const t = translator(data, lang)
 ---
 
 <style>
@@ -43,15 +45,15 @@ const lang = getLangFromUrl(Astro.url)
   </section>
   <Stats />
   <section>
-    <h2>Contributing and project overview</h2>
+    <h2>{t('index.h2')}</h2>
     <MarkdownSnippet lang={lang} filename="overview" />
-    <h3 style="text-align: center;">Hall of fame</h3>
+    <h3 style="text-align: center;">{t('index.contributors.title')}</h3>
     <a href="https://github.com/kulupu-lapo/poki/graphs/contributors">
       <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki"
-           alt="poki Lapo contributors' profile pictures"
+           alt={t('index.contributors.alttext')}
            style="text-align: center;"
       />
     </a>
-    <small class="thanks">Thank you all so much, wouldn't be possible without you! ❤️</small>
+    <small class="thanks">{t('index.contributors.caption')}</small>
   </section>
 </BaseLayout>
