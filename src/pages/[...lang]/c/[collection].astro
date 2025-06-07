@@ -26,11 +26,10 @@ const t = translator(data, lang)
 
 <BaseLayout title={unescape(collection)}>
   <h2>
-    {t('collection.pre')
-    }{unescape(collection)
-    }{t('collection.mid')
-    }{posts.length
-    }{t('collection.post')}
+    {t('collection.header(name, count)', {
+      name: unescape(collection),
+      count: posts.length
+    })}
   </h2>
   <ol>
     {posts.map((post) => post && <FoundPost {post} query={`c/${collection}`} />)}

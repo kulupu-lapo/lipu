@@ -45,5 +45,21 @@ export function urlLocaliser(url: URL) {
 
 export function translator<T extends Record<Langcode, Record<string, string>>>(dataset : T, langcode : Langcode) {
     type TranslationKey = keyof T[typeof defaultLang]
-    return (key : TranslationKey) => key in dataset[langcode] ? dataset[langcode][key as string] : dataset[defaultLang][key as string]
+    return (key : TranslationKey, variables? : Record<string, string | number | string[]>) => {
+        let template = key in dataset[langcode] ? 
+            dataset[langcode][key as string] 
+            : dataset[defaultLang][key as string]
+        if (variables === undefined) variables = {}
+
+        for (const [varname, value] of Object.entries(variables)) {
+            if (Array.isArray(value)) {
+                template = template.replaceAll(
+                    new RegExp(`\\{\\{${varname} between='(.+)'\\}\\}`, 'g'),
+                    (_,seperator) => value.join(seperator))
+            } else {
+                template = template.replaceAll("{{"+varname+"}}", value.toString())
+            }
+        } 
+        return template
+    }
 } 

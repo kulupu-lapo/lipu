@@ -6,28 +6,11 @@ export const data = {
         'index.contributors.caption': "Thank you all so much, wouldn't be possible without you! ❤️",
         
         // collation pages
-        // of the form {X.pre}title{X.mid}count{X.post}
-        'author.pre': "Posts by ",
-        'author.mid': " (",
-        'author.post': ")",
-
-        'collection.pre': "Posts that comprise ",
-        'collection.mid': " (",
-        'collection.post': ")",
-
-        'tag.pre': "Posts tagged with ",
-        'tag.mid': " (",
-        'tag.post': ")",
-
-        'original.pre': "Adaptations of ",
-        'original.mid': " (",
-        'original.post': ")",
-
-        'original.authors.pre': " by ",
-        'original.authors.between': ", ",
-        'original.authors.post': "",
-        
-
+        'author.header(name, count)': "Post by {{name}} ({{count}})",
+        'collection.header(name, count)': "Posts that comprise {{name}} ({{count}})",
+        'original.header(name, count, authors)': "Adaptations of {{name}}{{authors}} ({{count}})",
+        'original.authors(authors)': " by {{authors between=', '}}",
+        'tag.header(name, count)': "Post tagged with {{name}} ({{count}})",
         
     },
     tok: {

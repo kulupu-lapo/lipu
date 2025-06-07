@@ -18,23 +18,20 @@ export async function getStaticPaths() {
 const { original_title } = Astro.params;
 const { posts, lang } = Astro.props;
 const authors = getAuthorsOfOriginal(unescape(original_title))
+  .filter(author => author !== null) as string[]
 const t = translator(data, lang)
 ---
 
 <BaseLayout title={unescape(original_title)}>
   <h2>
-    {t('original.pre')
-    }{unescape(original_title)
-    }{ authors.length > 0 && (
-      <>
-        {t('original.authors.pre')
-        }{authors.join(t('original.authors.between'))
-        }{t('original.authors.post')}</>
-    )}{t('original.mid')
-    }{posts.length
-    }{t('original.post')}
+    {t('original.header(name, count, authors)', {
+      name: unescape(original_title),
+      count: posts.length,
+      authors: authors.length > 0 ?
+          t('original.authors(authors)', { authors } )
+          : ''
+    })}
   </h2>
-  <h2>Adaptations of {unescape(original_title)}  ({posts.length})</h2>
   <ul>
     {posts.map((post) => <FoundPost {post} query={`o/${original_title}`} />)}
   </ul>

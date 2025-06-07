@@ -22,11 +22,10 @@ const t = translator(data, lang)
 
 <BaseLayout title={unescape(tag)}>
   <h2>
-    {t('tag.pre')
-    }{unescape(tag)
-    }{t('tag.mid')
-    }{posts.length
-    }{t('tag.post')}
+    {t('tag.header(name, count)', {
+      name: unescape(tag),
+      count: posts.length
+    })}
   </h2>
   <ul>
     {posts.map((post) => <FoundPost {post} query={`t/${tag}`} />)}
