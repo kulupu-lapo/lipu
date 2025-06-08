@@ -46,7 +46,7 @@ const { Content } = await render(post);
     <center>{formatDate(post.data.date, post.data["date-precision"])}</center>
 
     <!-- <PrevNexts client:load prevnexts={prevnexts[post.id]} /> -->
-    <PrevNexts prevnexts={prevnexts[post.id]} />
+    <PrevNexts prevnexts={prevnext} />
 
     {embed && <Embed id={embed} />}
     <section>
