@@ -10,7 +10,7 @@ export const getStaticPaths = getStaticLanguagePaths;
 const t = translator(data, Astro.props.lang)
 ---
 
-<BaseLayout title={t("all.header(count)", {count: posts.length})}>
+<BaseLayout title={t("all.title", {count: posts.length})}>
     <section>
         <h2>{t("all.header(count)", { count: posts.length})}</h2>
         <ul>

@@ -8,11 +8,6 @@ export const data = {
     'nav.random': "Random",
     'nav.add': "Add",
 
-    'stats.Entries': "Entries",
-    'stats.Collections': "Collections",
-    'stats.Tags': "Tags",
-    'stats.Authors': "Authors",
-
     // titles of prev/next bar options
     'index.default': "Index",
     'index.author(name)': "by {name}",

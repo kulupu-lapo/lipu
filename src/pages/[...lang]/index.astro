@@ -45,15 +45,15 @@ const t = translator(data, lang)
   </section>
   <Stats />
   <section>
-    <h2>{t('index.h2')}</h2>
+    <h2>{t('homepage.h2')}</h2>
     <MarkdownSnippet lang={lang} filename="overview" />
-    <h3 style="text-align: center;">{t('index.contributors.title')}</h3>
+    <h3 style="text-align: center;">{t('homepage.contributors.title')}</h3>
     <a href="https://github.com/kulupu-lapo/poki/graphs/contributors">
       <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki"
-           alt={t('index.contributors.alttext')}
+           alt={t('homepage.contributors.alttext')}
            style="text-align: center;"
       />
     </a>
-    <small class="thanks">{t('index.contributors.caption')}</small>
+    <small class="thanks">{t('homepage.contributors.caption')}</small>
   </section>
 </BaseLayout>

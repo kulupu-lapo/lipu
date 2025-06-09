@@ -1,9 +1,13 @@
 export const data = {
     en: {
-        'index.h2': "Contributing and project overview",
-        'index.contributors.title': "Hall of fame",
-        'index.contributors.alttext': "poki Lapo contributors' profile pictures",
-        'index.contributors.caption': "Thank you all so much, wouldn't be possible without you! ❤️",
+        'homepage.h2': "Contributing and project overview",
+        'homepage.contributors.title': "Hall of fame",
+        'homepage.contributors.alttext': "poki Lapo contributors' profile pictures",
+        'homepage.contributors.caption': "Thank you all so much, wouldn't be possible without you! ❤️",
+        'homepage.stats.Entries': "Entries",
+        'homepage.stats.Collections': "Collections",
+        'homepage.stats.Tags': "Tags",
+        'homepage.stats.Authors': "Authors",
         
         // collation pages
         'author.header(name, count)': "Post by {{name}} ({{count}})",
