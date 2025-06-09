@@ -4,6 +4,7 @@ export const data = {
         'homepage.contributors.title': "Hall of fame",
         'homepage.contributors.alttext': "poki Lapo contributors' profile pictures",
         'homepage.contributors.caption': "Thank you all so much, wouldn't be possible without you! ❤️",
+        'homepage.stats.title': "Stats",
         'homepage.stats.Entries': "Entries",
         'homepage.stats.Collections': "Collections",
         'homepage.stats.Tags': "Tags",
