@@ -10,8 +10,10 @@ interface Props {
 
 const { post, query = "" } = Astro.props;
 
-import { urlLocaliser } from "@/utils/i18n.ts"
+import { urlLocaliser, translator, getLangFromUrl } from "@/utils/i18n.ts"
+import { data } from "@/i18n/ui";
 const localUrl = urlLocaliser(Astro.url)
+const t = translator(data, getLangFromUrl(Astro.url))
 ---
 
 <style>
@@ -37,7 +39,9 @@ const localUrl = urlLocaliser(Astro.url)
 <li>
   <a href={localUrl(`/${post.id}/${query ? `?q=${query}` : ""}`)} class="post">{post.data.title}</a>
   <p>
-    by <Authors authors={post.data.authors} />,
-    <span class="date">{formatDate(post.data.date, post.data["date-precision"])}</span>
+    {t('foundpost.pre')
+    }<Authors authors={post.data.authors} 
+    />{t('foundpost.mid')
+    }<span class="date">{formatDate(post.data.date, post.data["date-precision"])}</span>{t('foundpost.post')}
   </p>
 </li>

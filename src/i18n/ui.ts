@@ -13,6 +13,20 @@ export const data = {
     'stats.Tags': "Tags",
     'stats.Authors': "Authors",
 
+    // post preview on pages listing multiple posts
+    /* format: 
+      <a>[post title]</a>
+      <p>
+        {foundpost.pre}[list of authors]
+        {foundpost.mid}[post.date]
+        {foundpost.post}
+      </p>
+    */
+    'foundpost.pre': "by ",
+    'foundpost.mid': ", ",
+    'foundpost.post': "",
+
+    // metadata section on individual post pages
     'metadata.container_title': "Details",
 
     'metadata.github.pre': "Edit on ",
