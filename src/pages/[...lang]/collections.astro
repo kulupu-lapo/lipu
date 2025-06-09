@@ -2,22 +2,32 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 import { escape, postsByCollection } from "@/utils/content";
-import { getStaticLanguagePaths } from "@/utils/i18n.ts"
-
-export const getStaticPaths = getStaticLanguagePaths;
+import { getStaticLanguagePaths, translator } from "@/utils/i18n.ts"
 
 import { urlLocaliser } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+
 const localUrl = urlLocaliser(Astro.url)
+export const getStaticPaths = getStaticLanguagePaths;
+const t = translator(data, Astro.props.lang)
 ---
 
-<BaseLayout title="collections">
-  <h2>Collections ({postsByCollection.length})</h2>
+<BaseLayout title={t('collections.title')}>
+  <h2>{t('collections.header(count)', { count: postsByCollection.length })}</h2>
   <ul>
     {
       postsByCollection.map((row) => (
-        <li>
-          <a href={localUrl(`/c/${escape(row.collection)}`)}>{row.collection}</a>
-          {` (${row.posts.length} posts)`}
+      <li>
+          <a href={localUrl(`/a/${escape(row.collection)}`)}>
+            {t('collections.link(name, count)', {
+              name: row.collection,
+              count: row.posts.length,
+            })}
+          </a>
+          {t('collections.postlink(name, count)', {
+            name: row.collection,
+            count: row.posts.length,
+          })}
         </li>
       ))
     }

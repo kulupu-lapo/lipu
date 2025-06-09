@@ -12,6 +12,31 @@ export const data = {
         'original.authors(authors)': " by {{authors between=', '}}",
         'tag.header(name, count)': "Post tagged with {{name}} ({{count}})",
         
+        // pages listing collations
+        'all.title': "All works",
+        'all.header(count)': "{{count}} Works:",
+        
+        'adaptations.title': "Adaptations",
+        'adaptations.header(count)': "",
+        'adaptations.link(name, count, authors)': "{{name}}{{authors}}",
+        'adaptations.authors(authors)': " by {{authors between=', '}}",
+        'adaptations.postlink(name, count, authors)': " ({{count}} adaptations)",
+
+        'authors.title': "Authors",
+        'authors.header(count)': "Authors ({{count}})",
+        'authors.link(name, count)': "{{name}}",
+        'authors.postlink(name, count)': " ({{count}} posts)",
+
+        'collections.title': "Collections",
+        'collections.header(count)': "Collections ({{count}})",
+        'collections.link(name, count)': "{{name}}",
+        'collections.postlink(name, count)': " ({{count}} posts)",
+
+        'tags.title': "Tags",
+        'tags.header(count)': "Tags ({{count}})",
+        'tags.link(name, count)': "{{name}}",
+        'tags.postlink(name, count)': " ({{count}} posts)",
+        
     },
     tok: {
 

@@ -6,18 +6,28 @@ import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
 
-import { urlLocaliser } from "@/utils/i18n.ts"
-const localUrl = urlLocaliser(Astro.url)
+import { urlLocaliser, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+const localUrl = urlLocaliser(Astro.url);
+const t = translator(data, Astro.props.lang);
 ---
 
-<BaseLayout title="authors">
-  <h2>Authors ({postsByAuthor.length})</h2>
+<BaseLayout title={t('authors.title')}>
+  <h2>{t('authors.header(count)', {count: postsByAuthor.length})}</h2>
   <ul>
     {
       postsByAuthor.map((row) => (
         <li>
-          <a href={localUrl(`/a/${escape(row.author)}`)}>{row.author}</a>
-          {` (${row.posts.length} posts)`}
+          <a href={localUrl(`/a/${escape(row.author)}`)}>
+            {t('authors.link(name, count)', {
+              name: row.author,
+              count: row.posts.length,
+            })}
+          </a>
+          {t('authors.postlink(name, count)', {
+            name: row.author,
+            count: row.posts.length,
+          })}
         </li>
       ))
     }

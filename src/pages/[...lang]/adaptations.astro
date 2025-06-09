@@ -6,18 +6,33 @@ import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
 
-import { urlLocaliser } from "@/utils/i18n.ts"
+import { urlLocaliser, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site"
+const { lang } = Astro.props
 const localUrl = urlLocaliser(Astro.url)
+const t = translator(data, lang)
 ---
 
-<BaseLayout title="authors">
-  <h2>Adaptation sources ({postsByOriginal.length})</h2>
+<BaseLayout title={t('adaptations.title')}>
+  <h2>{t('adaptations.header(count)', {
+    count: postsByOriginal.length
+  })}</h2>
   <ul>
     {
       postsByOriginal.map((row) => (
         <li>
-          <a href={localUrl(`/o/${escape(row.original)}`)}>{row.original}{row.authors.length > 0 && " (" + row.authors.join(', ') + ")" }</a>
-          {` (${row.posts.length} adaptations)`}
+          <a href={localUrl(`/o/${escape(row.original)}`)}>
+            {t('adaptations.link(name, count, authors)', {
+              name: row.original,
+              count: row.posts.length,
+              authors: row.authors.length > 0 ? t('adaptations.authors(authors)', { authors: row.authors }) : ''
+            })}
+          </a>
+          {t('adaptations.postlink(name, count, authors)', {
+            name: row.original,
+            count: row.posts.length,
+            authors: row.authors.length > 0 ? t('adaptations.authors(authors)', { authors: row.authors }) : ''
+          })}
         </li>
       ))
     }

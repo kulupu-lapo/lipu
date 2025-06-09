@@ -6,18 +6,28 @@ import { getStaticLanguagePaths } from "@/utils/i18n.ts"
 
 export const getStaticPaths = getStaticLanguagePaths;
 
-import { urlLocaliser } from "@/utils/i18n.ts"
-const localUrl = urlLocaliser(Astro.url)
+import { urlLocaliser, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+const localUrl = urlLocaliser(Astro.url);
+const t = translator(data, Astro.props.lang);
 ---
 
-<BaseLayout title="tags">
-  <h2>Tags ({postsByTag.length})</h2>
+<BaseLayout title={t('tags.title')}>
+  <h2>{t('tags.header(count)', {count: postsByTag.length})}</h2>
   <ul>
     {
       postsByTag.map((row) => (
         <li>
-          <a href={localUrl(`/t/${escape(row.tag)}`)}>{row.tag}</a>
-          {` (${row.posts.length} posts)`}
+          <a href={localUrl(`/a/${escape(row.tag)}`)}>
+            {t('tags.link(name, count)', {
+              name: row.tag,
+              count: row.posts.length,
+            })}
+          </a>
+          {t('tags.postlink(name, count)', {
+            name: row.tag,
+            count: row.posts.length,
+          })}
         </li>
       ))
     }
