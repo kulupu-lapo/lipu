@@ -18,7 +18,7 @@ const t = translator(data, Astro.props.lang)
     {
       postsByCollection.map((row) => (
       <li>
-          <a href={localUrl(`/a/${escape(row.collection)}`)}>
+          <a href={localUrl(`/c/${escape(row.collection)}`)}>
             {t('collections.link(name, count)', {
               name: row.collection,
               count: row.posts.length,

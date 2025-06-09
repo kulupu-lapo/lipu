@@ -18,7 +18,7 @@ const t = translator(data, Astro.props.lang);
     {
       postsByTag.map((row) => (
         <li>
-          <a href={localUrl(`/a/${escape(row.tag)}`)}>
+          <a href={localUrl(`/t/${escape(row.tag)}`)}>
             {t('tags.link(name, count)', {
               name: row.tag,
               count: row.posts.length,
