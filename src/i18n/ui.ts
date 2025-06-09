@@ -13,6 +13,13 @@ export const data = {
     'stats.Tags': "Tags",
     'stats.Authors': "Authors",
 
+    // titles of prev/next bar options
+    'index.default': "Index",
+    'index.author(name)': "by {name}",
+    'index.collection(name)': "from {name}",
+    'index.tag(name)': "{name}",
+    'index.original(name)': "adapting {name}",
+
     // post preview on pages listing multiple posts
     /* format: 
       <a>[post title]</a>
