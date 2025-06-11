@@ -48,7 +48,7 @@ const { Content } = await render(post);
     <PrevNexts prevnexts={prevnext} langPrefix={Astro.url.pathname.startsWith('/'+post.lang) ? post.lang : '.' } />
 
     {embed && <Embed id={embed} />}
-    <section>
+    <section lang={post.lang === "tok" ? undefined : "tok"}>
       <Content />
     </section>
   </article>

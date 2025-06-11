@@ -2,6 +2,7 @@
 import BaseHead from "@/components/BaseHead.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
+import { getLangFromUrl } from "@/utils/i18n";
 
 interface Props {
   title: string;
@@ -11,7 +12,7 @@ const { title, description = "" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={getLangFromUrl(Astro.url)}>
   <head>
     <BaseHead title={title} description={description} />
   </head>

@@ -13,8 +13,11 @@ const { lang, filename } = Astro.props;
 
 const collection = await getCollection("meta")
 
-const md = collection.find((post) => post.id == `${lang}-${filename}`)!
-            || collection.find((post) => post.id == `${defaultLang}-${filename}`)!;
+let nativeMd = collection.find((post) => post.id == `${lang}-${filename}`)
+const md = nativeMd ?? collection.find((post) => post.id == `${defaultLang}-${filename}`)!;
+
 const { Content: Element } = await render(md);
 ---
-<Element />
+<div lang={nativeMd === undefined ? defaultLang : undefined}>
+  <Element />
+</div>
