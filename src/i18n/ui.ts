@@ -8,6 +8,13 @@ export const data = {
     'nav.random': "Random",
     'nav.add': "Add",
 
+    'nav.wasona': "Course",
+    'nav.library': "Library",
+    'nav.sinkulupu': "News",
+    'nav.mapona': "Discord",
+    'nav.ponala': "More",
+
+
     // titles of prev/next bar options
     'index.default': "Index",
     'index.author(name)': "by {name}",

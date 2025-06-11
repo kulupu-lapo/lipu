@@ -35,11 +35,20 @@ const localUrl = urlLocaliser(Astro.url)
   </a>
   <DarkModeToggle />
   <LanguageSwitch />
-  <a href={localUrl("/all")}>{t("nav.all")}</a>{" · "}
-  <a href={localUrl("/collections")}>{t("nav.collections")}</a>{" · "}
-  <a href={localUrl("/tags")}>{t("nav.tags")}</a>{" · "}
-  <a href={localUrl("/authors")}>{t("nav.authors")}</a>{" · "}
-  <a href={localUrl("/adaptations")}>{t("nav.adaptations")}</a>{" · "}
-  <a href={localUrl("/random")}>{t("nav.random")}</a>{" · "}
-  <a href={localUrl("/add")}>{t("nav.add")}</a>
+  <div style="font-weight: 700">
+    <a href="https://wasona.com/">{t('nav.wasona')}</a>{" · "}
+    {t('nav.library')}{" · "}
+    <a href="https://sin-kulupu.pona.la">{t('nav.sinkulupu')}</a>{" · "}
+    <a href="https://discord.gg/6zkugJFU4x">{t('nav.mapona')}</a>{" · "}
+    <a href="https://pona.la/">{t('nav.ponala')}</a>
+  </div>
+  <div class="secondary">
+    <a href={localUrl("/all")}>{t("nav.all")}</a>{" · "}
+    <a href={localUrl("/collections")}>{t("nav.collections")}</a>{" · "}
+    <a href={localUrl("/tags")}>{t("nav.tags")}</a>{" · "}
+    <a href={localUrl("/authors")}>{t("nav.authors")}</a>{" · "}
+    <a href={localUrl("/adaptations")}>{t("nav.adaptations")}</a>{" · "}
+    <a href={localUrl("/random")}>{t("nav.random")}</a>{" · "}
+    <a href={localUrl("/add")}>{t("nav.add")}</a>
+  </div>
 </header>
