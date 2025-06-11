@@ -35,7 +35,7 @@ if ((locales as string[]).includes(urlPrefix)) {
     </button>
     <ul hidden>
         {locales.map(langcode => 
-            (<li><a class={langcode === currentLocale ? 'active' : ''} href={langcode + "/" + path}>{languages[langcode]}</a></li>)
+            (<li><a class={langcode === currentLocale ? 'active' : ''} href={langcode + "/" + path} hreflang={langcode}>{languages[langcode]}</a></li>)
         )}
     </ul>
 </div>
@@ -57,13 +57,13 @@ if ((locales as string[]).includes(urlPrefix)) {
     --enFg: var(--bg);
     --arrows: var(--grey-1);
 }
-#languageSwitch:hover svg, #languageSwitch[data-expanded="true"] svg {
+#languageSwitch[data-expanded="true"] svg {
     --tokBg: var(--accent);
     --tokFg: var(--bg);
     --enBg: var(--bg-1);
     --enFg: var(--grey);
 }
-#languageSwitch[data-expanded="true"] svg {
+#languageSwitch:hover svg, #languageSwitch[data-expanded="true"] svg {
     --arrows: var(--accent);
 }
 

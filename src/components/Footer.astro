@@ -33,6 +33,6 @@ if ((locales as string[]).includes(urlPrefix)) {
   {locales.map(langcode => 
     langcode === currentLocale 
     ? (<span>{languages[langcode]}</span>) 
-    : (<a href={langcode + "/" + path}>{languages[langcode]}</a>)
+    : (<a href={langcode + "/" + path} hreflang={langcode}>{languages[langcode]}</a>)
   ).reduce((a,b) => (<>{a} · {b}</>))}
 </footer>
