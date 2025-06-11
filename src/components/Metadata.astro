@@ -1,14 +1,13 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content"
+import MixIn from "@/components/MixIn.astro";;
 import { escape } from "@/utils/content";
+import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n"
+import { data } from "@/i18n/ui";
+
 interface Props {
   post: CollectionEntry<"blog">["data"];
 }
-
-
-import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n.ts"
-import { data } from "@/i18n/ui";
-
 const { post } = Astro.props;
 
 const localUrl = urlLocaliser(Astro.url)
@@ -18,9 +17,6 @@ const t = translator(data, getLangFromUrl(Astro.url))
 <style>
   p {
     margin: initial;
-  }
-  a + a {
-    margin-left: 4px;
   }
   details {
     background-color: var(--bg-1);
@@ -33,95 +29,64 @@ const t = translator(data, getLangFromUrl(Astro.url))
 <details open>
   <summary>{t('metadata.container_title')}</summary>
   <p>
-    {t('metadata.github.pre')}
-    <a
-      href={`https://github.com/kulupu-lapo/poki/blob/main/plaintext/${Astro.url.pathname
-        .split("/")
-        .filter((x) => x)
-        .join("/")}.md?plain=1`}>{t('metadata.github.github')}</a
-    >
-    {t('metadata.github.post')}
+    <MixIn template={t('metadata.github[link]')}>
+      <a slot="link" href={`https://github.com/kulupu-lapo/poki/blob/main/plaintext/${Astro.url.pathname
+          .split("/")
+          .filter((x) => x)
+          .join("/")}.md?plain=1`}
+          >
+          {t('metadata.github.link')}
+      </a>
+    </MixIn>
   </p>
   {post.description && <p>
-    {t('metadata.description.pre')}
-    {post.description}
-    {t('metadata.description.post')}
+    {t('metadata.description(text)', {text: post.description})}
   </p>}
   {post.proofreaders && <p>
-    {t('metadata.proofreaders.pre')}
-    {post.proofreaders.join(t('metadata.proofreaders.between'))}
-    {t('metadata.proofreaders.post')}
+    {t('metadata.proofreaders(proofreaders)', {proofreaders: post.proofreaders})}
   </p>}
-  {
-    post.tags && (
-      <p>
-        {t('metadata.tags.pre')}
-        {post.tags.map((tag) => (
-          <a href={localUrl(`/t/${escape(tag)}`)}>{tag}</a>
-        ))}
-      </p>
-    )
-  }
+  {post.tags && <p>
+    <MixIn template={t('metadata.tags[links]')}>
+      {post.tags.map((tag) => (<a slot="links" href={localUrl(`/t/${escape(tag)}`)}>{tag}</a>))}
+    </MixIn>
+  </p>}
   {post.license && <p>
-    {t('metadata.license.pre')}
-    {post.license}
-    {t('metadata.license.post')}
+    {t('metadata.license(text)', {text: post.license})}
   </p>}
-
-  {
-    post.sources && (
-      <p>
-        <span>{t('metadata.sources.pre')}</span>
-        {post.sources.map((source, i) => (
-          <a href={source}>{source.split("/")[2] ?? i + 1}</a>
-        ))}
-        {t('metadata.sources.post')}
-      </p>
-    )
-  }
-  {
-    post.archives && (
-      <p>
-        <span>{t('metadata.archives.pre')}</span>
-        {post.archives.map((archive, i) => (
-          <a href={archive}>{archive.split("/")[2] ?? i + 1} </a>
-        ))}
-        {t('metadata.archives.post')}
-      </p>
-    )
-  }
+  {post.sources && <p>
+    <MixIn template={t('metadata.sources[links]')}>
+      {post.sources.map((source, i) => (
+        <a slot="links" href={source}>{source.split("/")[2] ?? i + 1}</a>
+      ))}
+    </MixIn>
+  </p>}
+  {post.archives && <p>
+    <MixIn template={t('metadata.archives[links]')}>
+      {post.archives.map((archive, i) => (
+        <a slot="links" href={archive}>{archive.split("/")[2] ?? i + 1}</a>
+      ))}
+    </MixIn>
+  </p>}
   {
     post.original && post.original.title !== null &&  (
       <p>
-        <span>{t('metadata.original.pre')}</span>
-        <a href={localUrl(`/o/${escape(post.original.title)}`)}>{post.original.title}</a>
-        {t('metadata.original.post')}
-        {
-          post.original.authors && (
-            <span>
-              {t('metadata.originalauthors.pre')}
-              {post.original.authors.reduce((prev, curr, i) => (
-                <>
-                  {prev}{t('metadata.originalauthors.between')}{curr}
-                </>
-              ))}
-              {t('metadata.originalauthors.post')}
-            </span>
-          )
-        }
+        <MixIn template={t('metadata.original[title, credits]')}>
+          <a slot="title" href={localUrl(`/o/${escape(post.original.title)}`)}>{post.original.title}</a>
+          {post.original.authors && (
+            <span slot="credits">{t('metadata.original.credits(authors)', {authors: post.original.authors})}</span>
+          )}
+        </MixIn>
       </p>
     ) 
   }
   {
     (post.preprocessing || post["accessibility-notes"] || post.notes) && (
       <p>
-        <span>{t('metadata.notes.pre')}</span>
-        {post.preprocessing && <span>{post.preprocessing}</span>}
-        {post["accessibility-notes"] && (
-          <span>{post["accessibility-notes"]}</span>
-        )}
-        {post.notes && <span>{post.notes}</span>}
-        <span>{t('metadata.notes.post')}</span>
+        <MixIn template={t('metadata.notes[notes]')}>
+          {post.preprocessing && <span slot="notes">{post.preprocessing}</span>}
+          {post["accessibility-notes"] && <span slot="notes">{post["accessibility-notes"]}</span>}
+          {post.notes && <span slot="notes">{post.notes}</span>}
+        </MixIn>
       </p>
     )
   }

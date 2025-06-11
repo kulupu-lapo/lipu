@@ -1,0 +1,67 @@
+---
+import { array } from 'astro:schema';
+
+// for use with translated text. allows substituting astro components into strings.
+/* usage: 
+  with a translation key such as 
+    'example.text[element, list]': "example of single [{element}] and multiple [{list between=' || '}]",
+  the html should look like 
+    <MixIn template={t('example.text[element, list]')>
+      <p slot="element">my element</p>}
+      {myList.map(data => (
+        <span slot="list">{data}</span>
+      ))}
+    </MixIn>
+  note that for 'between' to behave correctly, all elements under the same slot should have the same tag, and must not contain a nested element with that tag
+*/
+type Props = {
+  template: string,
+}
+const { template } = Astro.props;
+
+const escapeRegexp = (str : string) => str.replaceAll(/[\[\]\\/^$+.?*{}|]/g, '\\$&')
+const escapeHTML = (str : string) => str.replaceAll('<', "&lt;").replaceAll('>', "&gt;")
+
+const slotNames = Object.keys(Astro.slots)
+const substitutionsRegex = new RegExp(`\{(${slotNames.map(escapeRegexp).join('|')})(?: between='(.*?)')?\}`,'g')
+const renderedSlots = Object.fromEntries(await Promise.all(slotNames.map(async slot => [slot, await Astro.slots.render(slot)])))
+
+const splitHTML = (html : string) => {
+  // converts "<span>one</span><span>two</span>" -> ["<span>one</span>","<span>two</span>"]
+  // the only way to access an astro slot is to render it to a string of html that concatenates all the elements in that slot, 
+  // this undoes that concatonation, assuming each element in a slot has the same tag and no nested elements share this tag.
+  const tag = html.match(/<(\w+)/)?.[1]
+  if (tag === undefined) return [html]
+  const closingTag = `</${tag}>`
+  return html.split(closingTag).filter((val,i,arr)=> !(val === '' && i === arr.length-1)).map(fragment => fragment + closingTag)
+} 
+
+const replaceMatchedAndUnmatched = (
+    string : string,
+    pattern : RegExp,
+    replaceMatched : (matched : string, ...groups : (string | undefined)[]) => string,
+    replaceUnmatched : (unmatched : string) => string
+) => {
+  // like string.replaceAll(pattern, replaceMatched) but also replacing the unmatched.
+  const matches = [...string.matchAll(pattern)];
+  var output = "";
+  var parsed_up_to = 0;
+
+  for (const match of matches) {
+    if (match.index > parsed_up_to)
+      output += replaceUnmatched(string.slice(parsed_up_to, match.index));
+    output += replaceMatched(match[0], ...match.slice(1));
+    parsed_up_to = match.index + match[0].length;
+  }
+  if (parsed_up_to < string.length-1) 
+    output += replaceUnmatched(string.slice(parsed_up_to));
+
+  return output
+}
+
+const substituteSlots =  (_ : string, slot? : string, between? : string) =>
+  (between === undefined)
+  ?  renderedSlots[slot!]
+  : splitHTML(renderedSlots[slot!]).join(escapeHTML(between))
+---
+<Fragment set:html={replaceMatchedAndUnmatched(template, substitutionsRegex, substituteSlots, escapeHTML)}></Fragment>

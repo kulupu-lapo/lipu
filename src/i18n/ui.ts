@@ -10,51 +10,26 @@ export const data = {
     // post preview on pages listing multiple posts
     /* format: 
       <a>[post title]</a>
-      <p>
-        {foundpost.pre}[list of authors]
-        {foundpost.mid}[post.date]
-        {foundpost.post}
-      </p>
+      <p>{foundpost.details}</p>
     */
-    'foundpost.pre': "by ",
-    'foundpost.mid': ", ",
-    'foundpost.post': "",
+    'foundpost.details[authors, date]': "by {authors between=', '}, {date}",
 
     // metadata section on individual post pages
     'metadata.container_title': "Details",
 
-    'metadata.github.pre': "Edit on ",
-    'metadata.github.github': "Github",
-    'metadata.github.post': "",
+    'metadata.github[link]': "Edit on {link}",
+    'metadata.github.link': "Github",
+    'metadata.description(text)': "Description: {text}",
+    'metadata.license(text)': "License: {text}",
+    'metadata.proofreaders(proofreaders)': "Proofreaders: {proofreaders between=', '}",
+    'metadata.tags[links]': "Tags: {links between=' '}",
+    'metadata.sources[links]': "Sources: {links between=' '}",
+    'metadata.archives[links]': "Archives: {links between=' '}",
+    'metadata.original[title, credits]': "Original: {title}{credits}",
+    'metadata.original.credits(authors)': " by {authors between=', '}",
+    'metadata.notes[notes]': "Notes: {notes}",
 
-    'metadata.description.pre': "Description: ",
-    'metadata.description.post': "",
-
-    'metadata.license.pre': "License: ",
-    'metadata.license.post': "",
-
-    'metadata.proofreaders.pre': "Proofreaders: ",
-    'metadata.proofreaders.between': ", ",
-    'metadata.proofreaders.post': "",
-
-    'metadata.tags.pre': "Tags: ",
-    'metadata.tags.post': "",
-
-    'metadata.sources.pre': "Sources: ",
-    'metadata.sources.post': "",
-
-    'metadata.archives.pre': "Archives: ",
-    'metadata.archives.post': "",
-
-    'metadata.original.pre': "Original: ",
-    'metadata.original.post': "",
-    'metadata.originalauthors.pre': "by ",
-    'metadata.originalauthors.between': ", ",
-    'metadata.originalauthors.post': "",
-
-    'metadata.notes.pre': "Notes:",
-    'metadata.notes.post': "",
-
+    'post.credits[authors]': "{authors between=', '}",
   },
   tok: {
     // titles of prev/next bar options
@@ -73,44 +48,23 @@ export const data = {
         {foundpost.post}
       </p>
     */
-    'foundpost.pre': "",
-    'foundpost.mid': " li sitelen e ni lon ",
-    'foundpost.post': "",
+    'foundpost.details[authors, date]': "{authors between=' en '} li sitelen e ni lon {date}",
 
     // metadata section on individual post pages
     'metadata.container_title': "sona pi lipu toki ni",
 
-    'metadata.github.pre': "sina ken pona e ona kepeken",
-    'metadata.github.github': "ilo poki Kita",
-    'metadata.github.post': "",
+    'metadata.github[link]': "sina ken pona e ona kepeken {link}",
+    'metadata.github.link': "ilo poki Kita",
+    'metadata.description(text)': "ona li toki e ni: {text}",
+    'metadata.license(text)': "sina wile kepeken ona la, o kute e nasin {text}",
+    'metadata.proofreaders(proofreaders)': "{proofreaders between=' en '} li pona e ona",
+    'metadata.tags[links]': "kulupu toki la ona li {links between=' li '}",
+    'metadata.sources[links]': "sina ken lukin e ona lon lipu {links between=' lon lipu '}",
+    'metadata.archives[links]': "sina ken lukin e ona lon lipu {links between=' anu lipu '} pi moli ala",
+    'metadata.original[title, credits]': "ona li tan toki ante. toki ante ni li {title}{credits}",
+    'metadata.original.credits(authors)': " li tan {authors between=' li tan '}",
+    'metadata.notes[notes]': "o sona e ni: {notes}",
 
-    'metadata.description.pre': "ona li toki e ni: ",
-    'metadata.description.post': "",
-
-    'metadata.license.pre': "sina wile kepeken ona la, o kute e nasin",
-    'metadata.license.post': "",
-
-    'metadata.proofreaders.pre': "",
-    'metadata.proofreaders.between': " en ",
-    'metadata.proofreaders.post': " li pona e ona",
-
-    'metadata.tags.pre': "kulupu toki la ona li ",
-    'metadata.tags.post': "",
-
-    'metadata.sources.pre': "sina ken lukin e ona lon lipu ",
-    'metadata.sources.post': "",
-
-    'metadata.archives.pre': "sina ken lukin e ona lon lipu ",
-    'metadata.archives.post': " pi moli ala",
-
-    'metadata.original.pre': "ona li tan toki ante. toki ante ni li ",
-    'metadata.original.post': "",
-    'metadata.originalauthors.pre': " li tan ",
-    'metadata.originalauthors.between': " li tan ",
-    'metadata.originalauthors.post': "",
-
-    'metadata.notes.pre': "o sona e ni:",
-    'metadata.notes.post': "",
-
+    'post.credits[authors]': "tan {authors between=' tan '}",
   },
 } as const;

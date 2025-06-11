@@ -1,7 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import MixIn from "@/components/MixIn.astro";
 import { formatDate } from "@/utils/date";
-import Authors from "@/components/Authors.astro";
+import { urlLocaliser, translator, getLangFromUrl } from "@/utils/i18n.ts"
+import { data } from "@/i18n/ui";
+import { escape } from "@/utils/content";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -10,8 +13,6 @@ interface Props {
 
 const { post, query = "" } = Astro.props;
 
-import { urlLocaliser, translator, getLangFromUrl } from "@/utils/i18n.ts"
-import { data } from "@/i18n/ui";
 const lang = getLangFromUrl(Astro.url)
 const localUrl = urlLocaliser(Astro.url)
 const t = translator(data, lang)
@@ -40,9 +41,12 @@ const t = translator(data, lang)
 <li>
   <a href={localUrl(`/${post.id}/${query ? `?q=${query}` : ""}`)} class="post">{post.data.title}</a>
   <p>
-    {t('foundpost.pre')
-    }<Authors authors={post.data.authors} 
-    />{t('foundpost.mid')
-    }<span class="date">{formatDate(post.data.date, post.data["date-precision"], lang)}</span>{t('foundpost.post')}
+    <MixIn template={t('foundpost.details[authors, date]')}>
+      {post.data.authors &&
+        post.data.authors.map((author) => 
+          <a slot="authors" href={localUrl(`/a/${escape(author)}`)}>{author}</a>
+      )}
+      <span slot="date" class="date">{formatDate(post.data.date, post.data["date-precision"], lang)}</span>
+    </MixIn>
   </p>
 </li>
