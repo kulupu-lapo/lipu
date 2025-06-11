@@ -1,6 +1,16 @@
 ---
-import { getLangFromUrl } from "@/utils/i18n";
+import { getLangFromUrl, locales, languages, defaultLang } from "@/utils/i18n";
 import MarkdownSnippet from "@/components/MarkdownSnippet.astro";
+
+const urlPrefix = Astro.url.pathname.split('/')[1]
+var path : string, currentLocale : string;
+if ((locales as string[]).includes(urlPrefix)) {
+    path = Astro.url.pathname.slice(("/"+urlPrefix+"/").length);
+    currentLocale = urlPrefix;
+} else {
+    path = Astro.url.pathname;
+    currentLocale = defaultLang;
+}
 ---
 <style>
   footer {
@@ -20,4 +30,9 @@ import MarkdownSnippet from "@/components/MarkdownSnippet.astro";
 </style>
 <footer>
   <MarkdownSnippet lang={getLangFromUrl(Astro.url)} filename='footer' />
+  {locales.map(langcode => 
+    langcode === currentLocale 
+    ? (<span>{languages[langcode]}</span>) 
+    : (<a href={langcode + "/" + path}>{languages[langcode]}</a>)
+  ).reduce((a,b) => (<>{a} · {b}</>))}
 </footer>
