@@ -52,10 +52,10 @@ export function translator<T extends Record<Langcode, Record<string, string>>>(d
         for (const [varname, value] of Object.entries(variables)) {
             if (Array.isArray(value)) {
                 template = template.replaceAll(
-                    new RegExp(`\\{\\{${varname} between='(.+)'\\}\\}`, 'g'),
+                    new RegExp(`\\{${varname.replaceAll(/[.?*+]/g,"\\$&")} between='(.+)'\\}`, 'g'),
                     (_,seperator) => value.join(seperator))
             } else {
-                template = template.replaceAll("{{"+varname+"}}", value.toString())
+                template = template.replaceAll("{"+varname+"}", value.toString())
             }
         } 
         return template
