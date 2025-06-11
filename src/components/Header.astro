@@ -1,7 +1,7 @@
 ---
 import DarkModeToggle from "@/components/DarkModeToggle.astro";
 import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n.ts"
-import { data } from "@/i18n/ui.ts"
+import { data } from "@/i18n/site.ts"
 import LanguageSwitch from "./LanguageSwitch.astro";
 
 const t = translator(data, getLangFromUrl(Astro.url))

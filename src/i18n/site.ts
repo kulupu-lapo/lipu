@@ -1,5 +1,19 @@
 export const data = {
     en: {
+        'nav.all': "All",
+        'nav.collections': "Collections",
+        'nav.tags': "Tags",
+        'nav.authors': "Authors",
+        'nav.adaptations': "Adaptations",
+        'nav.random': "Random",
+        'nav.add': "Add",
+
+        'nav.wasona': "Course",
+        'nav.library': "Library",
+        'nav.sinkulupu': "News",
+        'nav.mapona': "Discord",
+        'nav.ponala': "More",
+        
         'homepage.h2': "Contributing and project overview",
         'homepage.contributors.title': "Hall of fame",
         'homepage.contributors.alttext': "poki Lapo contributors' profile pictures",
