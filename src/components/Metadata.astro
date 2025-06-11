@@ -4,6 +4,7 @@ import MixIn from "@/components/MixIn.astro";;
 import { escape } from "@/utils/content";
 import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n"
 import { data } from "@/i18n/ui";
+import { locales } from "@/utils/i18n";
 
 interface Props {
   post: CollectionEntry<"blog">["data"];
@@ -33,6 +34,7 @@ const t = translator(data, getLangFromUrl(Astro.url))
       <a slot="link" href={`https://github.com/kulupu-lapo/poki/blob/main/plaintext/${Astro.url.pathname
           .split("/")
           .filter((x) => x)
+          .filter((x,i) => !(i===0 && (locales as string[]).includes(x)))
           .join("/")}.md?plain=1`}
           >
           {t('metadata.github.link')}
