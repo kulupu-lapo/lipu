@@ -5,6 +5,7 @@
     --grey: #666;
     --grey-1: #bbb;
     --accent: #0068d3;
+    --accent-1: #004287;
     --error: #e61023;
 
     --block-padding: 1rem;
@@ -16,6 +17,8 @@
     --txt: #dbdbdb;
     --grey: #999;
     --grey-1: #666;
+    --accent: #2691ff;
+    --accent-1: #81bfff;
     --error: #ff495a;
 }
 
@@ -34,7 +37,7 @@ body {
         background-color 0.2s,
         border 0.2s,
         fill 0.2s;
-        box-shadow: 0.2s;
+    box-shadow: 0.2s;
 }
 
 ::selection {
@@ -55,21 +58,19 @@ main {
     text-align: justify;
 }
 a {
-    color: var(--txt);
+    color: var(--accent);
     text-decoration: dotted underline;
     text-underline-position: under;
+    font-weight: bold;
 }
 
 a:visited {
-    color: var(--txt);
+    color: var(--accent);
 }
 
-a:active, a:hover {
-    color: var(--accent) !important;
-}
-
-header a:has(img) {
-    display: block; /*fix focus styling on main header*/
+a:active,
+a:hover {
+    color: var(--accent-1) !important;
 }
 
 h1 {
