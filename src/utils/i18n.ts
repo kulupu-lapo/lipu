@@ -14,9 +14,7 @@ export async function getStaticLanguagePaths() {
   });
 }
 
-export function internationaliseStaticPaths<T,E>(paths : {params: T, props: E}[]) 
-    : {params : T & {lang: string}, props: E & {lang: Langcode}}[] 
-{
+export function internationaliseStaticPaths<T,E>(paths : {params: T, props: E}[]) {
     return paths.flatMap(({ params, props }) => 
         i18n_prefixes.map(({locale, prefix})=>({
             params: {

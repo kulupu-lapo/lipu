@@ -17,8 +17,6 @@ export async function getStaticPaths() {
   })));
 }
 
-type Props = CollectionEntry<"blog">;
-
 const post = Astro.props;
 const prevnext = prevnexts[post.id];
 
@@ -44,7 +42,7 @@ const { Content } = await render(post);
     <Metadata post={post.data} />
     <h1>{post.data.title}</h1>
     <center><b><Authors authors={post.data.authors} /></b></center>
-    <center>{formatDate(post.data.date, post.data["date-precision"])}</center>
+    <center>{formatDate(post.data.date, post.data["date-precision"], post.lang)}</center>
 
     <!-- <PrevNexts client:load prevnexts={prevnexts[post.id]} /> -->
     <PrevNexts prevnexts={prevnexts[post.id]} langPrefix={Astro.url.pathname.startsWith('/'+post.lang) ? post.lang : '.' } />

@@ -12,8 +12,9 @@ const { post, query = "" } = Astro.props;
 
 import { urlLocaliser, translator, getLangFromUrl } from "@/utils/i18n.ts"
 import { data } from "@/i18n/ui";
+const lang = getLangFromUrl(Astro.url)
 const localUrl = urlLocaliser(Astro.url)
-const t = translator(data, getLangFromUrl(Astro.url))
+const t = translator(data, lang)
 ---
 
 <style>
@@ -42,6 +43,6 @@ const t = translator(data, getLangFromUrl(Astro.url))
     {t('foundpost.pre')
     }<Authors authors={post.data.authors} 
     />{t('foundpost.mid')
-    }<span class="date">{formatDate(post.data.date, post.data["date-precision"])}</span>{t('foundpost.post')}
+    }<span class="date">{formatDate(post.data.date, post.data["date-precision"], lang)}</span>{t('foundpost.post')}
   </p>
 </li>
