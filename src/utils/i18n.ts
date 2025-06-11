@@ -6,11 +6,11 @@ export type Langcode = keyof typeof languages;
 export const locales = Object.keys(languages) as Langcode[];
 export const defaultLang = 'en';
 
-const i18n_prefixes = locales.map( locale => ({ locale: locale, prefix: locale as string }) ).concat({ locale: defaultLang, prefix: '' });
+const i18n_prefixes = locales.map( locale => ({ locale: locale, prefix: locale as string | undefined }) ).concat({ locale: defaultLang, prefix: undefined });
 
 export async function getStaticLanguagePaths() {
   return i18n_prefixes.map(({locale, prefix}) => {
-    return { params: { lang: prefix }, props: { lang: locale, langPrefix: prefix === '' ? '' : prefix + '/' }, };
+    return { params: { lang: prefix }, props: { lang: locale, langPrefix: prefix === undefined ? undefined : prefix + '/' }, };
   });
 }
 

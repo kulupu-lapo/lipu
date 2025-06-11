@@ -6,7 +6,7 @@ if ((locales as string[]).includes(urlPrefix)) {
     path = Astro.url.pathname.slice(("/"+urlPrefix+"/").length);
     currentLocale = urlPrefix;
 } else {
-    path = Astro.url.pathname;
+    path = Astro.url.pathname.slice(1);
     currentLocale = defaultLang;
 }
 ---
