@@ -2,6 +2,14 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Error from "@/components/Error.astro";
 import Input from "@/components/Input.astro";
+import { getStaticLanguagePaths, getLangFromUrl } from "@/utils/i18n.ts";
+import { data } from "@/i18n/add.ts";
+import { defaultLang, translator } from "@/utils/i18n.ts";
+
+export const getStaticPaths = getStaticLanguagePaths;
+
+const lang = getLangFromUrl(Astro.url);
+const t = translator(data, lang);
 ---
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -30,7 +38,7 @@ import Input from "@/components/Input.astro";
   //   }
   // };
 </script>
-<script is:inline lang="javascript">
+<script is:inline define:vars={{translations: Object.assign({}, data[defaultLang], data[lang])}} lang="javascript">
  const validate = () => {
     let submitButton = document.getElementById("submit");
     let errorContainer = document.getElementById("error-div");
@@ -44,22 +52,22 @@ import Input from "@/components/Input.astro";
     };
     submitButton.disabled = true;
     errorContainer.dataset.active = true;
-    errorText.innerText = "Error: "+error;
+    errorText.innerText = translations['errors.boilerplate(details)'].replaceAll("{details}", error);
   };
   const findInputError = () => {
     let form = document.getElementById("form");
     for (const input of form.elements) {
-      if (input.required && input.value === "") return `"${input.name}" field must be provided`;
+      if (input.required && input.value === "") return translations["errors.empty(fieldname)"].replaceAll("{fieldname}", input.previousElementSibling.innerText);
     };
 
     let text = document.getElementById("md-input").value;
-    if (text === "") return `Text must not be empty`;
+    if (text === "") return translations['errors.textEmpty'];
     const banned_words = [
-      [/(<br ?\/?>)/, "Text should use markdown not HTML, \n\"toki$1toki\"\ncan be written as \n\"toki\\\ntoki\"\nor\n\"toki  \ntoki\"\n(with two spaces)"],
-      [/<\/p>/, "Text should use markdown not HTML, \n\"<p>toki open</p><p>toki pini</p>\"\ncan be written as \n\"toki open\ntoki pini\"\n"],
-      [/<\/(i|em)>/, "Text should use markdown not HTML, \"<$1>toki</$1>\" can be written as \"*toki*\""],
-      [/<\/(b|strong)>/, "Text should use markdown not HTML, \"<$1>toki</$1>\" can be written as \"**toki**\""],
-      [/<a href="?([^">]+)"?>/, "Text should use markdown not HTML, \"<a href=\"$1\">lipu</a>\" can be written as \"[lipu]($1)\""],
+      [/(<br ?\/?>)/, translations['errors.htmlBr']],
+      [/<\/p>/, translations['errors.htmlP']],
+      [/<\/(i|em)>/, translations['errors.htmlI']],
+      [/<\/(b|strong)>/, translations['errors.htmlB']],
+      [/<a href="?([^">]+)"?>/, translations['errors.htmlA']],
     ];
     for (const [word, error] of banned_words) {
       let match = text.match(word);
@@ -89,7 +97,7 @@ import Input from "@/components/Input.astro";
     console.log(data);
 
     let submitButton = document.getElementById("submit");
-    submitButton.value = "Submitting, please wait...";
+    submitButton.value = translations['submit.clicked'];
     submitButton.onclick = "";
     let response = await fetch("https://submit-4gx.pages.dev/api/submit", {
       method: "POST",
@@ -101,17 +109,14 @@ import Input from "@/components/Input.astro";
     let responseBody = await response.json();
 
     if (responseBody.success) {
-      document.getElementById("response").innerHTML =
-        `Your article has been received and will be reviewed by volunteers!<br /><a href="${responseBody.data.html_url}">${responseBody.data.title}</a><br />Please make sure not to submit the same thing several times, thanks in advance!`;
+      document.getElementById("response").innerHTML = translations['submit.success(url, title)'].replaceAll("{url}", responseBody.data.html_url).replaceAll("{title}", responseBody.data.title);
       document.getElementById("response-error").innerHTML = "";
     } else {
-      document.getElementById("error-message").innerHTML = 
-        `Failed to upload article. Show this to kala Asi at ma pona! Error message:
-        <pre>\n${JSON.stringify(responseBody.error, null, " ")}</pre>`
+      document.getElementById("error-message").innerHTML = translations['submit.error(details)'].replaceAll("{details}", JSON.stringify(responseBody.error, null, " "))
       document.getElementById("error-div").dataset.active = true;
       submitButton.active = false;
     }
-    submitButton.value = "Submit article";
+    submitButton.value = translations['submit.button'];
     submitButton.onclick = submit;
   };
 
@@ -121,6 +126,10 @@ import Input from "@/components/Input.astro";
     errorContainer.dataset.active = false;
     submitButton.disabled = false;
   };
+
+  window.validate = validate
+  window.submit = submit
+  window.ignoreError = ignoreError
 
   // document.getElementById("form").addEventListener("submit", (e) => {
   //   e.preventDefault();
@@ -136,85 +145,83 @@ import Input from "@/components/Input.astro";
   // });
 </script>
 
-<BaseLayout title={"Add an article"}>
+<BaseLayout title={t("addpage.title")}>
   <section>
-    <h1>Add your article</h1>
+    <h1>{t('addpage.header')}</h1>
     <form id="form" oninput="validate()">
       <div class="row">
         <Input
           top
-          title="Submitted by"
           id="submitted-by"
+          title={t('add.submitted-by.title')}
           required
-          placeholder="your Toki Pona name"
+          placeholder={t('add.submitted-by.default')}
         />
       </div>
       <div class="row">
         <Input
-          title="File name"
           id="filename"
+          title={t('add.filename.title')}
+          placeholder={t('add.filename.default')}
           required
-          placeholder="carry-feat-jan-kekan-san"
         />
       </div>
       <div class="row">
         <Input
-          title="Title"
           id="title"
+          title={t('add.title.title')}
+          placeholder={t('add.title.default')}
           required
-          placeholder="carry-feat-jan-kekan-san"
           oninput="updateFileName()"
-          placeholder="carry (feat.) jan kekan san"
         />
         <Input
-          title="Original title"
           id="original-title"
-          placeholder="carry-feat-jan-kekan-san"
-          placeholder="(use this if the work is a translation)"
+          title={t('add.original-title.title')}
+          placeholder={t('add.original-title.default')}
         />
       </div>
       <div class="row">
         <Input
-          title="Authors"
           id="authors"
-          placeholder="jan Usawi, jan Kekan San"
+          title={t('add.authors.title')}
+          placeholder={t('add.authors.default')}
         />
         <Input
-          title="Original authors"
           id="original-authors"
-          placeholder="(use this if the work is a translation)"
+          title={t('add.original-authors.title')}
+          placeholder={t('add.original-authors.default')}
         />
       </div>
       <div class="row">
         <Input
-          title="Description"
           id="description"
-          placeholder="A punny parody of Wayward Son"
+          title={t('add.description.title')}
+          placeholder={t('add.description.default')}
         />
       </div>
       <div class="row">
-        <Input title="Date published" id="date" type="date" required />
-        <Input title="Date precision" id="date-precision" tag="select" required>
-          <option selected value="day">Precise to the day</option>
-          <option value="month">Precise to the month</option>
-          <option value="year">Precise to the year</option>
-          <option value="none">Complete guess</option>
+        <Input id="date" title={t('add.date.title')} type="date" required />
+        <Input id="date-precision" title={t('add.date-precision.title')} tag="select" required>
+          <option selected value="day">{t('add.date-precision.day')}</option>
+          <option value="month">{t('add.date-precision.month')}</option>
+          <option value="year">{t('add.date-precision.year')}</option>
+          <option value="none">{t('add.date-precision.none')}</option>
         </Input>
       </div>
       <div class="row">
-        <Input title="Tags" id="tags" placeholder="music, pop, parody etc." />
-        <Input title="License" id="license" placeholder="CC BY-SA 3.0" />
+        <Input id="tags" title={t('add.tags.title')} placeholder={t('add.tags.default')} />
+        <Input id="license" title={t('add.license.title')} placeholder={t('add.license.default')} />
       </div>
       <div class="row">
         <Input
-          title="Sources"
           id="sources"
+          title={t('add.sources.title')}
+          placeholder={t('add.sources.default')}
           required
-          placeholder="https://janusawi.bandcamp.com/album/toki-gaming"
         />
       </div>
       <div class="row">
-        <Input bottom title="Notes" id="notes" />
+        <Input bottom id="notes" title={t('add.notes.title')} placeholder={t('add.notes.default')} />
       </div>
     </form>
     <!-- <input id="toggle-advanced" type="checkbox" oninput="toggleAdvanced()" />
@@ -237,21 +244,21 @@ import Input from "@/components/Input.astro";
       </div> -->
   </section>
   <div>
-    <h1>Text</h1>
+    <h1>{t('add.text.title')}</h1>
     <textarea
       id="md-input"
-      placeholder="# Start typing! o kama sitelen e ijo!\n\nYou can use **Markdown**! o nasin **Markdown**!"
+      placeholder={t('add.text.default')}
       oninput="rerender()"></textarea>
   </div>
   <div id="md-render"></div>
   <Error id="error-div" active={false}><span id="error-message"></span>
-    <br><button class="ignore_error" onclick="ignoreError()">I know what I'm doing, ignore this</button>
+    <br><button class="ignore_error" onclick="ignoreError()">{t('errors.ignore')}</button>
   </Error>
   <input
     class="submit"
     type="submit"
     id="submit"
-    value="Submit article"
+    value={t('submit.button')}
     onclick="submit()"
   />
   <div id="response"></div>

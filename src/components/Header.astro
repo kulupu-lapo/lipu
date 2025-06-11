@@ -1,7 +1,12 @@
 ---
 import DarkModeToggle from "@/components/DarkModeToggle.astro";
----
+import { translator, getLangFromUrl, urlLocaliser } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site.ts"
+import LanguageSwitch from "./LanguageSwitch.astro";
 
+const t = translator(data, getLangFromUrl(Astro.url))
+const localUrl = urlLocaliser(Astro.url)
+---
 <style>
   header {
     position: relative;
@@ -30,24 +35,25 @@ import DarkModeToggle from "@/components/DarkModeToggle.astro";
 </style>
 
 <header>
-  <a href="./">
+  <a href={localUrl("/")}>
     <img alt="lipu.pona.la" src="./header.svg" />
   </a>
   <div style="font-weight: 700">
-    <a href="https://wasona.com/">Course</a>{" · "}
-    Library{" · "}
-    <a href="https://sin-kulupu.pona.la">News</a>{" · "}
-    <a href="https://discord.gg/6zkugJFU4x">Discord</a>{" · "}
-    <a href="https://pona.la/">More</a>
+    <a href="https://wasona.com/">{t('nav.wasona')}</a>{" · "}
+    {t('nav.library')}{" · "}
+    <a href="https://sin-kulupu.pona.la">{t('nav.sinkulupu')}</a>{" · "}
+    <a href="https://discord.gg/6zkugJFU4x">{t('nav.mapona')}</a>{" · "}
+    <a href="https://pona.la/">{t('nav.ponala')}</a>
   </div>
   <div class="secondary">
-    <a href="./all">All</a>{" · "}
-    <a href="./collections">Collections</a>{" · "}
-    <a href="./tags">Tags</a>{" · "}
-    <a href="./authors">Authors</a>{" · "}
-    <a href="./adaptations">Adaptations</a>{" · "}
-    <a href="./random">Random</a>{" · "}
-    <a href="./add">Add</a>
+    <a href={localUrl("/all")}>{t("nav.all")}</a>{" · "}
+    <a href={localUrl("/collections")}>{t("nav.collections")}</a>{" · "}
+    <a href={localUrl("/tags")}>{t("nav.tags")}</a>{" · "}
+    <a href={localUrl("/authors")}>{t("nav.authors")}</a>{" · "}
+    <a href={localUrl("/adaptations")}>{t("nav.adaptations")}</a>{" · "}
+    <a href={localUrl("/random")}>{t("nav.random")}</a>{" · "}
+    <a href={localUrl("/add")}>{t("nav.add")}</a>
   </div>
   <DarkModeToggle />
+  <LanguageSwitch />
 </header>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import FoundPost from "@/components/FoundPost.astro";
+import {
+  collections,
+  escape,
+  getPostsByCollection,
+  unescape,
+} from "@/utils/content";
+import { internationaliseStaticPaths, translator } from "@/utils/i18n";
+import { data } from "@/i18n/site";
+
+export async function getStaticPaths() {
+  return internationaliseStaticPaths(
+    collections.map((collection) => ({
+      params: { collection: escape(collection.name) },
+      props: { posts: getPostsByCollection(collection) },
+    }))
+  );
+}
+const { collection } = Astro.params;
+const { posts, lang } = Astro.props;
+const t = translator(data, lang)
+---
+
+<BaseLayout title={unescape(collection)}>
+  <h2>
+    {t('collection.header(name, count)', {
+      name: unescape(collection),
+      count: posts.length
+    })}
+  </h2>
+  <ol>
+    {posts.map((post) => post && <FoundPost {post} query={`c/${collection}`} />)}
+  </ol>
+</BaseLayout>

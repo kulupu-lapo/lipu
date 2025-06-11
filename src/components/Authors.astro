@@ -6,20 +6,22 @@ interface Props {
 }
 
 const { authors } = Astro.props;
+
+import { getLangFromUrl, translator, urlLocaliser } from "@/utils/i18n.ts"
+import MixIn from "./MixIn.astro";
+import { data } from "@/i18n/ui";
+const localUrl = urlLocaliser(Astro.url)
+
+const t = translator(data, getLangFromUrl(Astro.url))
 ---
 
 <style>
   a {
     font-weight: inherit;
   }
-</style>
-{
-  authors &&
-    authors
-      .map((author) => <a href={`./a/${escape(author)}`}>{author}</a>)
-      .reduce((prev, curr, i) => (
-        <>
-          {prev}, {curr}
-        </>
-      ))
-}
+</style> 
+<MixIn template={t('post.credits[authors]')}>
+  {authors && authors.map((author) => 
+    <a slot="authors" href={localUrl(`/a/${escape(author)}`)}>{author}</a>)
+  }
+</MixIn>

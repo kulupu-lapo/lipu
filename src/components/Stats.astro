@@ -2,6 +2,9 @@
 import StatBlock from "./StatBlock.astro";
 
 import { posts, collections, tags, authors } from "@/utils/content";
+import { data } from "@/i18n/site";
+import { translator, getLangFromUrl } from "@/utils/i18n";
+const t = translator(data, getLangFromUrl(Astro.url))
 ---
 
 <style>
@@ -18,13 +21,13 @@ import { posts, collections, tags, authors } from "@/utils/content";
 </style>
 
 <section>
-  <h2 style="margin-bottom: 0px;">Stats</h2>
+  <h2 style="margin-bottom: 0px;">{t('homepage.stats.title')}</h2>
   <div class="scrollable">
     <div>
-      <StatBlock title="Entries" value={posts.length} link="./all" />
-      <StatBlock title="Collections" value={collections.length} link="./collections" />
-      <StatBlock title="Tags" value={tags.length} link="./tags" />
-      <StatBlock title="Authors" value={authors.length} link="./authors" />
+      <StatBlock title="Entries" value={posts.length} link="all" />
+      <StatBlock title="Collections" value={collections.length} link="collections" />
+      <StatBlock title="Tags" value={tags.length} link="tags" />
+      <StatBlock title="Authors" value={authors.length} link="authors" />
     </div>
   </div>
 </section>

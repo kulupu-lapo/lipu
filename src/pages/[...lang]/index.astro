@@ -4,13 +4,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Stats from "@/components/Stats.astro"
 import { posts } from "@/utils/content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@consts";
-import { getCollection, render } from "astro:content";
+import MarkdownSnippet from "@/components/MarkdownSnippet.astro";
 import FoundPost from "@/components/FoundPost.astro";
+import { getStaticLanguagePaths, getLangFromUrl, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
 
-const meta = (await getCollection("meta")).find((post) => post.id == "index")!;
-const overview = (await getCollection("meta")).find((post) => post.id == "overview")!;
-const { Content: Meta } = await render(meta);
-const { Content: Overview } = await render(overview);
+export const getStaticPaths = getStaticLanguagePaths;
+const lang = getLangFromUrl(Astro.url)
+const t = translator(data, lang)
 ---
 
 <style>
@@ -40,19 +41,19 @@ const { Content: Overview } = await render(overview);
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section>
-    <Meta />
+    <MarkdownSnippet lang={lang} filename="index" />
   </section>
   <Stats />
   <section>
-    <h2>Contributing and project overview</h2>
-    <Overview />
-    <h3 style="text-align: center;">Hall of fame</h3>
+    <h2>{t('homepage.h2')}</h2>
+    <MarkdownSnippet lang={lang} filename="overview" />
+    <h3 style="text-align: center;">{t('homepage.contributors.title')}</h3>
     <a href="https://github.com/kulupu-lapo/poki/graphs/contributors">
       <img src="https://contrib.rocks/image?repo=kulupu-lapo/poki"
-           alt="poki Lapo contributors' profile pictures"
+           alt={t('homepage.contributors.alttext')}
            style="text-align: center;"
       />
     </a>
-    <small class="thanks">Thank you all so much, wouldn't be possible without you! ❤️</small>
+    <small class="thanks">{t('homepage.contributors.caption')}</small>
   </section>
 </BaseLayout>

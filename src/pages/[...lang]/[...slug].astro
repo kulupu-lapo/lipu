@@ -8,15 +8,14 @@ import PrevNexts from "@/components/PrevNexts.astro";
 import { posts, prevnexts } from "@/utils/content";
 import { formatDate } from "@/utils/date";
 import { type CollectionEntry, render } from "astro:content";
+import { internationaliseStaticPaths } from "@/utils/i18n";
 
 export async function getStaticPaths() {
-  return posts.map((post, i) => ({
+  return internationaliseStaticPaths(posts.map((post, i) => ({
     params: { slug: post.id },
     props: post,
-  }));
+  })));
 }
-
-type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const prevnext = prevnexts[post.id];
@@ -43,13 +42,13 @@ const { Content } = await render(post);
     <Metadata post={post.data} />
     <h1>{post.data.title}</h1>
     <center><b><Authors authors={post.data.authors} /></b></center>
-    <center>{formatDate(post.data.date, post.data["date-precision"])}</center>
+    <center>{formatDate(post.data.date, post.data["date-precision"], post.lang)}</center>
 
     <!-- <PrevNexts client:load prevnexts={prevnexts[post.id]} /> -->
-    <PrevNexts prevnexts={prevnext} />
+    <PrevNexts prevnexts={prevnext} langPrefix={Astro.url.pathname.startsWith('/'+post.lang) ? post.lang : '.' } />
 
     {embed && <Embed id={embed} />}
-    <section>
+    <section lang={post.lang === "tok" ? undefined : "tok"}>
       <Content />
     </section>
   </article>

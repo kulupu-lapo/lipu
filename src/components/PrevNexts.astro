@@ -9,18 +9,23 @@ interface Props {
       next?: CollectionEntry<"blog">;
     };
   };
+  langPrefix: string;
 }
 
+import { translator, getLangFromUrl } from "@/utils/i18n";
+import { data } from "@/i18n/ui";
+const t = translator(data, getLangFromUrl(Astro.url))
+
 const humanReadable = (string: string) => {
-  if (string === "/") return "Index";
-  if (string.slice(0, 2) === "a/") return `by ${unescape(string.slice(2))}`;
-  if (string.slice(0, 2) === "c/") return `from ${unescape(string.slice(2))}`;
-  if (string.slice(0, 2) === "t/") return `${unescape(string.slice(2))}`;
-  if (string.slice(0, 2) === "o/") return `adapting ${unescape(string.slice(2))}`;
+  if (string === "/") return t('index.default');
+  if (string.slice(0, 2) === "a/") return t('index.author(name)',     {name: unescape(string.slice(2))});
+  if (string.slice(0, 2) === "c/") return t('index.collection(name)', {name: unescape(string.slice(2))});
+  if (string.slice(0, 2) === "t/") return t('index.tag(name)',        {name: unescape(string.slice(2))});
+  if (string.slice(0, 2) === "o/") return t('index.original(name)',   {name: unescape(string.slice(2))});
   return string;
 };
 
-const { prevnexts } = Astro.props;
+const { prevnexts, langPrefix } = Astro.props;
 ---
 
 <style>
@@ -105,10 +110,11 @@ const { prevnexts } = Astro.props;
   const updatePage = () => {
     const prevnext = prevnexts[getQuery()];
     navSelect.value = getQuery();
+    const lang = navSelect.dataset.langprefix || '.';
 
     const prev = document.getElementById("nav-prev-link")!;
     if (prevnext.prev) {
-      prev.setAttribute("href", `./${prevnext.prev?.id}?q=${getQuery()}`);
+      prev.setAttribute("href", `${lang}/${prevnext.prev?.id}?q=${getQuery()}`);
       prev.innerText = `« ${abbreviate(prevnext.prev?.data.title)}`;
     } else {
       prev.innerText = "";
@@ -116,7 +122,7 @@ const { prevnexts } = Astro.props;
 
     const next = document.getElementById("nav-next-link")!;
     if (prevnext.next) {
-      next.setAttribute("href", `./${prevnext.next?.id}?q=${getQuery()}`);
+      next.setAttribute("href", `${lang}/${prevnext.next?.id}?q=${getQuery()}`);
       next.innerText = `${abbreviate(prevnext.next?.data.title)} »`;
     } else {
       next.innerText = "";
@@ -136,7 +142,7 @@ const { prevnexts } = Astro.props;
   <hr />
   <div>
     <a id="nav-prev-link"></a>
-    <select id="nav-select" value="/">
+    <select id="nav-select" data-langprefix={langPrefix} value="/">
       {
         Object.entries(prevnexts).map(([name, pn]) => (
           <option value={name}>{humanReadable(name)}</option>

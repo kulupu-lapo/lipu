@@ -1,0 +1,35 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import { escape, postsByTag } from "@/utils/content";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
+
+export const getStaticPaths = getStaticLanguagePaths;
+
+import { urlLocaliser, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+const localUrl = urlLocaliser(Astro.url);
+const t = translator(data, Astro.props.lang);
+---
+
+<BaseLayout title={t('tags.title')}>
+  <h2>{t('tags.header(count)', {count: postsByTag.length})}</h2>
+  <ul>
+    {
+      postsByTag.map((row) => (
+        <li>
+          <a href={localUrl(`/t/${escape(row.tag)}`)}>
+            {t('tags.link(name, count)', {
+              name: row.tag,
+              count: row.posts.length,
+            })}
+          </a>
+          {t('tags.postlink(name, count)', {
+            name: row.tag,
+            count: row.posts.length,
+          })}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

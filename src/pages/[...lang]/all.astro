@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import FoundPost from "@/components/FoundPost.astro";
+import { posts } from "@/utils/content";
+import { getStaticLanguagePaths, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+
+export const getStaticPaths = getStaticLanguagePaths;
+const t = translator(data, Astro.props.lang)
+---
+
+<BaseLayout title={t("all.title", {count: posts.length})}>
+    <section>
+        <h2>{t("all.header(count)", { count: posts.length})}</h2>
+        <ul>
+            {posts.map((post) => <FoundPost {post} />)}
+        </ul>
+    </section>
+</BaseLayout>

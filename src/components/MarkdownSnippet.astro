@@ -1,0 +1,23 @@
+---
+import { defaultLang } from '@/utils/i18n';
+import { getCollection, render } from "astro:content";
+import type { Langcode } from '@/utils/i18n';
+
+interface Props {
+  lang: Langcode;
+  filename: string; 
+  // with corresponding src/content/meta/[lang]-[filename].md file
+}
+
+const { lang, filename } = Astro.props;
+
+const collection = await getCollection("meta")
+
+let nativeMd = collection.find((post) => post.id == `${lang}-${filename}`)
+const md = nativeMd ?? collection.find((post) => post.id == `${defaultLang}-${filename}`)!;
+
+const { Content: Element } = await render(md);
+---
+<div lang={nativeMd === undefined ? defaultLang : undefined}>
+  <Element />
+</div>

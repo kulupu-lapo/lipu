@@ -1,3 +1,17 @@
+---
+import { getLangFromUrl, locales, languages, defaultLang } from "@/utils/i18n";
+import MarkdownSnippet from "@/components/MarkdownSnippet.astro";
+
+const urlPrefix = Astro.url.pathname.split('/')[1]
+var path : string, currentLocale : string;
+if ((locales as string[]).includes(urlPrefix)) {
+    path = Astro.url.pathname.slice(("/"+urlPrefix+"/").length);
+    currentLocale = urlPrefix;
+} else {
+    path = Astro.url.pathname;
+    currentLocale = defaultLang;
+}
+---
 <style>
   footer {
     max-width: 850px;
@@ -14,11 +28,11 @@
     font-weight: initial;
   }
 </style>
-
 <footer>
-  Library put together by kala Asi, jan Juwan, ijo vivi, jan Kita, and others.<br>
-  Licenses for articles specified individually.<br>
-  Website made by <a href="https://kala-asi.li.pona.la">kala Asi</a>.<br>
-  Source code licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0</a>
-  and hosted on <a href="https://github.com/kulupu-lapo/lipu">GitHub</a>.
+  <MarkdownSnippet lang={getLangFromUrl(Astro.url)} filename='footer' />
+  {locales.map(langcode => 
+    langcode === currentLocale 
+    ? (<span>{languages[langcode]}</span>) 
+    : (<a href={langcode + "/" + path} hreflang={langcode}>{languages[langcode]}</a>)
+  ).reduce((a,b) => (<>{a} · {b}</>))}
 </footer>

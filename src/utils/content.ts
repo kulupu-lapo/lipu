@@ -49,7 +49,7 @@ export const getAuthorsOfOriginal = (original: string) => [...new Set(
   posts.filter(
     (post) => post.data.original && post.data.original.title === original && post.data.original.authors !== null
   ).flatMap((post) => post.data.original!.authors)
-  .filter(author => author !== "unknown" && author !== "(unknown)")
+  .filter(author => author !== "unknown" && author !== "(unknown)") as string[]
 )];
 
 export const getPostsByOriginal = (original: string) =>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import FoundPost from "@/components/FoundPost.astro";
+import { escape, getPostsByTag, tags, unescape } from "@/utils/content";
+import { internationaliseStaticPaths, translator } from "@/utils/i18n";
+import { data } from "@/i18n/site";
+
+export async function getStaticPaths() {
+  return internationaliseStaticPaths(
+    tags.map((tag) => ({
+      params: { tag: escape(tag!) },
+      props: { posts: getPostsByTag(tag!) },
+    }))
+  );
+}
+
+const { tag } = Astro.params;
+const { posts, lang } = Astro.props;
+const t = translator(data, lang)
+---
+
+<BaseLayout title={unescape(tag)}>
+  <h2>
+    {t('tag.header(name, count)', {
+      name: unescape(tag),
+      count: posts.length
+    })}
+  </h2>
+  <ul>
+    {posts.map((post) => <FoundPost {post} query={`t/${tag}`} />)}
+  </ul>
+</BaseLayout>

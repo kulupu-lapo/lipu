@@ -1,0 +1,133 @@
+---
+import { locales, languages, defaultLang } from "@/utils/i18n"
+const urlPrefix = Astro.url.pathname.split('/')[1]
+var path : string, currentLocale : string;
+if ((locales as string[]).includes(urlPrefix)) {
+    path = Astro.url.pathname.slice(("/"+urlPrefix+"/").length);
+    currentLocale = urlPrefix;
+} else {
+    path = Astro.url.pathname.slice(1);
+    currentLocale = defaultLang;
+}
+---
+
+<div id="languageSwitch" data-expanded="false">
+    <button>
+        <svg width="30" height="30" viewBox="44 15 100 100" xmlns="http://www.w3.org/2000/svg">
+            <g style="fill:none;stroke-width:5">
+              <g class="toki" transform="translate(-9.471 -16.498)" style="stroke:var(--tokFg)">
+                <rect style="fill:var(--tokBg);stroke:none" width="45.707" height="54.596" x="59.944" y="33.578" ry="9.225" />
+                <path d="M76.21 53.668c-3.43 1.209-6.894 3.35-8.767 6.628-10.205 17.858 17.03 27.348 28.438 16.891 2.5-2.29 2.993-6.256 2.993-9.408 0-12.038-11.645-17.26-22.664-14.111zM65.977 41.724c.76 2.386 1.808 4.78 2.566 7.056M84.03 38.7v6.629M95.63 49.343c1.727-2.274 3.946-4.252 5.805-6.111" />
+              </g>
+              <g class="a" transform="translate(-57.707 29.288)" style="stroke:var(--enFg)">
+                <rect style="fill:var(--enBg);stroke:none" width="45.707" height="54.596" x="144.728" y="29.301" ry="9.225" />
+                <path d="M151.26 76.595c2.874-14.122 10.023-26.8 15.919-39.796.459-1.028 1.222-2.707 1.62-.743 3.834 8.694 7.092 17.628 10.602 26.455a3892.58 3892.58 0 0 1 5.709 14.803" />
+                <path d="M157.557 56.81c6.332-.752 12.686-.274 18.996-.826" />
+              </g>
+              <g class="arrows" style="stroke:var(--arrows);stroke-width:3.5">
+                <path d="M64.635 77.587c0 4.394 0 8.788 2.128 10.984 2.129 2.197 6.386 2.197 8.966 2.197h4.384" />
+                <path d="m74.31 85.884 5.813 4.61-5.813 5.145" />
+                <path d="m108.73 45.474-5.812-4.61 5.813-5.145" />
+                <path d="M118.406 53.77c0-4.393 0-8.787-2.13-10.984-2.128-2.197-6.385-2.197-8.965-2.197h-4.384" />
+              </g>
+            </g>
+          </svg>
+    </button>
+    <ul hidden>
+        {locales.map(langcode => 
+            (<li><a class={langcode === currentLocale ? 'active' : ''} href={langcode + "/" + path} hreflang={langcode}>{languages[langcode]}</a></li>)
+        )}
+    </ul>
+</div>
+  
+<style>
+#languageSwitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: left;
+}
+#languageSwitch svg * {
+    transition: stroke 0.2s, fill 0.2s;
+}
+#languageSwitch svg {
+    --tokBg: var(--bg-1);
+    --tokFg: var(--grey);
+    --enBg: var(--accent);
+    --enFg: var(--bg);
+    --arrows: var(--grey-1);
+}
+#languageSwitch[data-expanded="true"] svg {
+    --tokBg: var(--accent);
+    --tokFg: var(--bg);
+    --enBg: var(--bg-1);
+    --enFg: var(--grey);
+}
+#languageSwitch:hover svg, #languageSwitch[data-expanded="true"] svg {
+    --arrows: var(--accent);
+}
+
+#languageSwitch button, #languageSwitch a {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-size: inherit;
+    text-decoration: none;
+}
+#languageSwitch[data-expanded="false"] > ul { display: none; }
+
+#languageSwitch ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    border: var(--block-border-radius);
+    
+}
+#languageSwitch li {
+    border: 1px solid var(--grey);
+    box-sizing: border-box;
+    box-shadow: 0px 0px 0px transparent;
+    transition-duration: 0.3s;
+    transition-property: box-shadow;
+    border-top: none;
+}
+#languageSwitch li:first-child {
+    border-top: 1px solid var(--grey);
+    border-top-left-radius: var(--block-border-radius);
+    border-top-right-radius: var(--block-border-radius);
+}
+#languageSwitch li:last-child {
+    border-bottom-left-radius: var(--block-border-radius);
+    border-bottom-right-radius: var(--block-border-radius);
+}
+
+#languageSwitch li:hover {
+    border-color: var(--accent);
+    box-shadow: 0px 0px 8px var(--accent);
+}
+
+
+#languageSwitch li a {
+    width: 100%;
+    height: 100%;
+    padding: 0.5em;
+    text-align: left;
+}
+#languageSwitch a.active {
+    color: var(--txt);
+}
+</style>
+
+<script>
+const langSwitch = document.getElementById("languageSwitch")!
+const openButton = langSwitch.firstElementChild!
+const langList = langSwitch.lastElementChild!
+function toggleLangSwitch() {
+    langSwitch.dataset.expanded = (langSwitch.dataset.expanded === "false").toString()
+}
+openButton.addEventListener("click", toggleLangSwitch);
+</script>
+  

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+import { escape, postsByAuthor } from "@/utils/content";
+import { getStaticLanguagePaths } from "@/utils/i18n.ts"
+
+export const getStaticPaths = getStaticLanguagePaths;
+
+import { urlLocaliser, translator } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+const localUrl = urlLocaliser(Astro.url);
+const t = translator(data, Astro.props.lang);
+---
+
+<BaseLayout title={t('authors.title')}>
+  <h2>{t('authors.header(count)', {count: postsByAuthor.length})}</h2>
+  <ul>
+    {
+      postsByAuthor.map((row) => (
+        <li>
+          <a href={localUrl(`/a/${escape(row.author)}`)}>
+            {t('authors.link(name, count)', {
+              name: row.author,
+              count: row.posts.length,
+            })}
+          </a>
+          {t('authors.postlink(name, count)', {
+            name: row.author,
+            count: row.posts.length,
+          })}
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
