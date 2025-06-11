@@ -57,7 +57,7 @@ const t = translator(data, lang);
   const findInputError = () => {
     let form = document.getElementById("form");
     for (const input of form.elements) {
-      if (input.required && input.value === "") return translations["errors.empty(fieldname)"].replaceAll("{fieldname}", input.name);
+      if (input.required && input.value === "") return translations["errors.empty(fieldname)"].replaceAll("{fieldname}", input.previousElementSibling.innerText);
     };
 
     let text = document.getElementById("md-input").value;
@@ -67,7 +67,7 @@ const t = translator(data, lang);
       [/<\/p>/, translations['errors.htmlP']],
       [/<\/(i|em)>/, translations['errors.htmlI']],
       [/<\/(b|strong)>/, translations['errors.htmlB']],
-      [/<a href="?([^">]+)"?>/, translations['errors.htmlI']],
+      [/<a href="?([^">]+)"?>/, translations['errors.htmlA']],
     ];
     for (const [word, error] of banned_words) {
       let match = text.match(word);
@@ -221,7 +221,7 @@ const t = translator(data, lang);
         />
       </div>
       <div class="row">
-        <Input bottom id="notes" title={t('add.notes.title')} />
+        <Input bottom id="notes" title={t('add.notes.title')} placeholder={t('add.notes.default')} />
       </div>
     </form>
     <!-- <input id="toggle-advanced" type="checkbox" oninput="toggleAdvanced()" />
