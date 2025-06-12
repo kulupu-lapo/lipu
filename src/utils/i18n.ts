@@ -23,6 +23,7 @@ export function internationaliseStaticPaths<T,E>(paths : {params: T, props: E}[]
             },
             props: {
                 lang: locale,
+                langPrefix: prefix === undefined ? '' : prefix + '/',
                 ...props
             }
         }))
