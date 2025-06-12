@@ -10,7 +10,7 @@ const i18n_prefixes = locales.map( locale => ({ locale: locale, prefix: locale a
 
 export async function getStaticLanguagePaths() {
   return i18n_prefixes.map(({locale, prefix}) => {
-    return { params: { lang: prefix }, props: { lang: locale, langPrefix: prefix === undefined ? undefined : prefix + '/' }, };
+    return { params: { lang: prefix }, props: { lang: locale, langPrefix: prefix === undefined ? '' : prefix + '/' }, };
   });
 }
 
