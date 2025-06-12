@@ -110,11 +110,11 @@ const { prevnexts, langPrefix } = Astro.props;
   const updatePage = () => {
     const prevnext = prevnexts[getQuery()];
     navSelect.value = getQuery();
-    const lang = navSelect.dataset.langprefix || '.';
+    const langprefix = navSelect.dataset.langprefix || '';
 
     const prev = document.getElementById("nav-prev-link")!;
     if (prevnext.prev) {
-      prev.setAttribute("href", `${lang}/${prevnext.prev?.id}?q=${getQuery()}`);
+      prev.setAttribute("href", `${langprefix}${prevnext.prev?.id}?q=${getQuery()}`);
       prev.innerText = `« ${abbreviate(prevnext.prev?.data.title)}`;
     } else {
       prev.innerText = "";
@@ -122,7 +122,7 @@ const { prevnexts, langPrefix } = Astro.props;
 
     const next = document.getElementById("nav-next-link")!;
     if (prevnext.next) {
-      next.setAttribute("href", `${lang}/${prevnext.next?.id}?q=${getQuery()}`);
+      next.setAttribute("href", `${langprefix}${prevnext.next?.id}?q=${getQuery()}`);
       next.innerText = `${abbreviate(prevnext.next?.data.title)} »`;
     } else {
       next.innerText = "";
