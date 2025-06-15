@@ -5,3 +5,4 @@ export const SITE_URL = "lipu.pona.la";
 export const SITE_TITLE = "lipu.pona.la";
 export const SITE_DESCRIPTION =
   "lipu pona, the Toki Pona library by kulupu Lapo.";
+export const GOATCOUNTER_URL = "lipu-pona-la.goatcounter.com";
