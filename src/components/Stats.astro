@@ -8,26 +8,19 @@ const t = translator(data, getLangFromUrl(Astro.url))
 ---
 
 <style>
-  section {
-  }
   div {
-    width: max-content;
-  }
-  .scrollable {
-    width: 100%;
-    box-sizing: border-box;
-    overflow: scroll;
+    display: grid;
+    gap: calc(50px / 4);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 </style>
 
 <section>
   <h2 style="margin-bottom: 0px;">{t('homepage.stats.title')}</h2>
-  <div class="scrollable">
-    <div>
-      <StatBlock title="Entries" value={posts.length} link="all" />
-      <StatBlock title="Collections" value={collections.length} link="collections" />
-      <StatBlock title="Tags" value={tags.length} link="tags" />
-      <StatBlock title="Authors" value={authors.length} link="authors" />
-    </div>
+  <div>
+    <StatBlock title="Entries" value={posts.length} link="all" />
+    <StatBlock title="Collections" value={collections.length} link="collections" />
+    <StatBlock title="Tags" value={tags.length} link="tags" />
+    <StatBlock title="Authors" value={authors.length} link="authors" />
   </div>
 </section>
