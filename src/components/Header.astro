@@ -39,11 +39,11 @@ const localUrl = urlLocaliser(Astro.url)
     <img alt="lipu.pona.la" src="./header.svg" />
   </a>
   <div style="font-weight: 700">
-    <a href="https://wasona.com/">{t('nav.wasona')}</a>{" · "}
+    <a href="https://wasona.com/" rel="index follow">{t('nav.wasona')}</a>{" · "}
     {t('nav.library')}{" · "}
-    <a href="https://sin-kulupu.pona.la">{t('nav.sinkulupu')}</a>{" · "}
-    <a href="https://discord.gg/6zkugJFU4x">{t('nav.mapona')}</a>{" · "}
-    <a href="https://pona.la/">{t('nav.ponala')}</a>
+    <a href="https://sin-kulupu.pona.la" rel="index follow">{t('nav.sinkulupu')}</a>{" · "}
+    <a href="https://discord.gg/6zkugJFU4x" rel="index follow">{t('nav.mapona')}</a>{" · "}
+    <a href="https://pona.la/" rel="index follow">{t('nav.ponala')}</a>
   </div>
   <div class="secondary">
     <a href={localUrl("/all")}>{t("nav.all")}</a>{" · "}
@@ -51,7 +51,7 @@ const localUrl = urlLocaliser(Astro.url)
     <a href={localUrl("/tags")}>{t("nav.tags")}</a>{" · "}
     <a href={localUrl("/authors")}>{t("nav.authors")}</a>{" · "}
     <a href={localUrl("/adaptations")}>{t("nav.adaptations")}</a>{" · "}
-    <a href={localUrl("/random")}>{t("nav.random")}</a>{" · "}
+    <a href={localUrl("/random")} rel="nofollow">{t("nav.random")}</a>{" · "}
     <a href={localUrl("/add")}>{t("nav.add")}</a>
   </div>
   <DarkModeToggle />
