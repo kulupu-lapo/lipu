@@ -41,93 +41,100 @@ if ((locales as string[]).includes(urlPrefix)) {
 </div>
   
 <style>
-#languageSwitch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    text-align: left;
-}
-#languageSwitch svg * {
-    transition: stroke 0.2s, fill 0.2s;
-}
-#languageSwitch svg {
-    --tokBg: var(--bg-1);
-    --tokFg: var(--grey);
-    --enBg: var(--accent);
-    --enFg: var(--bg);
-    --arrows: var(--grey-1);
-}
-#languageSwitch[data-expanded="true"] svg {
-    --tokBg: var(--accent);
-    --tokFg: var(--bg);
-    --enBg: var(--bg-1);
-    --enFg: var(--grey);
-}
-#languageSwitch:hover svg, #languageSwitch[data-expanded="true"] svg {
-    --arrows: var(--accent);
-}
+    #languageSwitch {
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: left;
+    }
 
-#languageSwitch button, #languageSwitch a {
-    border: 0;
-    background: none;
-    cursor: pointer;
-    font-size: inherit;
-    text-decoration: none;
-}
-#languageSwitch[data-expanded="false"] > ul { display: none; }
+    #languageSwitch svg * {
+        transition: stroke 0.2s, fill 0.2s;
+    }
 
-#languageSwitch ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg);
-    border: var(--block-border-radius);
-    
-}
-#languageSwitch li {
-    border: 1px solid var(--grey);
-    box-sizing: border-box;
-    box-shadow: 0px 0px 0px transparent;
-    transition-duration: 0.3s;
-    transition-property: box-shadow;
-    border-top: none;
-}
-#languageSwitch li:first-child {
-    border-top: 1px solid var(--grey);
-    border-top-left-radius: var(--block-border-radius);
-    border-top-right-radius: var(--block-border-radius);
-}
-#languageSwitch li:last-child {
-    border-bottom-left-radius: var(--block-border-radius);
-    border-bottom-right-radius: var(--block-border-radius);
-}
+    #languageSwitch svg {
+        --tokBg: var(--bg-1);
+        --tokFg: var(--grey);
+        --enBg: var(--accent);
+        --enFg: var(--bg);
+        --arrows: var(--grey-1);
+    }
 
-#languageSwitch li:hover {
-    border-color: var(--accent);
-    box-shadow: 0px 0px 8px var(--accent);
-}
+    #languageSwitch[data-expanded="true"] svg {
+        --tokBg: var(--accent);
+        --tokFg: var(--bg);
+        --enBg: var(--bg-1);
+        --enFg: var(--grey);
+    }
 
+    #languageSwitch:hover svg, #languageSwitch[data-expanded="true"] svg {
+        --arrows: var(--accent);
+    }
 
-#languageSwitch li a {
-    width: 100%;
-    height: 100%;
-    padding: 0.5em;
-    text-align: left;
-}
-#languageSwitch a.active {
-    color: var(--txt);
-}
+    #languageSwitch button, #languageSwitch a {
+        border: 0;
+        background: none;
+        cursor: pointer;
+        font-size: inherit;
+        text-decoration: none;
+    }
+
+    #languageSwitch[data-expanded="false"] > ul { display: none; }
+
+    #languageSwitch ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg);
+        border: var(--block-border-radius);    
+    }
+
+    #languageSwitch li {
+        border: 1px solid var(--grey);
+        box-sizing: border-box;
+        box-shadow: 0px 0px 0px transparent;
+        transition-duration: 0.3s;
+        transition-property: box-shadow;
+        border-top: none;
+        padding: 0.5rem var(--block-padding);
+    }
+
+    #languageSwitch li:first-child {
+        border-top: 1px solid var(--grey);
+        border-top-left-radius: var(--block-border-radius);
+        border-top-right-radius: var(--block-border-radius);
+    }
+
+    #languageSwitch li:last-child {
+        border-bottom-left-radius: var(--block-border-radius);
+        border-bottom-right-radius: var(--block-border-radius);
+    }
+
+    #languageSwitch li:hover {
+        border-color: var(--accent);
+        box-shadow: 0px 0px 8px var(--accent);
+    }
+
+    #languageSwitch li a {
+        width: 100%;
+        height: 100%;
+        padding: 0.5em;
+        text-align: left;
+    }
+    #languageSwitch a.active {
+        color: var(--txt);
+    }
 </style>
 
 <script>
-const langSwitch = document.getElementById("languageSwitch")!
-const openButton = langSwitch.firstElementChild!
-const langList = langSwitch.lastElementChild!
-function toggleLangSwitch() {
-    langSwitch.dataset.expanded = (langSwitch.dataset.expanded === "false").toString()
-}
-openButton.addEventListener("click", toggleLangSwitch);
+    const langSwitch = document.getElementById("languageSwitch")!
+    const openButton = langSwitch.firstElementChild!
+    const langList = langSwitch.lastElementChild!
+    function toggleLangSwitch() {
+        langSwitch.dataset.expanded = (langSwitch.dataset.expanded === "false").toString()
+    }
+    openButton.addEventListener("click", toggleLangSwitch);
 </script>
   
