@@ -248,7 +248,8 @@ const t = translator(data, lang);
     <textarea
       id="md-input"
       placeholder={t('add.text.default')}
-      oninput="rerender()"></textarea>
+      oninput="rerender()"
+      aria-label="comments for github PR"></textarea>
   </div>
   <div id="md-render"></div>
   <Error id="error-div" active={false}><span id="error-message"></span>
