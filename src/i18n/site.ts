@@ -18,11 +18,12 @@ export const data = {
         'homepage.contributors.title': "Hall of fame",
         'homepage.contributors.alttext': "poki Lapo contributors' profile pictures",
         'homepage.contributors.caption': "Thank you all so much, wouldn't be possible without you! ❤️",
-        'homepage.stats.title': "Stats",
+        'homepage.stats.title': "Stats 'n' search",
         'homepage.stats.Entries': "Entries",
         'homepage.stats.Collections': "Collections",
         'homepage.stats.Tags': "Tags",
         'homepage.stats.Authors': "Authors",
+        'homepage.search.placeholder': "Search...",
         
         // collation pages
         'author.header(name, count)': "Post by {name} ({count})",
@@ -77,11 +78,12 @@ export const data = {
         'homepage.contributors.title': "jan ni li pana e lipu mute",
         'homepage.contributors.alttext': "jan mute li pana e lipu mute tawa poki Lapo. sitelen ni li jo e sitelen pi jan ni.",
         'homepage.contributors.caption': "sina mute li pona! sina lon ala la ni li ken ala! ❤️",
-        'homepage.stats.title': "poki ni li suli ala suli?",
+        'homepage.stats.title': "ilo alasa e nanpa mute nasa",
         'homepage.stats.Entries': "ni li jo e toki pona",
         'homepage.stats.Collections': "toki li tan poki toki",
         'homepage.stats.Tags': "toki ni li lon kulupu",
         'homepage.stats.Authors': "ni li jo e toki tan jan",
+        'homepage.search.placeholder': "o alasa...",
         
         // collation pages
         'author.header(name, count)': "{name} li sitelen e toki {count}",

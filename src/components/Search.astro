@@ -1,0 +1,33 @@
+---
+import { translator, getLangFromUrl } from "@/utils/i18n.ts"
+import { data } from "@/i18n/site";
+
+const t = translator(data, getLangFromUrl(Astro.url))
+---
+
+<style>
+  input {
+    width: 100%;
+    display: inline-block;
+    border: 1px solid var(--grey);
+    padding: var(--block-padding);
+    border-radius: var(--block-border-radius);
+    box-sizing: border-box;
+    box-shadow: 0px 0px 0px transparent;
+    transition-duration: 0.3s;
+    transition-property: box-shadow;
+    color: var(--txt);
+    background-color: var(--gb);
+    font-weight: initial;
+    font-size: 18px;
+    margin-bottom: calc(50px / 4);
+  }
+  input:focus, input:hover {
+    border-color: var(--accent);
+    box-shadow: 0px 0px 8px var(--accent);
+    outline: none;
+  }
+</style>
+<form action="">
+    <input type="search" name="q" id="q" placeholder={t(`homepage.search.placeholder`)} aria-label={t(`homepage.search.placeholder`)}>
+</form>

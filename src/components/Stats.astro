@@ -15,12 +15,9 @@ const t = translator(data, getLangFromUrl(Astro.url))
   }
 </style>
 
-<section>
-  <h2 style="margin-bottom: 0px;">{t('homepage.stats.title')}</h2>
-  <div>
-    <StatBlock title="Entries" value={posts.length} link="all" />
-    <StatBlock title="Collections" value={collections.length} link="collections" />
-    <StatBlock title="Tags" value={tags.length} link="tags" />
-    <StatBlock title="Authors" value={authors.length} link="authors" />
-  </div>
-</section>
+<div>
+  <StatBlock title="Entries" value={posts.length} link="all" />
+  <StatBlock title="Collections" value={collections.length} link="collections" />
+  <StatBlock title="Tags" value={tags.length} link="tags" />
+  <StatBlock title="Authors" value={authors.length} link="authors" />
+</div>
