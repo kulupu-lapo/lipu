@@ -29,22 +29,26 @@ const localUrl = urlLocaliser(Astro.url)
     text-decoration: none;
     /* color: var(--txt); */
   }
+  div.top {
+    margin-top: -20px;
+    margin-bottom: 30px;
+  }
   .secondary a {
     font-weight: 500;
   }
 </style>
 
 <header>
-  <a href={localUrl("/")}>
-    <img alt="lipu.pona.la" src="./header.svg" />
-  </a>
-  <div style="font-weight: 700">
+  <div class="top" style="font-weight: 700">
     <a href="https://wasona.com/" rel="index follow">{t('nav.wasona')}</a>{" · "}
     {t('nav.library')}{" · "}
     <a href="https://sin-kulupu.pona.la" rel="index follow">{t('nav.sinkulupu')}</a>{" · "}
     <a href="https://discord.gg/6zkugJFU4x" rel="index follow">{t('nav.mapona')}</a>{" · "}
     <a href="https://pona.la/" rel="index follow">{t('nav.ponala')}</a>
   </div>
+  <a href={localUrl("/")}>
+    <img alt="lipu.pona.la" src="./header.svg" />
+  </a>
   <div class="secondary">
     <a href={localUrl("/all")}>{t("nav.all")}</a>{" · "}
     <a href={localUrl("/collections")}>{t("nav.collections")}</a>{" · "}
