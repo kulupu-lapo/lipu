@@ -56,7 +56,7 @@ const Collection = z
   })
   .strict();
 
-const blog = defineCollection({
+const poki = defineCollection({
   // Load Markdown and MDX files in the `src/content/` directory.
   loader: glob({
     base: "./poki/plaintext/",
@@ -74,4 +74,4 @@ const meta = defineCollection({
   schema: z.object({}),
 });
 
-export const collections = { blog, meta };
+export const collections = { poki, meta };

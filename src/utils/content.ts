@@ -17,7 +17,7 @@ export const by =
 
 // posts, sorted from newest to oldest.
 
-export const posts = (await getCollection("blog")).sort(
+export const posts = (await getCollection("poki")).sort(
   by((x) => x.data.date.valueOf(), false),
 );
 
@@ -118,8 +118,8 @@ export const prevnexts = (() => {
   const prevnexts: {
     [k: string]: {
       [v: string]: {
-        prev?: CollectionEntry<"blog">;
-        next?: CollectionEntry<"blog">;
+        prev?: CollectionEntry<"poki">;
+        next?: CollectionEntry<"poki">;
       };
     };
   } = Object.fromEntries(posts.map((post) => [post.id, {}]));
