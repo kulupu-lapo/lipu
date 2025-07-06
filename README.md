@@ -5,8 +5,8 @@ The frontend for **poki Lapo**, a library of Toki Pona texts.
 ## Local development
 
 ```sh
-npm i
-npm run dev
+npm i # install dependencies. use only on the first startup.
+npm run dev # run the dev server
 ```
 
 ## Translating
@@ -32,7 +32,7 @@ export const data = {
 } as const
 ```
 The keys are unique strings that correspond to a specific part of the website.  
-Their format isn't enforced by code, but for clarity they're always in the form `'section.part'`, `'section.part(variable)'`, `'section.part(variable1, variable2)'`, etc. Sometimes `[`/`]` will be used instead of `(`/`)`, but the distinction isn't important for translation.  
+Their format isn't enforced by code, but for clarity they're always in the form `'section.part'`, `'section.part(variable)'`, `'section.part(variable1, variable2)'`, etc. Sometimes square brackets (`[]`) will be used instead of the regular ones (`()`), but the distinction isn't important for translation.  
 It's important that the keys are written exactly the same as they are in the website's code, so don't edit them, only copy & paste a preexisting language if you're adding a new one. 
 
 The value is what will get displayed on the website. This can be a simple string like `"Add an article"`, or it can include variables wrapped in curly brackets `"like {this}"`. The parts between the brackets in the key tells you what variables you can use.   
