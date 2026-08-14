@@ -1,6 +1,7 @@
 export const languages = {
   en: 'English',
   tok: 'toki pona',
+  pt: 'Português'
 };
 export type Langcode = keyof typeof languages;
 export const locales = Object.keys(languages) as Langcode[];

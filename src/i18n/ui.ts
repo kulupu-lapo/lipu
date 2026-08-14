@@ -67,4 +67,36 @@ export const data = {
 
     'post.credits[authors]': "tan {authors between=' tan '}",
   },
+  pt: {
+    // titles of prev/next bar options
+    'index.default': "Índice",
+    'index.author(name)': "por {name}",
+    'index.collection(name)': "de {name}",
+    'index.tag(name)': "{name}",
+    'index.original(name)': "adaptando {name}",
+
+    // post preview on pages listing multiple posts
+    /* format: 
+      <a>[post title]</a>
+      <p>{foundpost.details}</p>
+    */
+    'foundpost.details[authors, date]': "por {authors between=', '}, {date}",
+
+    // metadata section on individual post pages
+    'metadata.container_title': "Detalhes",
+
+    'metadata.github[link]': "Edite em {link}",
+    'metadata.github.link': "Github",
+    'metadata.description(text)': "Descrição: {text}",
+    'metadata.license(text)': "Licença: {text}",
+    'metadata.proofreaders(proofreaders)': "Revisores: {proofreaders between=', '}",
+    'metadata.tags[links]': "Tags: {links between=' '}",
+    'metadata.sources[links]': "Fontes: {links between=' '}",
+    'metadata.archives[links]': "Arquivos: {links between=' '}",
+    'metadata.original[title, credits]': "Original: {title}{credits}",
+    'metadata.original.credits(authors)': " por {authors between=', '}",
+    'metadata.notes[notes]': "Notas: {notes}",
+
+    'post.credits[authors]': "{authors between=', '}",
+  },
 } as const;

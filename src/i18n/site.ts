@@ -116,4 +116,62 @@ export const data = {
         'tags.postlink(name, count)': " li kulupu e toki {count}",
         
     },
+    pt: {
+        'nav.all': "Todos",
+        'nav.collections': "Coleções",
+        'nav.tags': "Tags",
+        'nav.authors': "Autores",
+        'nav.adaptations': "Adaptações",
+        'nav.random': "Aleatório",
+        'nav.add': "Adicionar",
+
+        'nav.wasona': "Curso",
+        'nav.library': "Biblioteca",
+        'nav.sinkulupu': "Notícias(en)",
+        'nav.mapona': "Discord(en)",
+        'nav.ponala': "Mais(en)",
+        
+        'homepage.h2': "Contribuições e visão geral do projeto",
+        'homepage.contributors.title': "Hall da fama",
+        'homepage.contributors.alttext': "Fotos de perfil dos contribuidores do poki Lapo",
+        'homepage.contributors.caption': "Muito obrigado a todos, não seria possivel sem vocês! ❤️",
+        'homepage.stats.title': "Estatísticas",
+        'homepage.stats.Entries': "Entradas",
+        'homepage.stats.Collections': "Coleções",
+        'homepage.stats.Tags': "Tags",
+        'homepage.stats.Authors': "Autores",
+        
+        // collation pages
+        'author.header(name, count)': "Post por {name} ({count})",
+        'collection.header(name, count)': "Posts que incluem {name} ({count})",
+        'original.header(name, count, authors)': "Adaptações de {name}{authors} ({count})",
+        'original.authors(authors)': " por {authors between=', '}",
+        'tag.header(name, count)': "Post marcado com {name} ({count})",
+        
+        // pages listing collations
+        'all.title': "Todos os trabalhos",
+        'all.header(count)': "{count} Trabalhos:",
+        
+        'adaptations.title': "Adaptações",
+        'adaptations.header(count)': "Trabalhos adaptados ({count})",
+        'adaptations.link(name, count, authors)': "{name}{authors}",
+        'adaptations.authors(authors)': " por {authors between=', '}",
+        'adaptations.postlink(name, count, authors)': " ({count} adaptações)",
+
+        'authors.title': "Autores",
+        'authors.header(count)': "Autores ({count})",
+        'authors.link(name, count)': "{name}",
+        'authors.postlink(name, count)': " ({count} posts)",
+
+        'collections.title': "Coleções",
+        'collections.header(count)': "Coleções ({count})",
+        'collections.link(name, count)': "{name}",
+        'collections.postlink(name, count)': " ({count} posts)",
+
+        'tags.title': "Tags",
+        'tags.header(count)': "Tags ({count})",
+        'tags.link(name, count)': "{name}",
+        'tags.postlink(name, count)': " ({count} posts)",
+        
+    },
   } as const;
